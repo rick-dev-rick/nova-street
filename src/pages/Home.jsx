@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import BestSellers from '../components/BestSellers.jsx'
+import Lifestyle from '../components/Lifestyle.jsx'
+import FinalCTA from '../components/FinalCTA.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
@@ -50,9 +53,13 @@ export default function Home() {
         </div>
       </section>
 
+      <BestSellers />
+
       <section className="promo-strip">
-        <span>IDENTIDADE SEM RÓTULOS</span><span>•</span><span>FRETE GRÁTIS ACIMA DE R$ 299</span>
+        <span>IDENTIDADE SEM RÓTULOS</span><span>•</span><span>FRETE GRÁTIS A PARTIR DE R$ 299</span>
       </section>
+      <Lifestyle />
+      <FinalCTA />
     </>
   )
 }

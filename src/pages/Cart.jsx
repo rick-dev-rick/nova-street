@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
+import ShippingCalculator from '../components/ShippingCalculator.jsx'
+import OrderTotals from '../components/OrderTotals.jsx'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
-export default function Cart({ cart, subtotal, onUpdateQuantity, onRemove }) {
+export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, cart, subtotal, onUpdateQuantity, onRemove }) {
   if (!cart.length) return <section className="section container empty-state"><p className="eyebrow dark">SACOLA</p><h1>Sua sacola está vazia.</h1><p>Explore o drop e adicione suas peças favoritas.</p><Link className="btn btn-primary" to="/catalogo">Ver coleção</Link></section>
 
   return (
@@ -19,7 +21,7 @@ export default function Cart({ cart, subtotal, onUpdateQuantity, onRemove }) {
             </article>
           ))}
         </div>
-        <aside className="cart-summary"><h2>Resumo</h2><div><span>Subtotal</span><strong>{money.format(subtotal)}</strong></div><div><span>Frete</span><span>{subtotal >= 299 ? 'Grátis' : 'Não simulado'}</span></div><hr /><div className="summary-total"><span>Total parcial</span><strong>{money.format(subtotal)}</strong></div><Link className="btn btn-primary" to="/checkout">Continuar</Link></aside>
+        <aside className="cart-summary"><h2>Resumo</h2><ShippingCalculator subtotal={subtotal} cep={shippingCep} onCepChange={onShippingCepChange} /><OrderTotals subtotal={subtotal} quote={shippingQuote} /><Link className="btn btn-primary" to="/checkout">Continuar</Link></aside>
       </div>
     </section>
   )

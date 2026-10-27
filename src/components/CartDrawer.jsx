@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
-export default function CartDrawer({ open, onClose, cart, subtotal, onUpdateQuantity, onRemove }) {
+export default function CartDrawer({ shippingQuote, open, onClose, cart, subtotal, onUpdateQuantity, onRemove }) {
   const dialog = useRef(null)
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function CartDrawer({ open, onClose, cart, subtotal, onUpdateQuan
               </div>
             </article>)}
           </div>
-          <div className="drawer-summary"><div className="drawer-subtotal" aria-live="polite" aria-atomic="true"><span>Subtotal</span><strong>{money.format(subtotal)}</strong></div><p>Frete não simulado · checkout demonstrativo.</p><Link className="btn btn-primary" to="/checkout" onClick={onClose}>Continuar para checkout</Link><Link className="drawer-cart-link text-link" to="/carrinho" onClick={onClose}>Ver sacola completa →</Link><button type="button" className="drawer-continue" onClick={onClose}>Continuar explorando</button></div>
+          <div className="drawer-summary"><div className="drawer-subtotal" aria-live="polite" aria-atomic="true"><span>Subtotal</span><strong>{money.format(subtotal)}</strong></div><p>{shippingQuote ? `Frete simulado: ${shippingQuote.cost === 0 ? 'grátis' : money.format(shippingQuote.cost)} · total ${money.format(shippingQuote.total)}` : 'Simule o frete na sacola completa ou no checkout.'}</p><Link className="btn btn-primary" to="/checkout" onClick={onClose}>Continuar para checkout</Link><Link className="drawer-cart-link text-link" to="/carrinho" onClick={onClose}>Ver sacola completa →</Link><button type="button" className="drawer-continue" onClick={onClose}>Continuar explorando</button></div>
         </> : <div className="drawer-empty"><span aria-hidden="true">Ø</span><h3>Sua sacola está vazia.</h3><p>Encontre a próxima peça do seu estilo.</p><Link className="btn btn-primary" to="/catalogo" onClick={onClose}>Explorar coleção</Link></div>}
       </div>
     </dialog>

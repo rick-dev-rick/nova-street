@@ -58,3 +58,18 @@ test('caps extreme quantities and repeated additions at 99', () => {
   assert.equal(updateCartItemQuantity(cart, cart[0].key, 1e308)[0].quantity, 99)
   assert.equal(Number.isFinite(getCartSubtotal(cart)), true)
 })
+
+test('selected product quantity is added and merged with the matching size', () => {
+  let cart = addCartItem([], tee, 'G', 3)
+  cart = addCartItem(cart, tee, 'G', '2.8')
+  assert.equal(cart[0].quantity, 5)
+  assert.equal(getCartSubtotal(cart), 649.5)
+})
+
+test('quantity normalization accepts numeric strings and clamps invalid values', async () => {
+  const { normalizeQuantity } = await import('../src/lib/cart.js')
+  assert.equal(normalizeQuantity('3.9'), 3)
+  assert.equal(normalizeQuantity(-2), 1)
+  assert.equal(normalizeQuantity(Infinity), 1)
+  assert.equal(normalizeQuantity(1000), 99)
+})

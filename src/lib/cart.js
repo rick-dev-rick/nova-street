@@ -1,9 +1,13 @@
+export function normalizeQuantity(quantity) {
+  return Number.isFinite(Number(quantity)) ? Math.min(99, Math.max(1, Math.floor(Number(quantity) || 1))) : 1
+}
+
 export function makeCartKey(productId, size) {
   return `${productId}::${size}`
 }
 
 export function addCartItem(cart, product, size, quantity = 1) {
-  const safeQuantity = Number.isFinite(Number(quantity)) ? Math.min(99, Math.max(1, Math.floor(Number(quantity) || 1))) : 1
+  const safeQuantity = normalizeQuantity(quantity)
   const key = makeCartKey(product.id, size)
   const existing = cart.find((item) => item.key === key)
 
@@ -17,7 +21,7 @@ export function addCartItem(cart, product, size, quantity = 1) {
 }
 
 export function updateCartItemQuantity(cart, key, quantity) {
-  const safeQuantity = Number.isFinite(Number(quantity)) ? Math.min(99, Math.max(1, Math.floor(Number(quantity) || 1))) : 1
+  const safeQuantity = normalizeQuantity(quantity)
   return cart.map((item) => (item.key === key ? { ...item, quantity: safeQuantity } : item))
 }
 
