@@ -1,0 +1,118 @@
+export const categories = ['Todos', 'Masculino', 'Feminino', 'Unissex', 'Acessórios']
+
+export const products = [
+  {
+    id: 'essential-oversized-tee',
+    releasedAt: '2026-10-27',
+    name: 'Essential Oversized Tee',
+    price: 129.9,
+    category: 'Unissex',
+    badge: 'NOVO',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=85',
+    description: 'Camiseta oversized de construção pesada, caimento amplo e visual minimalista.',
+    sizes: ['P', 'M', 'G', 'GG'],
+  },
+  {
+    id: 'district-cargo-pants',
+    releasedAt: '2026-10-20',
+    name: 'District Cargo Pants',
+    price: 219.9,
+    category: 'Unissex',
+    badge: 'DROP 01',
+    image: 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=1200&q=85',
+    description: 'Cargo ampla com bolsos utilitários e construção pensada para uso urbano.',
+    sizes: ['38', '40', '42', '44', '46'],
+  },
+  {
+    id: 'core-black-hoodie',
+    releasedAt: '2026-10-01',
+    name: 'Core Black Hoodie',
+    price: 249.9,
+    category: 'Masculino',
+    badge: 'BEST SELLER',
+    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1200&q=85',
+    description: 'Moletom encorpado com modelagem relaxada e acabamento limpo.',
+    sizes: ['P', 'M', 'G', 'GG'],
+  },
+  {
+    id: 'nova-cropped-tee',
+    releasedAt: '2026-10-26',
+    name: 'Nøva Cropped Tee',
+    price: 119.9,
+    category: 'Feminino',
+    badge: 'NOVO',
+    image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85',
+    description: 'Cropped street de corte reto e identidade visual minimalista.',
+    sizes: ['PP', 'P', 'M', 'G'],
+  },
+  {
+    id: 'urban-cap-redline',
+    releasedAt: '2026-10-15',
+    name: 'Urban Cap Redline',
+    price: 89.9,
+    category: 'Acessórios',
+    badge: 'LIMITED',
+    image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=1200&q=85',
+    description: 'Boné estruturado com detalhe vermelho e assinatura NØVA STREET.',
+    sizes: ['Único'],
+  },
+  {
+    id: 'street-layer-jacket',
+    releasedAt: '2026-10-10',
+    name: 'Street Layer Jacket',
+    price: 329.9,
+    category: 'Unissex',
+    badge: 'DROP 01',
+    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=85',
+    description: 'Jaqueta urbana leve para sobreposição, com recortes e presença marcante.',
+    sizes: ['P', 'M', 'G', 'GG'],
+  },
+  {
+    "id": "studio-oversized-tee",
+    "releasedAt": "2026-10-27",
+    "name": "Studio Oversized Tee",
+    "price": 139.9,
+    "category": "Unissex",
+    "badge": "NOVO",
+    "image": "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1200&q=85",
+    "description": "Camiseta de inspiração urbana, silhueta solta e visual versátil para combinar com peças amplas.",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ]
+  },
+  {
+    "id": "redline-street-sneaker",
+    "releasedAt": "2026-10-27",
+    "name": "Redline Street Sneaker",
+    "price": 289.9,
+    "category": "Unissex",
+    "badge": "NOVO",
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=85",
+    "description": "Tênis de inspiração esportiva em vermelho, para dar um ponto de cor ao look urbano.",
+    "sizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42"
+    ]
+  },
+  {
+    "id": "utility-backpack",
+    "releasedAt": "2026-10-27",
+    "name": "Utility Backpack",
+    "price": 179.9,
+    "category": "Acessórios",
+    "badge": "NOVO",
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=85",
+    "description": "Mochila utilitária para levar os essenciais do dia a dia, com alças ajustáveis e compartimento principal com zíper.",
+    "sizes": [
+      "Único"
+    ]
+  },
+]
