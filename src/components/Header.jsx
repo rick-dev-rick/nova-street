@@ -22,7 +22,7 @@ export default function Header({ cartCount = 0, onOpenCart, drawerOpen }) {
             </>}
           </NavLink>
           <button type="button" className="cart-link cart-trigger" onClick={onOpenCart} aria-haspopup="dialog" aria-controls="cart-drawer" aria-expanded={drawerOpen} aria-label={`Abrir sacola com ${cartCount} itens`}>
-            Sacola <span>{cartCount}</span>
+            Sacola <span className="cart-count" key={cartCount}>{cartCount}</span>
           </button>
         </div>
       </div>

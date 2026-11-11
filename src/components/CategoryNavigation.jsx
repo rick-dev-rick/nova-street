@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '../design-system/Action.jsx'
 
@@ -10,8 +10,21 @@ const categories = [
   { label: 'Acessórios', value: 'Acessórios' },
 ]
 
+const mobileQuery = '(max-width: 600px)'
+
+function subscribeToMobile(callback) {
+  const query = window.matchMedia(mobileQuery)
+  query.addEventListener('change', callback)
+  return () => query.removeEventListener('change', callback)
+}
+
+function isMobileViewport() {
+  return window.matchMedia(mobileQuery).matches
+}
+
 export default function CategoryNavigation() {
   const location = useLocation()
+  const isMobile = useSyncExternalStore(subscribeToMobile, isMobileViewport)
   const navId = useId()
   const toggle = useRef(null)
   const [open, setOpen] = useState(false)
@@ -44,7 +57,7 @@ export default function CategoryNavigation() {
       >
         Menu
       </Button>
-      <nav id={navId} className="main-nav" aria-label="Navegação principal" data-expanded={open} onKeyDown={onKeyDown}>
+      <nav id={navId} className="main-nav" aria-label="Navegação principal" data-expanded={open} inert={isMobile && !open} onKeyDown={onKeyDown}>
         {categories.map(({ label, value }) => (
           <Link
             key={label}

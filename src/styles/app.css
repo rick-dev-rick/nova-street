@@ -1,8 +1,8 @@
 @import '../design-system/tokens.css';
 @import '../design-system/typography.css';
+@import '../design-system/motion.css';
 :root{color:var(--nova-color-text);background:var(--nova-color-bg)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;min-width:320px;background:var(--nova-color-bg);color:var(--nova-color-text)}
 a{color:inherit;text-decoration:none}
 button,input{color:inherit}
@@ -59,8 +59,7 @@ img{display:block;max-width:100%}
 .product-grid{--nova-grid-columns:repeat(4,minmax(0,1fr));--grid-gap:var(--nova-space-5-5)}
 .product-card{min-width:0}
 .product-image-wrap{aspect-ratio:var(--nova-ratio-product);overflow:hidden;background:var(--nova-color-media);position:relative}
-.product-image-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
-.product-card:hover img{transform:scale(1.025)}
+.product-image-wrap img{width:100%;height:100%;object-fit:cover}
 .product-badge{position:absolute;inset-block-end:var(--nova-space-3);inset-inline-start:var(--nova-space-3);max-inline-size:calc(100% - var(--nova-space-3) * 2);background:var(--nova-color-action);color:var(--nova-color-on-action);padding:var(--nova-space-2) var(--nova-space-2)}
 .product-meta{padding:var(--nova-space-3-5) 0}
 .product-meta p{color:var(--nova-color-text-muted);margin:0 0 var(--nova-space-1-5)}
@@ -144,7 +143,7 @@ main{min-height:60vh}
 /* Product photography and collection specifications */
 .product-gallery,.product-detail-info{min-width:0}
 .gallery-main{display:block;position:relative;width:100%;aspect-ratio:var(--nova-ratio-product);overflow:hidden;border:0;padding:0;background:var(--nova-color-surface);cursor:zoom-in}
-.gallery-main img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.gallery-main img{width:100%;height:100%;object-fit:cover}
 .gallery-view-1 img{transform:scale(1.65)}
 .gallery-zoom{position:absolute;right:16px;bottom:16px;background:var(--nova-color-field);color:var(--nova-color-text);padding:var(--nova-space-2-5) var(--nova-space-3-5)}
 .gallery-controls{display:flex;gap:var(--nova-space-3);margin-top:var(--nova-space-4)}
@@ -359,10 +358,6 @@ main{min-height:60vh}
   .drawer-summary p{margin:var(--nova-space-1-5) 0 var(--nova-space-2-5)}
   .drawer-continue{display:none}
   .drawer-cart-link{margin-top:var(--nova-space-2-5)}
-}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none!important}
 }
 
 /* Estados de interação. Seleção persistente continua indicada por aria-pressed. */

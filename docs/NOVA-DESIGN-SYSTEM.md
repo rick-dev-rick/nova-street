@@ -14,6 +14,8 @@
 
 [Módulo 06 — Estados e comportamento](NOVA-DESIGN-SYSTEM-MODULO-06.md)
 
+[Módulo 07 — Animações e movimento](NOVA-DESIGN-SYSTEM-MODULO-07.md)
+
 ## O que já foi observado no repositório (10/11/2026)
 - React/Vite e rotas separadas em Home, Catálogo, Produto, Carrinho, Checkout e Favoritos.
 - Componentes como Layout, Header, Footer, ProductCard e CartDrawer.

@@ -27,7 +27,9 @@ export default function Layout({ shippingQuote, cartCount, cart, subtotal, drawe
       <Header cartCount={cartCount} onOpenCart={onOpenCart} drawerOpen={drawerOpen} />
       <main ref={main} id="conteudo" tabIndex={-1}>
         <RouteErrorBoundary pathname={pathname}>
-          <Suspense fallback={<LoadingStatus />}><Outlet /></Suspense>
+          <Suspense fallback={<LoadingStatus />}>
+            <div className="route-view" key={pathname}><Outlet /></div>
+          </Suspense>
         </RouteErrorBoundary>
       </main>
       <Footer />
