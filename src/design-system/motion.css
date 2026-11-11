@@ -250,6 +250,55 @@ html { scroll-behavior: smooth; }
   }
 }
 
+
+/* NØVA / NEW DROP: cinema editorial com camadas e tipografia em três tempos. */
+.hero { min-height: min(820px, 94svh); isolation: isolate; overflow: hidden; background: #090909; }
+.hero::before { animation: nova-hero-photo 1800ms var(--nova-ease-expressive) both; transform-origin: 65% 45%; }
+.hero-overlay { z-index: 1; }
+.hero-overlay::before { content: ''; position: absolute; inset: 0; background: var(--nova-brand-red); transform-origin: left; animation: nova-hero-curtain 1500ms var(--nova-ease-expressive) both; }
+.hero-content { z-index: 3; }
+.hero-display { animation: none !important; line-height: .96; max-width: 100%; }
+.hero-display-line { display: block; overflow: hidden; padding-block: .07em; margin-block: -.07em; }
+.hero-display-line > span { display: inline-block; animation: nova-hero-type var(--nova-motion-showcase) var(--nova-ease-expressive) both; }
+.hero-display-line:nth-child(2) > span { animation-delay: 180ms; }
+.hero-display-line:nth-child(3) > span { animation-delay: 360ms; }
+.hero-title-period { color: var(--nova-brand-red); }
+.hero-cinematic-frame { position: absolute; inset: var(--nova-space-6); z-index: 2; pointer-events: none; color: white; }
+.hero-frame-corner { position: absolute; width: 58px; height: 58px; border-color: rgb(255 255 255 / .75); border-style: solid; animation: nova-hero-frame var(--nova-motion-showcase) var(--nova-ease-expressive) both; }
+.hero-frame-top { top: 0; left: 0; border-width: 2px 0 0 2px; animation-delay: 400ms; }
+.hero-frame-bottom { bottom: 0; right: 0; border-width: 0 2px 2px 0; animation-delay: 600ms; }
+.hero-vertical-mark { position: absolute; right: 0; top: 42%; writing-mode: vertical-rl; font-size: .7rem; font-weight: 800; letter-spacing: .2em; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) 650ms both; }
+.hero-frame-index { position: absolute; bottom: var(--nova-space-3); right: var(--nova-space-6); font-size: .7rem; font-weight: 800; letter-spacing: .2em; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) 750ms both; }
+.hero-scroll-cue { display: inline-flex; align-items: center; gap: var(--nova-space-3); margin: var(--nova-space-8) 0 0 var(--nova-space-6); color: white; font-size: .65rem; font-weight: 700; letter-spacing: .18em; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) 850ms both; }
+.hero-scroll-track { position: relative; display: block; width: 2px; height: 32px; background: rgb(255 255 255 / .3); overflow: hidden; }
+.hero-scroll-track::after { content: ''; position: absolute; inset: 0; background: var(--nova-brand-red); animation: nova-scroll-pulse 1400ms ease-in-out 1000ms infinite; }
+.hero .btn-primary { position: relative; overflow: hidden; }
+.hero .btn-primary::before { content: ''; position: absolute; inset: 0; background: rgb(255 255 255 / .25); transform: translateX(-110%) skewX(-20deg); transition: transform var(--nova-motion-display) var(--nova-ease-expressive); pointer-events: none; }
+@media (hover:hover) { .hero .btn-primary:hover::before { transform: translateX(110%) skewX(-20deg); } }
+@keyframes nova-hero-photo { from { transform: scale(1.27) translate3d(2%,0,0); filter: grayscale(1) contrast(1.25); } to { transform: scale(1); filter: grayscale(1); } }
+@keyframes nova-hero-curtain { 0%, 35% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes nova-hero-type { from { transform: translate3d(0,125%,0) skewY(6deg); } to { transform: translate3d(0,0,0) skewY(0); } }
+@keyframes nova-hero-frame { from { opacity: 0; transform: scale(.5); } to { opacity: 1; transform: scale(1); } }
+@keyframes nova-scroll-pulse { 0% { transform: translateY(-110%); } 70%,100% { transform: translateY(110%); } }
+
+/* Outros momentos de impacto: faixa de frete, editorial, fotografia e campanhas. */
+.promo-strip-reveal { position: relative; isolation: isolate; overflow: hidden; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both; }
+.promo-strip-reveal::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--nova-brand-red); opacity: .08; transform-origin: left; animation: nova-accent-wipe 1200ms var(--nova-ease-expressive) both; }
+.featured-drop { isolation: isolate; position: relative; overflow: hidden; }
+.featured-drop::before { content: 'Ø'; position: absolute; bottom: -24%; right: -5%; font-size: clamp(18rem,45vw,48rem); font-weight: 900; line-height: 1; color: rgb(255 255 255 / .035); pointer-events: none; transform: rotate(-12deg); }
+@media (hover:hover) {
+  .lifestyle-card img { transition: transform var(--nova-motion-showcase) var(--nova-ease-expressive), filter var(--nova-motion-display) var(--nova-ease-expressive); }
+  .lifestyle-card:hover img { transform: scale(1.16); filter: grayscale(.25); }
+}
+@media (max-width:600px) {
+  .hero { min-height: 620px; }
+  .hero-cinematic-frame { inset: var(--nova-space-3); }
+  .hero-frame-corner { width: 28px; height: 28px; }
+  .hero-vertical-mark { display: none; }
+  .hero-scroll-cue { display: flex; margin: var(--nova-space-6) 0 0; }
+  .hero-display-line > span { letter-spacing: -.065em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .product-image-wrap img, .favorite-button .heart-icon {
@@ -257,7 +306,12 @@ html { scroll-behavior: smooth; }
   }
   .product-card, .category-card, .lifestyle-card, .btn { transform: none !important; }
   .section-heading h2::after, .featured-drop h2::after { transform: none !important; }
-  .hero::before { transform: none !important; }
+  .hero::before { transform: none !important; filter: var(--nova-treatment-photo-monochrome) !important; }
+  .hero-overlay::before { display: none !important; }
+  .hero-display-line > span, .hero-frame-corner, .hero-vertical-mark,
+  .hero-frame-index, .hero-scroll-cue, .promo-strip-reveal { transform: none !important; opacity: 1 !important; }
+  .hero-scroll-track::after, .hero .btn-primary::before { display: none !important; }
+  .featured-drop::before { display: none !important; }
   *, *::before, *::after, dialog::backdrop {
     transition: none !important;
     animation: none !important;
