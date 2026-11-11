@@ -5,7 +5,7 @@ html { scroll-behavior: smooth; }
 }
 
 @keyframes nova-route-in {
-  from { transform: translateY(var(--nova-space-1)); }
+  from { transform: translateY(var(--nova-space-5)); }
   to { transform: translateY(0); }
 }
 
@@ -107,11 +107,211 @@ html { scroll-behavior: smooth; }
   }
 }
 
+
+/* NØVA SHOWCASE — movimento editorial mais perceptível, sem ocultar conteúdo essencial.
+   Performance: transform + opacity; para foco, teclado e reduced motion não há dependência de JS. */
+@keyframes nova-editorial-rise {
+  from { opacity: 0; transform: translate3d(0, var(--nova-space-14), 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes nova-title-reveal {
+  from { clip-path: inset(0 0 100% 0); transform: translate3d(0, var(--nova-space-10), 0); }
+  to { clip-path: inset(0 0 0 0); transform: translate3d(0, 0, 0); }
+}
+@keyframes nova-image-arrival {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@keyframes nova-action-arrival {
+  from { opacity: 0; transform: translate3d(0, var(--nova-space-6), 0) scale(.94); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes nova-accent-wipe {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes nova-count-pop {
+  0% { transform: scale(.65); }
+  65% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Abertura cinematográfica da Home: título, apoio e CTA em sequência. */
+.hero { isolation: isolate; overflow: hidden; }
+.hero::before { animation: nova-image-arrival var(--nova-motion-showcase) var(--nova-ease-expressive) both; }
+.hero .eyebrow {
+  animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both;
+}
+.hero h1 {
+  animation: nova-title-reveal var(--nova-motion-showcase) var(--nova-ease-expressive) both;
+  animation-delay: var(--nova-motion-fast);
+}
+.hero p:not(.eyebrow) {
+  animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both;
+  animation-delay: var(--nova-motion-normal);
+}
+.hero .btn {
+  animation: nova-action-arrival var(--nova-motion-display) var(--nova-ease-expressive) both;
+  animation-delay: var(--nova-motion-slow);
+}
+
+/* Uma faixa vermelha revela a próxima seção sem poluir o visual editorial. */
+.section-heading h2::after, .featured-drop h2::after {
+  content: '';
+  display: block;
+  width: min(104px, 28%);
+  height: var(--nova-border-width-accent);
+  margin-block-start: var(--nova-space-3);
+  background: var(--nova-brand-red);
+  transform-origin: left center;
+  animation: nova-accent-wipe var(--nova-motion-display) var(--nova-ease-expressive) both;
+}
+.section-heading h2, .featured-drop h2 { max-width: 100%; }
+
+/* Cards: entrada escalonada e lift claramente visível em mouse/teclado. */
+.product-grid > *, .category-grid > *, .lifestyle-grid > * {
+  animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both;
+}
+.product-grid > :nth-child(4n + 2), .category-grid > :nth-child(3n + 2),
+.lifestyle-grid > :nth-child(3n + 2) { animation-delay: var(--nova-motion-fast); }
+.product-grid > :nth-child(4n + 3), .category-grid > :nth-child(3n + 3),
+.lifestyle-grid > :nth-child(3n + 3) { animation-delay: var(--nova-motion-normal); }
+.product-grid > :nth-child(4n + 4) { animation-delay: var(--nova-motion-slow); }
+.product-card, .category-card, .lifestyle-card {
+  transition: transform var(--nova-motion-display) var(--nova-ease-expressive),
+    box-shadow var(--nova-motion-display) var(--nova-ease-expressive);
+}
+.product-image-wrap img, .gallery-main img {
+  transition: transform var(--nova-motion-display) var(--nova-ease-expressive);
+}
+.cart-link .cart-count { animation: nova-count-pop var(--nova-motion-slow) var(--nova-ease-expressive); }
+.favorite-button.selected .heart-icon { transform: scale(1.22) rotate(-9deg); }
+.favorite-button .heart-icon {
+  transition: transform var(--nova-motion-slow) var(--nova-ease-expressive);
+}
+@media (hover: hover) {
+  .product-card:hover { transform: translateY(calc(-1 * var(--nova-space-2))); }
+  .product-card:hover .product-image-wrap img { transform: scale(1.09); }
+  .category-card:hover, .lifestyle-card:hover {
+    transform: translateY(calc(-1 * var(--nova-space-2)));
+    box-shadow: var(--nova-shadow-dialog);
+  }
+  .btn:not(:disabled):hover { transform: translateY(calc(-1 * var(--nova-space-1))); }
+}
+.product-card:focus-within { transform: translateY(calc(-1 * var(--nova-space-2))); }
+.category-card:focus-visible, .lifestyle-card:focus-visible { transform: translateY(calc(-1 * var(--nova-space-2))); }
+.btn:not(:disabled) {
+  transition: transform var(--nova-motion-normal) var(--nova-ease-expressive),
+    background-color var(--nova-motion-fast) var(--nova-ease-standard),
+    border-color var(--nova-motion-fast) var(--nova-ease-standard),
+    color var(--nova-motion-fast) var(--nova-ease-standard),
+    box-shadow var(--nova-motion-fast) var(--nova-ease-standard);
+}
+.btn:not(:disabled):active { transform: translateY(0) scale(.97); }
+.btn:focus-visible { box-shadow: 0 0 0 var(--nova-space-1) var(--nova-color-bg); }
+
+/* Menu e diálogo ficam mais expressivos, preservando o controle nativo de foco. */
+@media (max-width: 600px) {
+  @supports (transition-behavior: allow-discrete) {
+    .main-nav {
+      transition: transform var(--nova-motion-display) var(--nova-ease-expressive),
+        display var(--nova-motion-display) allow-discrete;
+    }
+    .main-nav[data-expanded="false"] { transform: translateY(calc(-1 * var(--nova-space-7))); }
+    @starting-style {
+      .main-nav[data-expanded="true"] { transform: translateY(calc(-1 * var(--nova-space-7))); }
+    }
+  }
+}
+@supports (transition-behavior: allow-discrete) {
+  :is(.cart-drawer, .image-dialog) {
+    transition: transform var(--nova-motion-display) var(--nova-ease-expressive),
+      display var(--nova-motion-display) allow-discrete,
+      overlay var(--nova-motion-display) allow-discrete;
+  }
+  :is(.cart-drawer, .image-dialog)::backdrop {
+    transition: opacity var(--nova-motion-display) var(--nova-ease-expressive),
+      display var(--nova-motion-display) allow-discrete,
+      overlay var(--nova-motion-display) allow-discrete;
+  }
+  .image-dialog { transform: translateY(var(--nova-space-14)) scale(.96); }
+  @starting-style {
+    .image-dialog[open] { transform: translateY(var(--nova-space-14)) scale(.96); }
+  }
+}
+
+/* Scroll-driven reveal é progressivo: sem suporte, tudo permanece visível.
+   Aplicado às chamadas editoriais e não aos botões, campos ou tabelas. */
+@supports (animation-timeline: view()) {
+  .featured-drop-inner, .final-cta .container {
+    animation: nova-editorial-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+}
+
+
+/* NØVA / NEW DROP: cinema editorial com camadas e tipografia em três tempos. */
+.hero { min-height: min(820px, 94svh); isolation: isolate; overflow: hidden; background: #090909; }
+.hero::before { animation: nova-hero-photo 1800ms var(--nova-ease-expressive) both; transform-origin: 65% 45%; }
+.hero-overlay { z-index: 1; }
+.hero-overlay::before { content: ''; position: absolute; inset: 0; background: var(--nova-brand-red); transform-origin: left; animation: nova-hero-curtain 1500ms var(--nova-ease-expressive) both; }
+.hero-content { z-index: 3; }
+.hero-display { animation: none !important; line-height: .96; max-width: 100%; }
+.hero-display-line { display: block; overflow: hidden; padding-block: .07em; margin-block: -.07em; }
+.hero-display-line > span { display: inline-block; animation: nova-hero-type var(--nova-motion-showcase) var(--nova-ease-expressive) both; }
+.hero-display-line:nth-child(2) > span { animation-delay: 180ms; }
+.hero-display-line:nth-child(3) > span { animation-delay: 360ms; }
+.hero-title-period { color: var(--nova-brand-red); }
+.hero-cinematic-frame { position: absolute; inset: var(--nova-space-6); z-index: 2; pointer-events: none; color: white; }
+.hero-frame-corner { position: absolute; width: 58px; height: 58px; border-color: rgb(255 255 255 / .75); border-style: solid; animation: nova-hero-frame var(--nova-motion-showcase) var(--nova-ease-expressive) both; }
+.hero-frame-top { top: 0; left: 0; border-width: 2px 0 0 2px; animation-delay: 400ms; }
+.hero-frame-bottom { bottom: 0; right: 0; border-width: 0 2px 2px 0; animation-delay: 600ms; }
+.hero-vertical-mark { position: absolute; right: 0; top: 42%; writing-mode: vertical-rl; font-size: .7rem; font-weight: 800; letter-spacing: .2em; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) 650ms both; }
+.hero-frame-index { position: absolute; bottom: var(--nova-space-3); right: var(--nova-space-6); font-size: .7rem; font-weight: 800; letter-spacing: .2em; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) 750ms both; }
+.hero-scroll-cue { display: inline-flex; align-items: center; gap: var(--nova-space-3); margin: var(--nova-space-8) 0 0 var(--nova-space-6); color: white; font-size: .65rem; font-weight: 700; letter-spacing: .18em; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) 850ms both; }
+.hero-scroll-track { position: relative; display: block; width: 2px; height: 32px; background: rgb(255 255 255 / .3); overflow: hidden; }
+.hero-scroll-track::after { content: ''; position: absolute; inset: 0; background: var(--nova-brand-red); animation: nova-scroll-pulse 1400ms ease-in-out 1000ms infinite; }
+.hero .btn-primary { position: relative; overflow: hidden; }
+.hero .btn-primary::before { content: ''; position: absolute; inset: 0; background: rgb(255 255 255 / .25); transform: translateX(-110%) skewX(-20deg); transition: transform var(--nova-motion-display) var(--nova-ease-expressive); pointer-events: none; }
+@media (hover:hover) { .hero .btn-primary:hover::before { transform: translateX(110%) skewX(-20deg); } }
+@keyframes nova-hero-photo { from { transform: scale(1.27) translate3d(2%,0,0); filter: grayscale(1) contrast(1.25); } to { transform: scale(1); filter: grayscale(1); } }
+@keyframes nova-hero-curtain { 0%, 35% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes nova-hero-type { from { transform: translate3d(0,125%,0) skewY(6deg); } to { transform: translate3d(0,0,0) skewY(0); } }
+@keyframes nova-hero-frame { from { opacity: 0; transform: scale(.5); } to { opacity: 1; transform: scale(1); } }
+@keyframes nova-scroll-pulse { 0% { transform: translateY(-110%); } 70%,100% { transform: translateY(110%); } }
+
+/* Outros momentos de impacto: faixa de frete, editorial, fotografia e campanhas. */
+.promo-strip-reveal { position: relative; isolation: isolate; overflow: hidden; animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both; }
+.promo-strip-reveal::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--nova-brand-red); opacity: .08; transform-origin: left; animation: nova-accent-wipe 1200ms var(--nova-ease-expressive) both; }
+.featured-drop { isolation: isolate; position: relative; overflow: hidden; }
+.featured-drop::before { content: 'Ø'; position: absolute; bottom: -24%; right: -5%; font-size: clamp(18rem,45vw,48rem); font-weight: 900; line-height: 1; color: rgb(255 255 255 / .035); pointer-events: none; transform: rotate(-12deg); }
+@media (hover:hover) {
+  .lifestyle-card img { transition: transform var(--nova-motion-showcase) var(--nova-ease-expressive), filter var(--nova-motion-display) var(--nova-ease-expressive); }
+  .lifestyle-card:hover img { transform: scale(1.16); filter: grayscale(.25); }
+}
+@media (max-width:600px) {
+  .hero { min-height: 620px; }
+  .hero-cinematic-frame { inset: var(--nova-space-3); }
+  .hero-frame-corner { width: 28px; height: 28px; }
+  .hero-vertical-mark { display: none; }
+  .hero-scroll-cue { display: flex; margin: var(--nova-space-6) 0 0; }
+  .hero-display-line > span { letter-spacing: -.065em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .product-image-wrap img, .favorite-button .heart-icon {
     transform: none !important;
   }
+  .product-card, .category-card, .lifestyle-card, .btn { transform: none !important; }
+  .section-heading h2::after, .featured-drop h2::after { transform: none !important; }
+  .hero::before { transform: none !important; filter: var(--nova-treatment-photo-monochrome) !important; }
+  .hero-overlay::before { display: none !important; }
+  .hero-display-line > span, .hero-frame-corner, .hero-vertical-mark,
+  .hero-frame-index, .hero-scroll-cue, .promo-strip-reveal { transform: none !important; opacity: 1 !important; }
+  .hero-scroll-track::after, .hero .btn-primary::before { display: none !important; }
+  .featured-drop::before { display: none !important; }
   *, *::before, *::after, dialog::backdrop {
     transition: none !important;
     animation: none !important;
