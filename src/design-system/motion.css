@@ -5,7 +5,7 @@ html { scroll-behavior: smooth; }
 }
 
 @keyframes nova-route-in {
-  from { transform: translateY(var(--nova-space-1)); }
+  from { transform: translateY(var(--nova-space-5)); }
   to { transform: translateY(0); }
 }
 
@@ -107,11 +107,157 @@ html { scroll-behavior: smooth; }
   }
 }
 
+
+/* NØVA SHOWCASE — movimento editorial mais perceptível, sem ocultar conteúdo essencial.
+   Performance: transform + opacity; para foco, teclado e reduced motion não há dependência de JS. */
+@keyframes nova-editorial-rise {
+  from { opacity: 0; transform: translate3d(0, var(--nova-space-14), 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes nova-title-reveal {
+  from { clip-path: inset(0 0 100% 0); transform: translate3d(0, var(--nova-space-10), 0); }
+  to { clip-path: inset(0 0 0 0); transform: translate3d(0, 0, 0); }
+}
+@keyframes nova-image-arrival {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@keyframes nova-action-arrival {
+  from { opacity: 0; transform: translate3d(0, var(--nova-space-6), 0) scale(.94); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes nova-accent-wipe {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes nova-count-pop {
+  0% { transform: scale(.65); }
+  65% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Abertura cinematográfica da Home: título, apoio e CTA em sequência. */
+.hero { isolation: isolate; overflow: hidden; }
+.hero::before { animation: nova-image-arrival var(--nova-motion-showcase) var(--nova-ease-expressive) both; }
+.hero .eyebrow {
+  animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both;
+}
+.hero h1 {
+  animation: nova-title-reveal var(--nova-motion-showcase) var(--nova-ease-expressive) both;
+  animation-delay: var(--nova-motion-fast);
+}
+.hero p:not(.eyebrow) {
+  animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both;
+  animation-delay: var(--nova-motion-normal);
+}
+.hero .btn {
+  animation: nova-action-arrival var(--nova-motion-display) var(--nova-ease-expressive) both;
+  animation-delay: var(--nova-motion-slow);
+}
+
+/* Uma faixa vermelha revela a próxima seção sem poluir o visual editorial. */
+.section-heading h2::after, .featured-drop h2::after {
+  content: '';
+  display: block;
+  width: min(104px, 28%);
+  height: var(--nova-border-width-accent);
+  margin-block-start: var(--nova-space-3);
+  background: var(--nova-brand-red);
+  transform-origin: left center;
+  animation: nova-accent-wipe var(--nova-motion-display) var(--nova-ease-expressive) both;
+}
+.section-heading h2, .featured-drop h2 { max-width: 100%; }
+
+/* Cards: entrada escalonada e lift claramente visível em mouse/teclado. */
+.product-grid > *, .category-grid > *, .lifestyle-grid > * {
+  animation: nova-editorial-rise var(--nova-motion-display) var(--nova-ease-expressive) both;
+}
+.product-grid > :nth-child(4n + 2), .category-grid > :nth-child(3n + 2),
+.lifestyle-grid > :nth-child(3n + 2) { animation-delay: var(--nova-motion-fast); }
+.product-grid > :nth-child(4n + 3), .category-grid > :nth-child(3n + 3),
+.lifestyle-grid > :nth-child(3n + 3) { animation-delay: var(--nova-motion-normal); }
+.product-grid > :nth-child(4n + 4) { animation-delay: var(--nova-motion-slow); }
+.product-card, .category-card, .lifestyle-card {
+  transition: transform var(--nova-motion-display) var(--nova-ease-expressive),
+    box-shadow var(--nova-motion-display) var(--nova-ease-expressive);
+}
+.product-image-wrap img, .gallery-main img {
+  transition: transform var(--nova-motion-display) var(--nova-ease-expressive);
+}
+.cart-link .cart-count { animation: nova-count-pop var(--nova-motion-slow) var(--nova-ease-expressive); }
+.favorite-button.selected .heart-icon { transform: scale(1.22) rotate(-9deg); }
+.favorite-button .heart-icon {
+  transition: transform var(--nova-motion-slow) var(--nova-ease-expressive);
+}
+@media (hover: hover) {
+  .product-card:hover { transform: translateY(calc(-1 * var(--nova-space-2))); }
+  .product-card:hover .product-image-wrap img { transform: scale(1.09); }
+  .category-card:hover, .lifestyle-card:hover {
+    transform: translateY(calc(-1 * var(--nova-space-2)));
+    box-shadow: var(--nova-shadow-dialog);
+  }
+  .btn:not(:disabled):hover { transform: translateY(calc(-1 * var(--nova-space-1))); }
+}
+.product-card:focus-within { transform: translateY(calc(-1 * var(--nova-space-2))); }
+.category-card:focus-visible, .lifestyle-card:focus-visible { transform: translateY(calc(-1 * var(--nova-space-2))); }
+.btn:not(:disabled) {
+  transition: transform var(--nova-motion-normal) var(--nova-ease-expressive),
+    background-color var(--nova-motion-fast) var(--nova-ease-standard),
+    border-color var(--nova-motion-fast) var(--nova-ease-standard),
+    color var(--nova-motion-fast) var(--nova-ease-standard),
+    box-shadow var(--nova-motion-fast) var(--nova-ease-standard);
+}
+.btn:not(:disabled):active { transform: translateY(0) scale(.97); }
+.btn:focus-visible { box-shadow: 0 0 0 var(--nova-space-1) var(--nova-color-bg); }
+
+/* Menu e diálogo ficam mais expressivos, preservando o controle nativo de foco. */
+@media (max-width: 600px) {
+  @supports (transition-behavior: allow-discrete) {
+    .main-nav {
+      transition: transform var(--nova-motion-display) var(--nova-ease-expressive),
+        display var(--nova-motion-display) allow-discrete;
+    }
+    .main-nav[data-expanded="false"] { transform: translateY(calc(-1 * var(--nova-space-7))); }
+    @starting-style {
+      .main-nav[data-expanded="true"] { transform: translateY(calc(-1 * var(--nova-space-7))); }
+    }
+  }
+}
+@supports (transition-behavior: allow-discrete) {
+  :is(.cart-drawer, .image-dialog) {
+    transition: transform var(--nova-motion-display) var(--nova-ease-expressive),
+      display var(--nova-motion-display) allow-discrete,
+      overlay var(--nova-motion-display) allow-discrete;
+  }
+  :is(.cart-drawer, .image-dialog)::backdrop {
+    transition: opacity var(--nova-motion-display) var(--nova-ease-expressive),
+      display var(--nova-motion-display) allow-discrete,
+      overlay var(--nova-motion-display) allow-discrete;
+  }
+  .image-dialog { transform: translateY(var(--nova-space-14)) scale(.96); }
+  @starting-style {
+    .image-dialog[open] { transform: translateY(var(--nova-space-14)) scale(.96); }
+  }
+}
+
+/* Scroll-driven reveal é progressivo: sem suporte, tudo permanece visível.
+   Aplicado às chamadas editoriais e não aos botões, campos ou tabelas. */
+@supports (animation-timeline: view()) {
+  .featured-drop-inner, .final-cta .container {
+    animation: nova-editorial-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .product-image-wrap img, .favorite-button .heart-icon {
     transform: none !important;
   }
+  .product-card, .category-card, .lifestyle-card, .btn { transform: none !important; }
+  .section-heading h2::after, .featured-drop h2::after { transform: none !important; }
+  .hero::before { transform: none !important; }
   *, *::before, *::after, dialog::backdrop {
     transition: none !important;
     animation: none !important;
