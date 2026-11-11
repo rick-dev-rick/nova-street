@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
-export default function CartDrawer({ shippingQuote, open, onClose, cart, subtotal, onUpdateQuantity, onRemove }) {
+export default function CartDrawer({ shippingQuote, open, onClose, onClosed, cart, subtotal, onUpdateQuantity, onRemove }) {
   const dialog = useRef(null)
 
   useEffect(() => {
@@ -19,8 +19,13 @@ export default function CartDrawer({ shippingQuote, open, onClose, cart, subtota
     return () => { document.body.style.overflow = previousOverflow }
   }, [open])
 
+  function handleClose() {
+    onClose()
+    onClosed()
+  }
+
   return (
-    <Dialog ref={dialog} id="cart-drawer" className="cart-drawer" aria-labelledby="cart-drawer-title" onClose={onClose} onDismiss={onClose}>
+    <Dialog ref={dialog} id="cart-drawer" className="cart-drawer" aria-labelledby="cart-drawer-title" onClose={handleClose} onDismiss={onClose}>
       <div className="drawer-shell">
         <div className="drawer-heading"><div><p className="eyebrow">NØVA STREET</p><h2 id="cart-drawer-title">Sua sacola</h2></div><button type="button" className="drawer-close" onClick={onClose} autoFocus aria-label="Fechar sacola">Fechar ×</button></div>
         {cart.length ? <>

@@ -364,3 +364,22 @@ main{min-height:60vh}
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important}
 }
+
+/* Estados de interação. Seleção persistente continua indicada por aria-pressed. */
+@media (hover: hover) {
+  :is(.filter, .size, .gallery-thumb, .favorite-button):not(:disabled):hover {
+    border-color: var(--nova-color-text);
+  }
+  .text-link:hover { color: var(--nova-color-accent); }
+}
+:is(.btn, .filter, .size, .gallery-thumb, .favorite-button, .quantity-controls button):not(:disabled):active {
+  box-shadow: inset 0 0 0 var(--nova-border-width-strong) currentColor;
+}
+:is(.btn, .quantity-controls input):disabled {
+  background: var(--nova-color-disabled);
+  color: var(--nova-color-on-disabled);
+  cursor: not-allowed;
+}
+.checkout-form input[aria-invalid="true"] { border-color: var(--nova-color-error); }
+.field-error { color: var(--nova-color-error); }
+button.text-link { padding: 0; border: 0; border-bottom: var(--nova-border-width) solid currentColor; background: transparent; }

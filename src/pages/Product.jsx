@@ -1,7 +1,8 @@
+import { getRemainingCartQuantity } from '../lib/cart.js'
 import ChoiceButton from '../design-system/ChoiceButton.jsx'
 import Feedback from '../design-system/Feedback.jsx'
 import { ActionLink, Button } from '../design-system/Action.jsx'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { products } from '../data/products.js'
 import EmptyState from '../components/EmptyState.jsx'
@@ -13,15 +14,15 @@ import ProductInformation from '../components/ProductInformation.jsx'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
-export default function Product({ onAddToCart }) {
+export default function Product({ cart, onAddToCart }) {
   const { id } = useParams()
-  useEffect(() => { window.scrollTo(0, 0) }, [id])
-  return <ProductDetail key={id} id={id} onAddToCart={onAddToCart} />
+  return <ProductDetail key={id} id={id} cart={cart} onAddToCart={onAddToCart} />
 }
 
-function ProductDetail({ id, onAddToCart }) {
+function ProductDetail({ id, cart, onAddToCart }) {
   const product = useMemo(() => products.find((item) => item.id === id), [id])
   const [size, setSize] = useState('')
+  const purchaseSection = useRef(null)
   const [added, setAdded] = useState(false)
   const [quantity, setQuantity] = useState(1)
 
@@ -31,9 +32,19 @@ function ProductDetail({ id, onAddToCart }) {
     />
   )
 
-  function add() {
-    if (!product.sizes.includes(size)) return
-    onAddToCart(product, size, quantity)
+  const remaining = getRemainingCartQuantity(cart, product.id, size)
+  const unavailable = product.sizes.length === 0 || remaining === 0
+  const maxQuantity = Math.max(1, remaining)
+  const selectedQuantity = Math.min(quantity, maxQuantity)
+
+  function add(event) {
+    if (unavailable || !product.sizes.includes(size)) return
+    const opener = event.currentTarget
+    onAddToCart(product, size, selectedQuantity, () => {
+      if (opener.isConnected && opener.disabled) {
+        purchaseSection.current?.querySelector('.size[aria-pressed="true"]')?.focus()
+      }
+    })
     setAdded(true)
   }
 
@@ -46,12 +57,18 @@ function ProductDetail({ id, onAddToCart }) {
         <h1>{product.name}</h1>
         <p className="price product-price">{money.format(product.price)}</p>
         <p className="product-description">{product.description}</p>
-        <section className="product-purchase" aria-labelledby="purchase-title">
+        <section ref={purchaseSection} className="product-purchase" aria-labelledby="purchase-title">
           <h2 id="purchase-title">Escolha sua peça</h2>
           <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <ChoiceButton className="size" selected={size === item} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</ChoiceButton>)}</div></fieldset>
-          <QuantitySelector value={quantity} onChange={value => { setQuantity(value); setAdded(false) }} />
-          <Button variant="primary" className="product-add" onClick={add} disabled={!size} aria-describedby="purchase-help">Adicionar à sacola</Button>
-          <p id="purchase-help" className="purchase-help">{size ? `Tamanho selecionado: ${size}.` : 'Selecione um tamanho para adicionar à sacola.'}</p>
+          <QuantitySelector value={selectedQuantity} max={maxQuantity} disabled={unavailable} onChange={value => { setQuantity(value); setAdded(false) }} />
+          <Button variant="primary" className="product-add" onClick={add} disabled={!size || unavailable} aria-describedby="purchase-help">Adicionar à sacola</Button>
+          <div id="purchase-help" className="purchase-help" aria-live="polite" aria-atomic="true">
+            {unavailable ? (
+              <Feedback tone="warning">
+                {size ? 'Você atingiu o limite deste tamanho na sacola.' : 'Nenhum tamanho disponível nesta demonstração.'}
+              </Feedback>
+            ) : size ? `Tamanho selecionado: ${size}. Você pode adicionar até ${remaining}.` : 'Selecione um tamanho para adicionar à sacola.'}
+          </div>
           {added && <Feedback className="success-message" tone="success">Adicionado à sacola ✓ <ActionLink variant="text" to="/carrinho">Ver sacola →</ActionLink></Feedback>}
           <FavoriteButton product={product} showLabel />
         </section>
