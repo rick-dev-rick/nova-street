@@ -1,3 +1,4 @@
+import SizeTable from './SizeTable.jsx'
 import { productDetails } from '../data/product-details.js'
 
 export default function ProductInformation({ product }) {
@@ -20,7 +21,7 @@ export default function ProductInformation({ product }) {
         <summary>Guia de tamanhos</summary>
         <div>
           <p>{detail.measureHelp}</p>
-          <div className="size-table-wrap"><table className="size-table"><caption>Medidas ilustrativas da peça em centímetros</caption><thead><tr>{detail.columns.map(column => <th scope="col" key={column}>{column}</th>)}</tr></thead><tbody>{detail.measurements.map(row => <tr key={row[0]}>{row.map((cell, index) => index === 0 ? <th scope="row" key={index}>{cell}</th> : <td key={index}>{cell}</td>)}</tr>)}</tbody></table></div>
+          <SizeTable columns={detail.columns} measurements={detail.measurements} />
           <p className="spec-note">Não use esta tabela como referência para comprar produtos reais.</p>
         </div>
       </details>

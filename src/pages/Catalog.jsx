@@ -1,3 +1,6 @@
+import { InputField, SelectField } from '../design-system/Field.jsx'
+import ChoiceButton from '../design-system/ChoiceButton.jsx'
+import { Button } from '../design-system/Action.jsx'
 import { useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import EmptyState from '../components/EmptyState.jsx'
@@ -40,11 +43,11 @@ export default function Catalog() {
       <div className="catalog-intro"><p className="eyebrow">CATÁLOGO</p><h1>Coleção NØVA STREET</h1><p>Streetwear unissex, peças essenciais e drops selecionados.</p></div>
       <div className="catalog-tools" role="group" aria-label="Controles do catálogo">
         <div className="filter-row" role="group" aria-label="Filtrar por categoria">
-          {categories.map((item) => <button type="button" className={item === category ? 'filter active' : 'filter'} aria-pressed={item === category} onClick={() => chooseCategory(item)} key={item}>{item}</button>)}
+          {categories.map((item) => <ChoiceButton className="filter" selected={item === category} onClick={() => chooseCategory(item)} key={item}>{item}</ChoiceButton>)}
         </div>
         <div className="catalog-fields">
-          <label className="search-field"><span>Buscar</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Nome do produto" type="search" /></label>
-          <label className="sort-field"><span>Ordenar por</span><select value={order} onChange={(e) => updateParameter('ordem', e.target.value === 'destaques' ? null : e.target.value)}>{catalogOrders.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}</select></label>
+          <InputField type="search" className="search-field" label="Buscar" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Nome do produto" />
+          <SelectField className="sort-field" label="Ordenar por" value={order} onChange={(e) => updateParameter('ordem', e.target.value === 'destaques' ? null : e.target.value)}>{catalogOrders.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}</SelectField>
         </div>
       </div>
       <p ref={resultsStatus} className="catalog-count" role="status" tabIndex={-1}>{filtered.length} {filtered.length === 1 ? 'peça encontrada' : 'peças encontradas'}</p>
@@ -53,7 +56,7 @@ export default function Catalog() {
           headingLevel={2}
           title="Nenhum produto encontrado."
           description="Limpe a busca e a categoria para ver outras peças."
-          action={<button type="button" className="btn btn-primary" onClick={clearFilters}>Limpar filtros</button>}
+          action={<Button variant="primary" onClick={clearFilters}>Limpar filtros</Button>}
         />
       )}
     </section>

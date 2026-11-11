@@ -1,18 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
+import { ActionLink } from './design-system/Action.jsx'
+import { lazy, useEffect, useMemo, useState } from 'react'
 import { BrowserRouter, HashRouter, Link, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import EmptyState from './components/EmptyState.jsx'
 import Home from './pages/Home.jsx'
-import Catalog from './pages/Catalog.jsx'
-import Product from './pages/Product.jsx'
 import Cart from './pages/Cart.jsx'
-import Checkout from './pages/Checkout.jsx'
 import { addCartItem, getCartSubtotal, removeCartItem, updateCartItemQuantity } from './lib/cart.js'
 import { loadCart, saveCart } from './lib/cart-storage.js'
 import Favorites from './pages/Favorites.jsx'
 import { FavoritesProvider } from './context/FavoritesContext.jsx'
 import { getShippingQuote } from './lib/shipping.js'
 import './styles/app.css'
+
+const Catalog = lazy(() => import('./pages/Catalog.jsx'))
+const Product = lazy(() => import('./pages/Product.jsx'))
+const Checkout = lazy(() => import('./pages/Checkout.jsx'))
 
 const SiteRouter = import.meta.env.VITE_GITHUB_PAGES ? HashRouter : BrowserRouter
 
@@ -46,7 +48,7 @@ export default function App() {
           <Route path="catalogo" element={<Catalog />} />
           <Route path="produto/:id" element={<Product onAddToCart={addToCart} />} />
           <Route path="carrinho" element={<Cart shippingCep={shippingCep} onShippingCepChange={setShippingCep} shippingQuote={shippingQuote} cart={cart} subtotal={subtotal} onUpdateQuantity={updateQuantity} onRemove={removeItem} />} />
-          <Route path="*" element={<EmptyState title="Página não encontrada." action={<Link className="btn btn-primary" to="/">Voltar ao início</Link>} />} />
+          <Route path="*" element={<EmptyState title="Página não encontrada." action={<ActionLink variant="primary" to="/">Voltar ao início</ActionLink>} />} />
           <Route path="checkout" element={<Checkout shippingCep={shippingCep} onShippingCepChange={setShippingCep} shippingQuote={shippingQuote} cart={cart} subtotal={subtotal} />} />
         </Route>
       </Routes>

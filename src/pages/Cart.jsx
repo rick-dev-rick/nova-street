@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { ActionLink } from '../design-system/Action.jsx'
 import EmptyState from '../components/EmptyState.jsx'
 import ShippingCalculator from '../components/ShippingCalculator.jsx'
 import OrderTotals from '../components/OrderTotals.jsx'
@@ -9,7 +9,7 @@ export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, 
   if (!cart.length) return (
     <EmptyState eyebrow="SACOLA" title="Sua sacola está vazia."
       description="Explore o drop e adicione suas peças favoritas."
-      action={<Link className="btn btn-primary" to="/catalogo">Ver coleção</Link>}
+      action={<ActionLink variant="primary" to="/catalogo">Ver coleção</ActionLink>}
     />
   )
 
@@ -27,7 +27,7 @@ export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, 
             </article>
           ))}
         </div>
-        <aside className="cart-summary"><h2>Resumo</h2><ShippingCalculator subtotal={subtotal} cep={shippingCep} onCepChange={onShippingCepChange} /><OrderTotals subtotal={subtotal} quote={shippingQuote} /><Link className="btn btn-primary" to="/checkout">Ir para o checkout</Link></aside>
+        <aside className="cart-summary"><h2>Resumo</h2><ShippingCalculator subtotal={subtotal} cep={shippingCep} onCepChange={onShippingCepChange} /><OrderTotals subtotal={subtotal} quote={shippingQuote} /><ActionLink variant="primary" to="/checkout">Ir para o checkout</ActionLink></aside>
       </div>
     </section>
   )
