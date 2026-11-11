@@ -40,7 +40,7 @@ export default function Catalog() {
         </div>
       </div>
       <p className="catalog-count" role="status">{filtered.length} {filtered.length === 1 ? 'peça encontrada' : 'peças encontradas'}</p>
-      {filtered.length ? <div className="product-grid">{filtered.map((product) => <ProductCard product={product} key={product.id} />)}</div> : <div className="empty-state"><h2>Nenhum produto encontrado.</h2><p>Tente outra categoria ou termo de busca.</p></div>}
+      {filtered.length ? <div className="product-grid">{filtered.map((product) => <ProductCard headingLevel={2} product={product} key={product.id} />)}</div> : <div className="empty-state"><h2>Nenhum produto encontrado.</h2><p>Tente outra categoria ou termo de busca.</p></div>}
     </section>
   )
 }

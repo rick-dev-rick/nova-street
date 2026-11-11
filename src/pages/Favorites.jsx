@@ -11,6 +11,6 @@ export default function Favorites() {
   return <section className="section container favorites-page">
     <div className="section-heading"><div className="catalog-intro"><p className="eyebrow">SUA SELEÇÃO</p><h1>Peças que são a sua cara.</h1><p>Seus favoritos ficam salvos neste navegador.</p></div><Link className="text-link" to="/catalogo">Explorar coleção →</Link></div>
     <p className="catalog-count" role="status">{saved.length} {saved.length === 1 ? 'peça salva' : 'peças salvas'}</p>
-    {saved.length ? <div className="product-grid">{saved.map(product => <ProductCard key={product.id} product={product} />)}</div> : <div className="empty-state favorites-empty"><HeartIcon size={64} /><h2>Sua seleção começa com um coração.</h2><p>Toque no coração de uma peça para encontrá-la aqui depois.</p><Link className="btn btn-primary" to="/catalogo">Encontrar minhas favoritas</Link></div>}
+    {saved.length ? <div className="product-grid">{saved.map(product => <ProductCard headingLevel={2} key={product.id} product={product} />)}</div> : <div className="empty-state favorites-empty"><HeartIcon size={64} /><h2>Sua seleção começa com um coração.</h2><p>Toque no coração de uma peça para encontrá-la aqui depois.</p><Link className="btn btn-primary" to="/catalogo">Encontrar minhas favoritas</Link></div>}
   </section>
 }
