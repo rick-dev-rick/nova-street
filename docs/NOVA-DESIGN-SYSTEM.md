@@ -6,6 +6,8 @@
 
 [Módulo 02 — Tipografia](NOVA-DESIGN-SYSTEM-MODULO-02.md)
 
+[Módulo 03 — Espaçamento e geometria](NOVA-DESIGN-SYSTEM-MODULO-03.md)
+
 ## O que já foi observado no repositório (10/11/2026)
 - React/Vite e rotas separadas em Home, Catálogo, Produto, Carrinho, Checkout e Favoritos.
 - Componentes como Layout, Header, Footer, ProductCard e CartDrawer.
