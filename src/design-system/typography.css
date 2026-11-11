@@ -70,7 +70,7 @@ h6 { font-size: var(--nova-type-size-h6); }
 }
 
 .hero p:not(.eyebrow), .featured-drop p:not(.eyebrow), .final-cta p:not(.eyebrow),
-.catalog-intro > p:last-child, .empty-state > p {
+.catalog-intro > p:last-child, .empty-state > p, .checkout-confirmation > p {
   max-inline-size: var(--nova-type-measure-short);
 }
 
@@ -82,7 +82,7 @@ h6 { font-size: var(--nova-type-size-h6); }
   margin-inline: auto;
 }
 
-.eyebrow, .product-badge, .promo-strip {
+.eyebrow, .product-badge {
   font-size: var(--nova-type-size-caption);
   font-weight: var(--nova-font-weight-heavy);
   line-height: var(--nova-type-leading-compact);
@@ -107,13 +107,14 @@ h6 { font-size: var(--nova-type-size-h6); }
   text-wrap: wrap;
 }
 
-.cart-summary h2, .checkout-summary h2 {
+.cart-summary h2, .checkout-summary h2, .checkout-form h2,
+.product-purchase h2, .product-information h2 {
   font-size: var(--nova-type-size-h3);
 }
 
 .main-nav, .footer-grid p, .product-benefits, .product-disclosure > div,
 .favorites-link, .favorite-button-labeled, .product-quantity, .drawer-cart-link,
-.order-totals > div, .drawer-item .price {
+.order-totals > div, .drawer-item .price, .promo-strip, .purchase-help {
   font-size: var(--nova-type-size-small);
 }
 

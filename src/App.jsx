@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { BrowserRouter, HashRouter, Link, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
+import EmptyState from './components/EmptyState.jsx'
 import Home from './pages/Home.jsx'
 import Catalog from './pages/Catalog.jsx'
 import Product from './pages/Product.jsx'
@@ -45,7 +46,7 @@ export default function App() {
           <Route path="catalogo" element={<Catalog />} />
           <Route path="produto/:id" element={<Product onAddToCart={addToCart} />} />
           <Route path="carrinho" element={<Cart shippingCep={shippingCep} onShippingCepChange={setShippingCep} shippingQuote={shippingQuote} cart={cart} subtotal={subtotal} onUpdateQuantity={updateQuantity} onRemove={removeItem} />} />
-          <Route path="*" element={<section className="section container empty-state"><h1>Página não encontrada.</h1><Link className="btn btn-primary" to="/">Voltar ao início</Link></section>} />
+          <Route path="*" element={<EmptyState title="Página não encontrada." action={<Link className="btn btn-primary" to="/">Voltar ao início</Link>} />} />
           <Route path="checkout" element={<Checkout shippingCep={shippingCep} onShippingCepChange={setShippingCep} shippingQuote={shippingQuote} cart={cart} subtotal={subtotal} />} />
         </Route>
       </Routes>
