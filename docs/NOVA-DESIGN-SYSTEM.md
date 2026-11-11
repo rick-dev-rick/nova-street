@@ -10,6 +10,8 @@
 
 [Módulo 04 — Hierarquia visual e composição](NOVA-DESIGN-SYSTEM-MODULO-04.md)
 
+[Módulo 05 — Componentes e variantes](NOVA-DESIGN-SYSTEM-MODULO-05.md)
+
 ## O que já foi observado no repositório (10/11/2026)
 - React/Vite e rotas separadas em Home, Catálogo, Produto, Carrinho, Checkout e Favoritos.
 - Componentes como Layout, Header, Footer, ProductCard e CartDrawer.

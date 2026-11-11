@@ -1,5 +1,8 @@
+import ChoiceButton from '../design-system/ChoiceButton.jsx'
+import Feedback from '../design-system/Feedback.jsx'
+import { ActionLink, Button } from '../design-system/Action.jsx'
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { products } from '../data/products.js'
 import EmptyState from '../components/EmptyState.jsx'
 import QuantitySelector from '../components/QuantitySelector.jsx'
@@ -24,7 +27,7 @@ function ProductDetail({ id, onAddToCart }) {
 
   if (!product) return (
     <EmptyState title="Produto não encontrado."
-      action={<Link className="btn btn-primary" to="/catalogo">Voltar ao catálogo</Link>}
+      action={<ActionLink variant="primary" to="/catalogo">Voltar ao catálogo</ActionLink>}
     />
   )
 
@@ -45,11 +48,11 @@ function ProductDetail({ id, onAddToCart }) {
         <p className="product-description">{product.description}</p>
         <section className="product-purchase" aria-labelledby="purchase-title">
           <h2 id="purchase-title">Escolha sua peça</h2>
-          <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <button type="button" aria-pressed={size === item} className={size === item ? 'size active' : 'size'} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</button>)}</div></fieldset>
+          <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <ChoiceButton className="size" selected={size === item} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</ChoiceButton>)}</div></fieldset>
           <QuantitySelector value={quantity} onChange={value => { setQuantity(value); setAdded(false) }} />
-          <button type="button" className="btn btn-primary product-add" onClick={add} disabled={!size} aria-describedby="purchase-help">Adicionar à sacola</button>
+          <Button variant="primary" className="product-add" onClick={add} disabled={!size} aria-describedby="purchase-help">Adicionar à sacola</Button>
           <p id="purchase-help" className="purchase-help">{size ? `Tamanho selecionado: ${size}.` : 'Selecione um tamanho para adicionar à sacola.'}</p>
-          {added && <p className="success-message feedback" data-feedback="success" role="status">Adicionado à sacola ✓ <Link className="text-link" to="/carrinho">Ver sacola →</Link></p>}
+          {added && <Feedback className="success-message" tone="success">Adicionado à sacola ✓ <ActionLink variant="text" to="/carrinho">Ver sacola →</ActionLink></Feedback>}
           <FavoriteButton product={product} showLabel />
         </section>
         <ProductInformation product={product} />

@@ -1,3 +1,6 @@
+import { QuantityControls } from './QuantitySelector.jsx'
+import Dialog from '../design-system/Dialog.jsx'
+import { ActionLink } from '../design-system/Action.jsx'
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -17,7 +20,7 @@ export default function CartDrawer({ shippingQuote, open, onClose, cart, subtota
   }, [open])
 
   return (
-    <dialog ref={dialog} id="cart-drawer" className="cart-drawer" aria-labelledby="cart-drawer-title" onClose={onClose} onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
+    <Dialog ref={dialog} id="cart-drawer" className="cart-drawer" aria-labelledby="cart-drawer-title" onClose={onClose} onDismiss={onClose}>
       <div className="drawer-shell">
         <div className="drawer-heading"><div><p className="eyebrow">NØVA STREET</p><h2 id="cart-drawer-title">Sua sacola</h2></div><button type="button" className="drawer-close" onClick={onClose} autoFocus aria-label="Fechar sacola">Fechar ×</button></div>
         {cart.length ? <>
@@ -25,17 +28,17 @@ export default function CartDrawer({ shippingQuote, open, onClose, cart, subtota
             {cart.map(item => <article className="drawer-item" key={item.key}>
               <Link to={`/produto/${item.id}`} onClick={onClose} tabIndex={-1} aria-hidden="true"><img src={item.image} alt="" /></Link>
               <div className="drawer-item-info"><h3><Link to={`/produto/${item.id}`} onClick={onClose}>{item.name}</Link></h3><p>Tamanho {item.size}</p><strong className="price">{money.format(item.price * item.quantity)}</strong>
-                <div className="drawer-item-actions"><div className="quantity-controls" aria-label={`Quantidade de ${item.name}, tamanho ${item.size}`}>
-                  <button type="button" aria-label={`Diminuir quantidade de ${item.name}, tamanho ${item.size}`} disabled={item.quantity <= 1} onClick={() => onUpdateQuantity(item.key, item.quantity - 1)}>−</button>
-                  <span aria-live="polite" aria-atomic="true">{item.quantity}</span>
-                  <button type="button" aria-label={`Aumentar quantidade de ${item.name}, tamanho ${item.size}`} disabled={item.quantity >= 99} onClick={() => onUpdateQuantity(item.key, item.quantity + 1)}>+</button>
-                </div><button type="button" className="remove-button" aria-label={`Remover ${item.name}, tamanho ${item.size}`} onClick={() => onRemove(item.key)}>Remover</button></div>
+                <div className="drawer-item-actions"><QuantityControls
+                  label={`Quantidade de ${item.name}, tamanho ${item.size}`}
+                  value={item.quantity}
+                  onChange={quantity => onUpdateQuantity(item.key, quantity)}
+                /><button type="button" className="remove-button" aria-label={`Remover ${item.name}, tamanho ${item.size}`} onClick={() => onRemove(item.key)}>Remover</button></div>
               </div>
             </article>)}
           </div>
-          <div className="drawer-summary"><div className="drawer-subtotal" aria-live="polite" aria-atomic="true"><span>Subtotal</span><strong className="price">{money.format(subtotal)}</strong></div><p>{shippingQuote ? `Frete simulado: ${shippingQuote.cost === 0 ? 'grátis' : money.format(shippingQuote.cost)} · total ${money.format(shippingQuote.total)}` : 'Simule o frete na sacola completa ou no checkout.'}</p><Link className="btn btn-primary" to="/checkout" onClick={onClose}>Continuar para checkout</Link><Link className="drawer-cart-link text-link" to="/carrinho" onClick={onClose}>Ver sacola completa →</Link><button type="button" className="drawer-continue" onClick={onClose}>Continuar explorando</button></div>
-        </> : <div className="drawer-empty"><span aria-hidden="true">Ø</span><h3>Sua sacola está vazia.</h3><p>Encontre a próxima peça do seu estilo.</p><Link className="btn btn-primary" to="/catalogo" onClick={onClose}>Explorar coleção</Link></div>}
+          <div className="drawer-summary"><div className="drawer-subtotal" aria-live="polite" aria-atomic="true"><span>Subtotal</span><strong className="price">{money.format(subtotal)}</strong></div><p>{shippingQuote ? `Frete simulado: ${shippingQuote.cost === 0 ? 'grátis' : money.format(shippingQuote.cost)} · total ${money.format(shippingQuote.total)}` : 'Simule o frete na sacola completa ou no checkout.'}</p><ActionLink variant="primary" to="/checkout" onClick={onClose}>Continuar para checkout</ActionLink><Link className="drawer-cart-link text-link" to="/carrinho" onClick={onClose}>Ver sacola completa →</Link><button type="button" className="drawer-continue" onClick={onClose}>Continuar explorando</button></div>
+        </> : <div className="drawer-empty"><span aria-hidden="true">Ø</span><h3>Sua sacola está vazia.</h3><p>Encontre a próxima peça do seu estilo.</p><ActionLink variant="primary" to="/catalogo" onClick={onClose}>Explorar coleção</ActionLink></div>}
       </div>
-    </dialog>
+    </Dialog>
   )
 }

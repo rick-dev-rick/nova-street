@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import EditorialCard from '../components/EditorialCard.jsx'
+import { ActionLink } from '../design-system/Action.jsx'
 import BestSellers from '../components/BestSellers.jsx'
 import Lifestyle from '../components/Lifestyle.jsx'
 import FinalCTA from '../components/FinalCTA.jsx'
@@ -15,7 +16,7 @@ export default function Home() {
           <p className="eyebrow">DROP 01 · 2026</p>
           <h1>NEW DROP<br />STREET ESSENTIALS</h1>
           <p>Peças urbanas, versáteis e sem rótulos para quem veste identidade.</p>
-          <Link className="btn btn-primary" to="/catalogo">Ver coleção</Link>
+          <ActionLink variant="primary" to="/catalogo">Ver coleção</ActionLink>
         </div>
       </section>
 
@@ -26,13 +27,13 @@ export default function Home() {
       <section className="section container">
         <div className="section-heading">
           <div><p className="eyebrow">EXPLORE</p><h2>Vista do seu jeito.</h2></div>
-          <Link className="text-link" to="/catalogo">Ver tudo →</Link>
+          <ActionLink variant="text" to="/catalogo">Ver tudo →</ActionLink>
         </div>
         <div className="category-grid">
           {['Masculino', 'Feminino', 'Unissex'].map((category, index) => (
-            <Link className={`category-card category-${index + 1}`} to={`/catalogo?categoria=${category}`} key={category}>
+            <EditorialCard variant="category" className={`category-${index + 1}`} category={category} key={category}>
               <span>{category}</span>
-            </Link>
+            </EditorialCard>
           ))}
         </div>
       </section>
@@ -41,7 +42,7 @@ export default function Home() {
         <div className="container">
           <div className="section-heading">
             <div><p className="eyebrow">NOVIDADES</p><h2>Chegou agora.</h2></div>
-            <Link className="text-link" to="/catalogo?ordem=novidades">Ver novidades →</Link>
+            <ActionLink variant="text" to="/catalogo?ordem=novidades">Ver novidades →</ActionLink>
           </div>
           <div className="product-grid">{selectProducts(products, { order: 'novidades' }).slice(0, 4).map((product) => <ProductCard product={product} key={product.id} />)}</div>
         </div>
@@ -55,7 +56,7 @@ export default function Home() {
           </div>
           <div>
             <p>Uma coleção construída para misturar proporções, camadas e atitude sem limitar estilo por gênero.</p>
-            <Link className="btn btn-secondary" to="/catalogo">Explorar o drop</Link>
+            <ActionLink variant="secondary" to="/catalogo">Explorar o drop</ActionLink>
           </div>
         </div>
       </section>
