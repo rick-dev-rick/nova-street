@@ -11,16 +11,27 @@ export default function Home() {
   return (
     <>
       <section className="hero" data-nova-theme="dark">
-        <div className="hero-overlay" />
+        <div className="hero-overlay" aria-hidden="true" />
+        <div className="hero-cinematic-frame" aria-hidden="true">
+          <span className="hero-frame-corner hero-frame-top" />
+          <span className="hero-frame-corner hero-frame-bottom" />
+          <span className="hero-vertical-mark">NØVA / EST. 2026</span>
+          <span className="hero-frame-index">01 — 04</span>
+        </div>
         <div className="container hero-content">
           <p className="eyebrow">DROP 01 · 2026</p>
-          <h1>NEW DROP<br />STREET ESSENTIALS</h1>
+          <h1 className="hero-display">
+            <span className="hero-display-line"><span>NEW DROP</span></span>
+            <span className="hero-display-line"><span>STREET</span></span>
+            <span className="hero-display-line"><span>ESSENTIALS<span className="hero-title-period">.</span></span></span>
+          </h1>
           <p>Peças urbanas, versáteis e sem rótulos para quem veste identidade.</p>
-          <ActionLink variant="primary" to="/catalogo">Ver coleção</ActionLink>
+          <ActionLink variant="primary" to="/catalogo">Ver coleção <span aria-hidden="true">↗</span></ActionLink>
+          <span className="hero-scroll-cue" aria-hidden="true"><span className="hero-scroll-track" /> SCROLL TO EXPLORE</span>
         </div>
       </section>
 
-      <aside className="promo-strip" aria-label="Condição de frete">
+      <aside className="promo-strip promo-strip-reveal" aria-label="Condição de frete">
         <p><strong>Frete grátis a partir de R$ 299</strong> no checkout demonstrativo.</p>
       </aside>
 
