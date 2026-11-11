@@ -1,9 +1,11 @@
+import BrandWordmark from '../design-system/BrandWordmark.jsx'
+
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" data-nova-theme="dark">
       <div className="container footer-grid">
         <div>
-          <div className="brand footer-brand">NØVA <span>STREET</span></div>
+          <div className="brand footer-brand"><BrandWordmark /></div>
           <p>Streetwear moderno. Identidade sem rótulos.</p>
         </div>
         <div>

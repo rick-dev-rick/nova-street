@@ -29,7 +29,7 @@ export default function Catalog() {
 
   return (
     <section className="section container catalog-page">
-      <div className="catalog-intro"><p className="eyebrow dark">CATÁLOGO</p><h1>Coleção NØVA STREET</h1><p>Streetwear unissex, peças essenciais e drops selecionados.</p></div>
+      <div className="catalog-intro"><p className="eyebrow">CATÁLOGO</p><h1>Coleção NØVA STREET</h1><p>Streetwear unissex, peças essenciais e drops selecionados.</p></div>
       <div className="catalog-tools">
         <div className="filter-row" aria-label="Filtrar por categoria">
           {categories.map((item) => <button type="button" className={item === category ? 'filter active' : 'filter'} aria-pressed={item === category} onClick={() => chooseCategory(item)} key={item}>{item}</button>)}

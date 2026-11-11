@@ -1,25 +1,51 @@
-/* NØVA Design System — foundation tokens v0.1.0
-   Preserve the established black, white and red brand identity.
-   Prefer semantic tokens in new components. */
+/* NØVA Design System — identidade visual e cores.
+   Primitivos definem a paleta. Papéis semânticos definem onde aplicar cada cor. */
 :root {
+  color-scheme: light;
   --nova-brand-ink: #0a0a0a;
   --nova-brand-paper: #ffffff;
   --nova-brand-red: #d71920;
+  --nova-brand-red-deep: #b90f16;
+  --nova-brand-red-light: #ff8f93;
   --nova-neutral-50: #f5f5f3;
   --nova-neutral-200: #e6e6e6;
+  --nova-neutral-300: #d2d2d2;
+  --nova-neutral-500: #858585;
   --nova-neutral-600: #686868;
+  --nova-neutral-800: #454545;
+  --nova-neutral-900: #191919;
   --nova-color-bg: var(--nova-brand-paper);
   --nova-color-surface: var(--nova-neutral-50);
+  --nova-color-field: var(--nova-brand-paper);
+  --nova-color-media: var(--nova-neutral-200);
   --nova-color-text: var(--nova-brand-ink);
   --nova-color-text-muted: var(--nova-neutral-600);
   --nova-color-border: var(--nova-neutral-200);
+  --nova-color-control-border: var(--nova-neutral-500);
+  --nova-color-accent: var(--nova-brand-red-deep);
   --nova-color-action: var(--nova-brand-red);
-  --nova-color-action-hover: #b90f16;
-  --nova-color-on-action: #ffffff;
+  --nova-color-action-hover: var(--nova-brand-red-deep);
+  --nova-color-on-action: var(--nova-brand-paper);
+  --nova-color-inverse: var(--nova-brand-ink);
+  --nova-color-on-inverse: var(--nova-brand-paper);
+  --nova-color-disabled: var(--nova-neutral-300);
+  --nova-color-on-disabled: var(--nova-neutral-800);
+  --nova-color-focus: var(--nova-brand-red-deep);
+  --nova-color-on-media: var(--nova-brand-paper);
   --nova-color-success: #22733d;
+  --nova-color-success-surface: #ebf6ee;
   --nova-color-warning: #925600;
+  --nova-color-warning-surface: #fff3dd;
   --nova-color-error: #b42318;
+  --nova-color-error-surface: #fff0ee;
   --nova-color-info: #175cd3;
+  --nova-color-info-surface: #edf4ff;
+  --nova-treatment-hero: linear-gradient(105deg, #000e, #000c 65%, rgb(0 0 0 / .66));
+  --nova-treatment-caption: linear-gradient(transparent, rgb(0 0 0 / .62) 34%, #000d);
+  --nova-treatment-editorial-caption: linear-gradient(transparent, rgb(0 0 0 / .62) 32px, #000d);
+  --nova-treatment-drop-texture: repeating-linear-gradient(135deg, transparent 0 5px, #ffffff08 5px 6px);
+  --nova-treatment-photo-monochrome: grayscale(1);
+  --nova-treatment-photo-control-shadow: 0 2px 8px #0002;
   --nova-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --nova-font-weight-regular: 400;
   --nova-font-weight-medium: 600;
@@ -52,13 +78,38 @@
   --nova-z-overlay: 50;
   --nova-z-modal: 60;
 }
-/* A dark surface is opt-in, not a forced site-wide theme. */
+
+/* Versões anteriores dos navegadores isolam ::backdrop da herança do elemento. */
+:root, ::backdrop {
+  --nova-treatment-backdrop: rgb(0 0 0 / .55);
+  --nova-treatment-backdrop-deep: rgb(0 0 0 / .85);
+}
+
+/* Áreas escuras explícitas mantêm as cores de campanha independentemente do sistema. */
 [data-nova-theme="dark"] {
+  color-scheme: dark;
   --nova-color-bg: var(--nova-brand-ink);
-  --nova-color-surface: #191919;
+  --nova-color-surface: var(--nova-neutral-900);
+  --nova-color-field: var(--nova-neutral-900);
+  --nova-color-media: var(--nova-neutral-800);
   --nova-color-text: var(--nova-brand-paper);
-  --nova-color-text-muted: #b7b7b7;
-  --nova-color-border: #454545;
+  --nova-color-text-muted: var(--nova-neutral-300);
+  --nova-color-border: var(--nova-neutral-800);
+  --nova-color-accent: var(--nova-brand-red-light);
+  --nova-color-action-hover: #c9161d;
+  --nova-color-inverse: var(--nova-brand-paper);
+  --nova-color-on-inverse: var(--nova-brand-ink);
+  --nova-color-disabled: var(--nova-neutral-800);
+  --nova-color-on-disabled: var(--nova-neutral-300);
+  --nova-color-focus: var(--nova-brand-red-light);
+  --nova-color-success: #8bdd9f;
+  --nova-color-success-surface: #14291b;
+  --nova-color-warning: #ffd080;
+  --nova-color-warning-surface: #35250e;
+  --nova-color-error: #ffada7;
+  --nova-color-error-surface: #381c1a;
+  --nova-color-info: #a6c9ff;
+  --nova-color-info-surface: #172840;
 }
 @media (prefers-reduced-motion: reduce) {
   :root {

@@ -8,7 +8,7 @@ const stories = [
 
 export default function Lifestyle() {
   return <section className="section container lifestyle-section">
-    <div className="section-heading"><div><p className="eyebrow dark">NØVA LIFESTYLE</p><h2>Além do look.</h2><p className="section-note">Um recorte de inspiração urbana. Editorial ilustrativo.</p></div><Link className="text-link" to="/catalogo">Explore a coleção →</Link></div>
+    <div className="section-heading"><div><p className="eyebrow">NØVA LIFESTYLE</p><h2>Além do look.</h2><p className="section-note">Um recorte de inspiração urbana. Editorial ilustrativo.</p></div><Link className="text-link" to="/catalogo">Explore a coleção →</Link></div>
     <div className="lifestyle-grid">{stories.map(story => <Link className="lifestyle-card" key={story.title} to={`/catalogo?categoria=${story.category}`}><img src={story.image} alt={`Inspiração editorial de estilo ${story.category.toLowerCase()}`} loading="lazy" /><span>{story.title}<small>Explorar {story.category.toLowerCase()} ↗</small></span></Link>)}</div>
     <p className="section-note">Editorial do case demonstrativo; não é um feed de Instagram.</p>
   </section>

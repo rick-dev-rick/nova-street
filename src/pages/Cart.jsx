@@ -5,11 +5,11 @@ import OrderTotals from '../components/OrderTotals.jsx'
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
 export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, cart, subtotal, onUpdateQuantity, onRemove }) {
-  if (!cart.length) return <section className="section container empty-state"><p className="eyebrow dark">SACOLA</p><h1>Sua sacola está vazia.</h1><p>Explore o drop e adicione suas peças favoritas.</p><Link className="btn btn-primary" to="/catalogo">Ver coleção</Link></section>
+  if (!cart.length) return <section className="section container empty-state"><p className="eyebrow">SACOLA</p><h1>Sua sacola está vazia.</h1><p>Explore o drop e adicione suas peças favoritas.</p><Link className="btn btn-primary" to="/catalogo">Ver coleção</Link></section>
 
   return (
     <section className="section container cart-page">
-      <div><p className="eyebrow dark">SACOLA</p><h1>Seu carrinho</h1></div>
+      <div><p className="eyebrow">SACOLA</p><h1>Seu carrinho</h1></div>
       <div className="cart-layout">
         <div className="cart-lines">
           {cart.map((item) => (
