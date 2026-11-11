@@ -127,6 +127,9 @@
   --nova-motion-fast: 150ms;
   --nova-motion-normal: 250ms;
   --nova-motion-slow: 350ms;
+  --nova-motion-display: 700ms;
+  --nova-motion-showcase: 900ms;
+  --nova-ease-expressive: cubic-bezier(.16, 1, .3, 1);
   --nova-ease-standard: cubic-bezier(.2, .8, .2, 1);
   --nova-z-header: 20;
   --nova-z-overlay: 50;
@@ -170,5 +173,7 @@
     --nova-motion-fast: 0ms;
     --nova-motion-normal: 0ms;
     --nova-motion-slow: 0ms;
+    --nova-motion-display: 0ms;
+    --nova-motion-showcase: 0ms;
   }
 }
