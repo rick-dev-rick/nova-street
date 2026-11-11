@@ -3,7 +3,8 @@ import FavoriteButton from './FavoriteButton.jsx'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, headingLevel = 3 }) {
+  const Heading = headingLevel === 2 ? 'h2' : 'h3'
   return (
     <article className="product-card">
       <div className="product-card-visual">
@@ -15,8 +16,8 @@ export default function ProductCard({ product }) {
       </div>
       <div className="product-meta">
         <p>{product.category}</p>
-        <h3><Link to={`/produto/${product.id}`}>{product.name}</Link></h3>
-        <strong>{money.format(product.price)}</strong>
+        <Heading className="product-card-title"><Link to={`/produto/${product.id}`}>{product.name}</Link></Heading>
+        <strong className="price">{money.format(product.price)}</strong>
       </div>
     </article>
   )

@@ -15,7 +15,7 @@ export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, 
           {cart.map((item) => (
             <article className="cart-line" key={item.key}>
               <img src={item.image} alt="" />
-              <div className="cart-line-info"><h2>{item.name}</h2><p>Tamanho {item.size}</p><strong>{money.format(item.price)}</strong></div>
+              <div className="cart-line-info"><h2>{item.name}</h2><p>Tamanho {item.size}</p><strong className="price">{money.format(item.price)}</strong></div>
               <label className="quantity-field"><span>Qtd.</span><input type="number" min="1" max="99" aria-label={`Quantidade de ${item.name}, tamanho ${item.size}`} value={item.quantity} onChange={(e) => onUpdateQuantity(item.key, e.target.value)} /></label>
               <button type="button" className="remove-button" onClick={() => onRemove(item.key)}>Remover</button>
             </article>

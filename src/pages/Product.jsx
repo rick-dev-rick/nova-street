@@ -36,7 +36,7 @@ function ProductDetail({ id, onAddToCart }) {
       <div className="product-detail-info">
         <p className="eyebrow">{product.category} · {product.badge}</p>
         <h1>{product.name}</h1>
-        <p className="product-price">{money.format(product.price)}</p>
+        <p className="price product-price">{money.format(product.price)}</p>
         <p className="product-description">{product.description}</p>
         <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <button type="button" aria-pressed={size === item} className={size === item ? 'size active' : 'size'} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</button>)}</div></fieldset>
         <QuantitySelector value={quantity} onChange={value => { setQuantity(value); setAdded(false) }} />
