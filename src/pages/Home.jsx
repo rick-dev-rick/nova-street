@@ -19,6 +19,10 @@ export default function Home() {
         </div>
       </section>
 
+      <aside className="promo-strip" aria-label="Condição de frete">
+        <p><strong>Frete grátis a partir de R$ 299</strong> no checkout demonstrativo.</p>
+      </aside>
+
       <section className="section container">
         <div className="section-heading">
           <div><p className="eyebrow">EXPLORE</p><h2>Vista do seu jeito.</h2></div>
@@ -35,7 +39,10 @@ export default function Home() {
 
       <section className="section section-soft">
         <div className="container">
-          <div className="section-heading"><div><p className="eyebrow">NOVIDADES</p><h2>Chegou agora.</h2></div></div>
+          <div className="section-heading">
+            <div><p className="eyebrow">NOVIDADES</p><h2>Chegou agora.</h2></div>
+            <Link className="text-link" to="/catalogo?ordem=novidades">Ver novidades →</Link>
+          </div>
           <div className="product-grid">{selectProducts(products, { order: 'novidades' }).slice(0, 4).map((product) => <ProductCard product={product} key={product.id} />)}</div>
         </div>
       </section>
@@ -48,16 +55,13 @@ export default function Home() {
           </div>
           <div>
             <p>Uma coleção construída para misturar proporções, camadas e atitude sem limitar estilo por gênero.</p>
-            <Link className="btn btn-light" to="/catalogo">Explorar o drop</Link>
+            <Link className="btn btn-secondary" to="/catalogo">Explorar o drop</Link>
           </div>
         </div>
       </section>
 
       <BestSellers />
 
-      <section className="promo-strip">
-        <span>IDENTIDADE SEM RÓTULOS</span><span>•</span><span>FRETE GRÁTIS A PARTIR DE R$ 299</span>
-      </section>
       <Lifestyle />
       <FinalCTA />
     </>

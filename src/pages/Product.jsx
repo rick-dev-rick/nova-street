@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { products } from '../data/products.js'
+import EmptyState from '../components/EmptyState.jsx'
 import QuantitySelector from '../components/QuantitySelector.jsx'
 import RelatedProducts from '../components/RelatedProducts.jsx'
 import FavoriteButton from '../components/FavoriteButton.jsx'
@@ -21,7 +22,11 @@ function ProductDetail({ id, onAddToCart }) {
   const [added, setAdded] = useState(false)
   const [quantity, setQuantity] = useState(1)
 
-  if (!product) return <section className="section container empty-state"><h1>Produto não encontrado.</h1><Link className="text-link" to="/catalogo">Voltar ao catálogo →</Link></section>
+  if (!product) return (
+    <EmptyState title="Produto não encontrado."
+      action={<Link className="btn btn-primary" to="/catalogo">Voltar ao catálogo</Link>}
+    />
+  )
 
   function add() {
     if (!product.sizes.includes(size)) return
@@ -38,11 +43,15 @@ function ProductDetail({ id, onAddToCart }) {
         <h1>{product.name}</h1>
         <p className="price product-price">{money.format(product.price)}</p>
         <p className="product-description">{product.description}</p>
-        <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <button type="button" aria-pressed={size === item} className={size === item ? 'size active' : 'size'} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</button>)}</div></fieldset>
-        <QuantitySelector value={quantity} onChange={value => { setQuantity(value); setAdded(false) }} />
-        <button type="button" className="btn btn-primary product-add" onClick={add} disabled={!size}>{size ? 'Adicionar à sacola' : 'Selecione um tamanho'}</button>
-        {added && <p className="success-message feedback" data-feedback="success" role="status">Adicionado à sacola ✓ <Link className="text-link" to="/carrinho">Ver sacola →</Link></p>}
-        <FavoriteButton product={product} showLabel />
+        <section className="product-purchase" aria-labelledby="purchase-title">
+          <h2 id="purchase-title">Escolha sua peça</h2>
+          <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <button type="button" aria-pressed={size === item} className={size === item ? 'size active' : 'size'} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</button>)}</div></fieldset>
+          <QuantitySelector value={quantity} onChange={value => { setQuantity(value); setAdded(false) }} />
+          <button type="button" className="btn btn-primary product-add" onClick={add} disabled={!size} aria-describedby="purchase-help">Adicionar à sacola</button>
+          <p id="purchase-help" className="purchase-help">{size ? `Tamanho selecionado: ${size}.` : 'Selecione um tamanho para adicionar à sacola.'}</p>
+          {added && <p className="success-message feedback" data-feedback="success" role="status">Adicionado à sacola ✓ <Link className="text-link" to="/carrinho">Ver sacola →</Link></p>}
+          <FavoriteButton product={product} showLabel />
+        </section>
         <ProductInformation product={product} />
         <div className="product-benefits"><p>✓ Troca simplificada</p><p>✓ Frete grátis a partir de R$ 299</p><p>✓ Checkout demonstrativo — nenhum pagamento real</p></div>
       </div>

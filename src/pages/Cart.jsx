@@ -1,17 +1,23 @@
 import { Link } from 'react-router-dom'
+import EmptyState from '../components/EmptyState.jsx'
 import ShippingCalculator from '../components/ShippingCalculator.jsx'
 import OrderTotals from '../components/OrderTotals.jsx'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
 export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, cart, subtotal, onUpdateQuantity, onRemove }) {
-  if (!cart.length) return <section className="section container empty-state"><p className="eyebrow">SACOLA</p><h1>Sua sacola está vazia.</h1><p>Explore o drop e adicione suas peças favoritas.</p><Link className="btn btn-primary" to="/catalogo">Ver coleção</Link></section>
+  if (!cart.length) return (
+    <EmptyState eyebrow="SACOLA" title="Sua sacola está vazia."
+      description="Explore o drop e adicione suas peças favoritas."
+      action={<Link className="btn btn-primary" to="/catalogo">Ver coleção</Link>}
+    />
+  )
 
   return (
     <section className="section container cart-page">
       <div><p className="eyebrow">SACOLA</p><h1>Seu carrinho</h1></div>
       <div className="cart-layout">
-        <div className="cart-lines">
+        <div className="cart-lines" role="group" aria-label="Itens da sacola">
           {cart.map((item) => (
             <article className="cart-line" key={item.key}>
               <img src={item.image} alt="" />
@@ -21,7 +27,7 @@ export default function Cart({ shippingCep, onShippingCepChange, shippingQuote, 
             </article>
           ))}
         </div>
-        <aside className="cart-summary"><h2>Resumo</h2><ShippingCalculator subtotal={subtotal} cep={shippingCep} onCepChange={onShippingCepChange} /><OrderTotals subtotal={subtotal} quote={shippingQuote} /><Link className="btn btn-primary" to="/checkout">Continuar</Link></aside>
+        <aside className="cart-summary"><h2>Resumo</h2><ShippingCalculator subtotal={subtotal} cep={shippingCep} onCepChange={onShippingCepChange} /><OrderTotals subtotal={subtotal} quote={shippingQuote} /><Link className="btn btn-primary" to="/checkout">Ir para o checkout</Link></aside>
       </div>
     </section>
   )

@@ -5,7 +5,8 @@ export default function ProductInformation({ product }) {
   if (!detail) return null
 
   return (
-    <div className="product-information">
+    <section className="product-information" aria-labelledby="product-information-title">
+      <h2 id="product-information-title">Detalhes da peça</h2>
       <p className="spec-note">Coleção fictícia · especificações e medidas demonstrativas.</p>
       <details className="product-disclosure" open>
         <summary>Composição e caimento</summary>
@@ -23,6 +24,6 @@ export default function ProductInformation({ product }) {
           <p className="spec-note">Não use esta tabela como referência para comprar produtos reais.</p>
         </div>
       </details>
-    </div>
+    </section>
   )
 }

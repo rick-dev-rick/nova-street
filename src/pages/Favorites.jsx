@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import EmptyState from '../components/EmptyState.jsx'
 import HeartIcon from '../design-system/HeartIcon.jsx'
 import { useFavorites } from '../context/FavoritesContext.jsx'
 import { products } from '../data/products.js'
@@ -9,8 +10,16 @@ export default function Favorites() {
   const saved = products.filter(product => favorites.includes(product.id))
 
   return <section className="section container favorites-page">
-    <div className="section-heading"><div className="catalog-intro"><p className="eyebrow">SUA SELEÇÃO</p><h1>Peças que são a sua cara.</h1><p>Seus favoritos ficam salvos neste navegador.</p></div><Link className="text-link" to="/catalogo">Explorar coleção →</Link></div>
+    <div className="section-heading"><div className="catalog-intro"><p className="eyebrow">SUA SELEÇÃO</p><h1>Peças que são a sua cara.</h1><p>Seus favoritos ficam salvos neste navegador.</p></div>{saved.length > 0 && <Link className="text-link" to="/catalogo">Explorar coleção →</Link>}</div>
     <p className="catalog-count" role="status">{saved.length} {saved.length === 1 ? 'peça salva' : 'peças salvas'}</p>
-    {saved.length ? <div className="product-grid">{saved.map(product => <ProductCard headingLevel={2} key={product.id} product={product} />)}</div> : <div className="empty-state favorites-empty"><HeartIcon size={64} /><h2>Sua seleção começa com um coração.</h2><p>Toque no coração de uma peça para encontrá-la aqui depois.</p><Link className="btn btn-primary" to="/catalogo">Encontrar minhas favoritas</Link></div>}
+    {saved.length ? <div className="product-grid">{saved.map(product => <ProductCard headingLevel={2} key={product.id} product={product} />)}</div> : (
+      <EmptyState
+        headingLevel={2}
+        title="Você ainda não tem favoritos."
+        description="Toque no coração de uma peça para encontrá-la aqui depois."
+        icon={<HeartIcon size={48} />}
+        action={<Link className="btn btn-primary" to="/catalogo">Explorar coleção</Link>}
+      />
+    )}
   </section>
 }
