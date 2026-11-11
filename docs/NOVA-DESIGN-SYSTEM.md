@@ -2,6 +2,8 @@
 
 **Status: em implantação.** Este documento não afirma que os requisitos estão concluídos. O objetivo é cobrir os 11 pilares aprovados, evoluindo o código existente sem reconstrução desnecessária.
 
+[Módulo 01 — Identidade visual e cores](NOVA-DESIGN-SYSTEM-MODULO-01.md)
+
 ## O que já foi observado no repositório (10/11/2026)
 - React/Vite e rotas separadas em Home, Catálogo, Produto, Carrinho, Checkout e Favoritos.
 - Componentes como Layout, Header, Footer, ProductCard e CartDrawer.

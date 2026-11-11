@@ -34,14 +34,14 @@ function ProductDetail({ id, onAddToCart }) {
     <section className="section container product-page">
       <ProductGallery product={product} />
       <div className="product-detail-info">
-        <p className="eyebrow dark">{product.category} · {product.badge}</p>
+        <p className="eyebrow">{product.category} · {product.badge}</p>
         <h1>{product.name}</h1>
         <p className="product-price">{money.format(product.price)}</p>
         <p className="product-description">{product.description}</p>
         <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <button type="button" aria-pressed={size === item} className={size === item ? 'size active' : 'size'} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</button>)}</div></fieldset>
         <QuantitySelector value={quantity} onChange={value => { setQuantity(value); setAdded(false) }} />
         <button type="button" className="btn btn-primary product-add" onClick={add} disabled={!size}>{size ? 'Adicionar à sacola' : 'Selecione um tamanho'}</button>
-        {added && <p className="success-message" role="status">Adicionado à sacola ✓ <Link className="text-link" to="/carrinho">Ver sacola →</Link></p>}
+        {added && <p className="success-message feedback" data-feedback="success" role="status">Adicionado à sacola ✓ <Link className="text-link" to="/carrinho">Ver sacola →</Link></p>}
         <FavoriteButton product={product} showLabel />
         <ProductInformation product={product} />
         <div className="product-benefits"><p>✓ Troca simplificada</p><p>✓ Frete grátis a partir de R$ 299</p><p>✓ Checkout demonstrativo — nenhum pagamento real</p></div>

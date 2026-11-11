@@ -9,7 +9,7 @@ export default function RelatedProducts({ product }) {
 
   return <section className="section section-soft related-products" aria-labelledby="related-products-title">
     <div className="container">
-      <div className="section-heading"><div><p className="eyebrow dark">CONTINUE EXPLORANDO</p><h2 id="related-products-title">Você também pode curtir.</h2></div><Link className="text-link" to="/catalogo">Ver toda a coleção →</Link></div>
+      <div className="section-heading"><div><p className="eyebrow">CONTINUE EXPLORANDO</p><h2 id="related-products-title">Você também pode curtir.</h2></div><Link className="text-link" to="/catalogo">Ver toda a coleção →</Link></div>
       <div className="product-grid">{related.map(item => <ProductCard product={item} key={item.id} />)}</div>
     </div>
   </section>

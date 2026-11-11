@@ -19,7 +19,7 @@ export default function CartDrawer({ shippingQuote, open, onClose, cart, subtota
   return (
     <dialog ref={dialog} id="cart-drawer" className="cart-drawer" aria-labelledby="cart-drawer-title" onClose={onClose} onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
       <div className="drawer-shell">
-        <div className="drawer-heading"><div><p className="eyebrow dark">NØVA STREET</p><h2 id="cart-drawer-title">Sua sacola</h2></div><button type="button" className="drawer-close" onClick={onClose} autoFocus aria-label="Fechar sacola">Fechar ×</button></div>
+        <div className="drawer-heading"><div><p className="eyebrow">NØVA STREET</p><h2 id="cart-drawer-title">Sua sacola</h2></div><button type="button" className="drawer-close" onClick={onClose} autoFocus aria-label="Fechar sacola">Fechar ×</button></div>
         {cart.length ? <>
           <div className="drawer-items" aria-label="Itens da sacola">
             {cart.map(item => <article className="drawer-item" key={item.key}>

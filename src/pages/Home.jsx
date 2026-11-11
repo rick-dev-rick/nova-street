@@ -9,7 +9,7 @@ import { selectProducts } from '../lib/catalog.js'
 export default function Home() {
   return (
     <>
-      <section className="hero">
+      <section className="hero" data-nova-theme="dark">
         <div className="hero-overlay" />
         <div className="container hero-content">
           <p className="eyebrow">DROP 01 · 2026</p>
@@ -21,7 +21,7 @@ export default function Home() {
 
       <section className="section container">
         <div className="section-heading">
-          <div><p className="eyebrow dark">EXPLORE</p><h2>Vista do seu jeito.</h2></div>
+          <div><p className="eyebrow">EXPLORE</p><h2>Vista do seu jeito.</h2></div>
           <Link className="text-link" to="/catalogo">Ver tudo →</Link>
         </div>
         <div className="category-grid">
@@ -35,12 +35,12 @@ export default function Home() {
 
       <section className="section section-soft">
         <div className="container">
-          <div className="section-heading"><div><p className="eyebrow dark">NOVIDADES</p><h2>Chegou agora.</h2></div></div>
+          <div className="section-heading"><div><p className="eyebrow">NOVIDADES</p><h2>Chegou agora.</h2></div></div>
           <div className="product-grid">{selectProducts(products, { order: 'novidades' }).slice(0, 4).map((product) => <ProductCard product={product} key={product.id} />)}</div>
         </div>
       </section>
 
-      <section className="featured-drop">
+      <section className="featured-drop" data-nova-theme="dark">
         <div className="container featured-drop-inner">
           <div>
             <p className="eyebrow">NØVA STREET · DROP 01</p>
