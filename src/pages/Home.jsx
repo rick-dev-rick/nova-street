@@ -7,18 +7,19 @@ import FinalCTA from '../components/FinalCTA.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
-import { connectMobileScroll } from '../lib/mobile-scroll.js'
+import { connectHomeScroll } from '../lib/mobile-scroll.js'
 
 import '../styles/hero-showcase.css'
 import '../styles/scroll-showcase.css'
 import '../styles/mobile-scroll.css'
+import '../styles/campaign-scroll.css'
 
 const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
 const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
 
 export default function Home() {
   const hero = useRef(null)
-  useEffect(() => connectMobileScroll(hero.current), [])
+  useEffect(() => connectHomeScroll(hero.current), [])
 
   return (
     <>
@@ -98,6 +99,9 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="campaign-cut" data-scroll-scene="cut" aria-hidden="true">
+        <div className="campaign-cut-frame" />
+      </div>
       <BestSellers />
 
       <Lifestyle />

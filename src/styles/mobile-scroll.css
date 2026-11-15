@@ -10,36 +10,6 @@
 }
 
 @media (max-width: 900px), (max-width: 1024px) and (pointer: coarse) {
-  .director-stage {
-    overflow: visible;
-    min-block-size: auto;
-    padding-block: clamp(28px, 8vw, 48px) var(--nova-space-6);
-  }
-
-  .director-stage .featured-drop-inner {
-    --nova-grid-columns: minmax(0, 1fr);
-  }
-
-  .director-stage h2 {
-    font-size: clamp(2.35rem, 1.4rem + 6.4vw, 5rem);
-    line-height: 1;
-    overflow-wrap: anywhere;
-  }
-
-  .director-title-line {
-    overflow: visible;
-    padding: 0;
-    margin: 0;
-  }
-
-  .director-art { overflow: hidden; }
-  .director-art::before { inset: 0 0 0 12%; background-position: 60% 50%; }
-  .director-art::after {
-    background:
-      linear-gradient(0deg, #0a0a0a 17%, #0a0a0ac9 60%, #250a11a8),
-      linear-gradient(90deg, #0a0a0a 0%, transparent 80%);
-  }
-
   .hero-display,
   [data-scroll-scene="explore"] h2,
   [data-scroll-scene="lifestyle"] .lifestyle-card > span {
@@ -102,67 +72,6 @@
     transform: translateY(calc(100% * var(--nova-mobile-progress)));
   }
 
-  [data-mobile-scroll] .director-art::before {
-    transform: scale(calc(1.32 + .22 * var(--nova-mobile-progress)))
-      translate(calc(10% - 17% * var(--nova-mobile-progress)), calc(5% - 8% * var(--nova-mobile-progress)));
-  }
-
-  [data-mobile-scroll] .director-title-line > span {
-    transform-origin: left center;
-    transform: translateX(calc(.18em * (1 - var(--nova-mobile-progress))))
-      scale(calc(.73 + .27 * var(--nova-mobile-progress))) skewX(calc(-6deg * (1 - var(--nova-mobile-progress))));
-  }
-
-  [data-mobile-scroll] .director-title-line + .director-title-line > span {
-    --second-line-progress: clamp(0, calc(1.3 * var(--nova-mobile-progress) - .3), 1);
-    transform: translateX(calc(.3em * (1 - var(--second-line-progress))))
-      scale(calc(.8 + .2 * var(--second-line-progress))) skewX(calc(5deg * (1 - var(--second-line-progress))));
-  }
-
-  [data-scroll-scene="best"].section {
-    position: relative;
-    padding-block-start: clamp(26px, 7vw, 42px);
-  }
-
-  [data-scroll-scene="best"].section::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    block-size: 3px;
-    pointer-events: none;
-    background: linear-gradient(105deg, var(--nova-brand-red-deep), var(--nova-brand-red) 62%, transparent);
-  }
-
-  [data-scroll-scene="best"] .section-heading .eyebrow::after {
-    content: '';
-    display: block;
-    width: min(100%, 7rem);
-    height: 3px;
-    margin-block-start: var(--nova-space-2);
-    background: var(--nova-brand-red);
-  }
-
-  /* The cut at the edge and the heading share the section's progress. */
-  [data-mobile-scroll] [data-scroll-scene="best"].section::before {
-    transform-origin: left;
-    transform: scaleX(calc(.22 + .78 * var(--nova-mobile-progress, 1)));
-  }
-
-  [data-mobile-scroll] [data-scroll-scene="best"] .section-heading .eyebrow::after {
-    transform-origin: left;
-    transform: scaleX(calc(.16 + .84 * var(--nova-mobile-progress, 1)));
-  }
-
-  [data-mobile-scroll] [data-scroll-scene="best"] .product-card { --best-pan: 5%; }
-  [data-mobile-scroll] [data-scroll-scene="best"] .product-card:nth-child(even) { --best-pan: -5%; }
-
-  [data-mobile-scroll] [data-scroll-scene="best"] .product-image-wrap img {
-    --remaining: calc(1 - var(--nova-mobile-progress, 1));
-    transition: none;
-    transform: translate(calc(var(--best-pan) * var(--remaining)), calc(4% * var(--remaining)))
-      scale(calc(1 + .18 * var(--remaining)));
-  }
-
   [data-mobile-scroll] .lifestyle-card {
     isolation: isolate;
     --lifestyle-pan: 7%;
@@ -187,17 +96,8 @@
   }
 
   [data-mobile-scroll] [data-scroll-scene="explore"]:focus-within h2,
-  [data-mobile-scroll] .director-stage:focus-within .director-title-line > span,
-  [data-mobile-scroll] :is([data-scroll-scene="new"], [data-scroll-scene="best"]) .product-card:focus-within .product-image-wrap img,
+  [data-mobile-scroll] [data-scroll-scene="new"] .product-card:focus-within .product-image-wrap img,
   [data-mobile-scroll] .lifestyle-card:focus-visible img {
     transform: none;
-  }
-
-  @media (orientation: landscape) and (max-height: 519px) {
-    .director-stage .featured-drop-inner {
-      --nova-grid-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    }
-
-    .director-stage h2 { font-size: clamp(2.1rem, 1.3rem + 4vw, 4rem); }
   }
 }
