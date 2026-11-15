@@ -24,12 +24,15 @@ test('scroll enhancement has stable anchors and a visible keyboard and reduced-m
   assert.doesNotMatch(css, /(?:visibility:\s*hidden|opacity:\s*0\s*[;}])/)
 })
 
-test('the campaign pin uses a bounded CSS stage and semantic masked headlines', () => {
+test('the campaign pin is bounded to desktop and mobile lets the semantic headlines flow', () => {
   const home = read('pages/Home.jsx')
   const css = read('styles/scroll-showcase.css')
   assert.match(home, /<div className="director-stage">/)
   assert.equal(home.match(/className="director-title-line"/g)?.length, 2)
   assert.match(css, /\.director-stage\s*\{[^}]*position:\s*sticky/)
   assert.match(css, /animation-range:\s*contain 0% contain 100%/)
-  assert.match(css, /\(max-width: 600px\)[\s\S]*--director-/)
+  assert.match(css, /\(width > 900px\)/)
+  const mobile = read('styles/mobile-scroll.css')
+  assert.match(mobile, /\.director-title-line\s*\{[^}]*overflow:\s*visible/)
+  assert.doesNotMatch(mobile, /position:\s*sticky/)
 })

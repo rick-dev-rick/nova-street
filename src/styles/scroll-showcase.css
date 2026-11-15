@@ -82,18 +82,7 @@
 .director-title-line + .director-title-line { color: var(--nova-brand-red-light); }
 .director-drop-copy { padding-inline-start: var(--nova-space-4); border-inline-start: 3px solid var(--nova-brand-red); }
 
-@media (max-width: 900px) {
-  .director-stage .featured-drop-inner { --nova-grid-columns: minmax(0, 1fr); }
-}
-
-@media (max-width: 600px) {
-  .director-stage { min-block-size: 445px; padding-block: var(--nova-space-10); }
-  .director-stage h2 { font-size: clamp(2.65rem, 1.2rem + 8vw, 4rem); }
-  .director-art::before { inset: 0 0 0 12%; background-position: 60% 50%; }
-  .director-art::after { background: linear-gradient(0deg, #0a0a0a 18%, #0a0a0abf 75%, #300a12be); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (width > 900px) and ((width > 1024px) or (not (pointer: coarse))) {
   @supports (animation-timeline: view()) and (view-timeline-name: --scroll-hero) and (animation-range: contain 0% contain 100%) {
     .hero:has(+ [data-scroll-scene="exit"]) { view-timeline-name: --scroll-hero; }
     [data-scroll-scene="exit"] { view-timeline-name: --scroll-exit; }
@@ -176,10 +165,6 @@
         inset-block-start: var(--director-pin-inset);
         min-block-size: calc(100svh - var(--director-pin-inset));
       }
-    }
-
-    @media (max-width: 900px) and (min-height: 520px) {
-      .director-stage { --director-pin-inset: 112px; }
     }
 
     .director-art {
@@ -268,21 +253,6 @@
         --director-delay: 37%;
         --director-end: 72%;
       }
-    }
-
-    @media (max-width: 600px) {
-      .hero-shot { --director-camera: 1.22; --director-camera-x: -6%; }
-      [data-scroll-scene="explore"] .category-card:nth-child(even) { --director-cut-x: 112%; }
-      [data-scroll-scene="new"] .product-card:nth-child(even) { --director-delay: 16%; --director-end: 61%; }
-      [data-scroll-scene="best"] .product-card:nth-child(even) { --director-sheet-x: 46%; }
-      .director-title-line > span { --director-x: -60%; --director-y: 40%; }
-      .director-title-line + .director-title-line > span { --director-x: 60%; --director-y: -37%; }
-      [data-scroll-scene="lifestyle"] .lifestyle-card img {
-        --director-photo-scale: 1.26;
-        --director-photo-x: 7%;
-        --director-photo-y: 5%;
-      }
-      [data-scroll-scene="lifestyle"] .lifestyle-card:nth-child(even) img { --director-photo-x: -7%; }
     }
 
     [data-scroll-scene="explore"]:focus-within .section-heading h2,

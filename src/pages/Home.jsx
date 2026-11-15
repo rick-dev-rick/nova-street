@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import EditorialCard from '../components/EditorialCard.jsx'
 import { ActionLink } from '../design-system/Action.jsx'
 import BestSellers from '../components/BestSellers.jsx'
@@ -6,17 +7,22 @@ import FinalCTA from '../components/FinalCTA.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
+import { connectMobileScroll } from '../lib/mobile-scroll.js'
 
 import '../styles/hero-showcase.css'
 import '../styles/scroll-showcase.css'
+import '../styles/mobile-scroll.css'
 
 const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
 const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
 
 export default function Home() {
+  const hero = useRef(null)
+  useEffect(() => connectMobileScroll(hero.current), [])
+
   return (
     <>
-      <section className="hero" data-nova-theme="dark" aria-labelledby="drop-title">
+      <section ref={hero} className="hero" data-nova-theme="dark" aria-labelledby="drop-title">
         <div className="hero-shot" aria-hidden="true">
           <img
             className="hero-photo"
