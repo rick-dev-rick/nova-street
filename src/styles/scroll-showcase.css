@@ -1,0 +1,268 @@
+/* Static composition and fallback. Only the Home opts into these scenes. */
+[data-scroll-scene="drop"] {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  --drop-red: var(--nova-brand-red-deep);
+}
+
+[data-scroll-scene="drop"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(112deg, transparent 52%, #310b0e 52%, var(--drop-red) 100%);
+  opacity: .52;
+  pointer-events: none;
+}
+
+[data-scroll-scene="drop"] h2 > span { display: block; }
+[data-scroll-scene="drop"] h2 > span + span { color: var(--nova-brand-red-light); }
+
+[data-scroll-scene="exit"], [data-scroll-scene="outro"] {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+[data-scroll-scene="exit"]::after, [data-scroll-scene="outro"]::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  inset: auto 0 0;
+  block-size: 4px;
+  background: linear-gradient(110deg, transparent, var(--nova-brand-red-deep) 40%, var(--nova-brand-red) 76%, transparent);
+}
+
+[data-scroll-scene="outro"]::before { inset: 0 0 auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) and (view-timeline-name: --scroll-hero) and (animation-range: entry 5% cover 40%) {
+    /* Timelines follow untransformed frames. Only their inner layers move. */
+    .hero:has(+ [data-scroll-scene="exit"]) { view-timeline-name: --scroll-hero; }
+    [data-scroll-scene="exit"] { view-timeline-name: --scroll-exit; }
+    [data-scroll-scene="explore"] .section-heading { view-timeline-name: --scroll-explore; }
+    [data-scroll-scene="explore"] .category-card { view-timeline-name: --scroll-category; }
+    [data-scroll-scene="new"] .product-card { view-timeline-name: --scroll-new; }
+    [data-scroll-scene="drop"] { view-timeline-name: --scroll-drop; }
+    [data-scroll-scene="best"] .section-heading { view-timeline-name: --scroll-best-heading; }
+    [data-scroll-scene="best"] .product-card { view-timeline-name: --scroll-best; }
+    [data-scroll-scene="lifestyle"] .lifestyle-card { view-timeline-name: --scroll-lifestyle; }
+    [data-scroll-scene="outro"] { view-timeline-name: --scroll-outro; }
+
+    .hero:has(+ [data-scroll-scene="exit"]) .hero-shot {
+      animation: nova-scroll-camera linear both;
+      animation-timeline: --scroll-hero;
+      animation-range: exit 0% exit 86%;
+    }
+
+    [data-scroll-scene="exit"]::after {
+      animation: nova-scroll-splice linear both;
+      animation-timeline: --scroll-exit;
+      animation-range: entry 0% cover 60%;
+    }
+
+    [data-scroll-scene="explore"] .section-heading h2 {
+      animation: nova-scroll-type linear both;
+      animation-timeline: --scroll-explore;
+      animation-range: entry 0% cover 46%;
+      transform-origin: left bottom;
+    }
+
+    [data-scroll-scene="explore"] .category-card::after,
+    [data-scroll-scene="new"] .product-image-wrap::after,
+    [data-scroll-scene="best"] .product-image-wrap::after,
+    [data-scroll-scene="lifestyle"] .lifestyle-card::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    [data-scroll-scene="explore"] .category-card::after {
+      background: linear-gradient(120deg, #090909 42%, var(--nova-brand-red-deep));
+      opacity: .76;
+      clip-path: polygon(0 0, 68% 0, 48% 100%, 0 100%);
+      animation: nova-scroll-category linear both;
+      animation-timeline: --scroll-category;
+      animation-range: entry var(--cut-delay, 0%) cover var(--cut-end, 48%);
+    }
+
+    [data-scroll-scene="explore"] .category-card > span,
+    [data-scroll-scene="lifestyle"] .lifestyle-card > span {
+      z-index: 2;
+    }
+
+    [data-scroll-scene="new"] .product-image-wrap::after {
+      /* The frame opens upward. The photo and card metadata stay in place. */
+      background: linear-gradient(0deg, var(--nova-color-surface) 28%, #f5f5f399);
+      clip-path: inset(45% 0 0);
+      animation: nova-scroll-print linear both;
+      animation-timeline: --scroll-new;
+      animation-range: entry var(--cut-delay, 0%) cover var(--cut-end, 46%);
+    }
+
+    [data-scroll-scene] .product-badge { z-index: 2; }
+
+    [data-scroll-scene="drop"]::before {
+      animation: nova-scroll-drop-field linear both;
+      animation-timeline: --scroll-drop;
+      animation-range: entry 0% cover 64%;
+    }
+
+    [data-scroll-scene="drop"] h2 > span {
+      animation: nova-scroll-drop-type linear both;
+      animation-timeline: --scroll-drop;
+      animation-range: entry 0% cover 49%;
+      --drop-line-travel: clamp(34px, 6vw, 88px);
+    }
+
+    [data-scroll-scene="drop"] h2 > span + span {
+      --drop-line-travel: clamp(62px, 10vw, 142px);
+      animation-range: entry 10% cover 57%;
+    }
+
+    [data-scroll-scene="best"] .product-image-wrap::after {
+      background: linear-gradient(155deg, #111 25%, #571219 53%, #111 95%);
+      opacity: .76;
+      clip-path: polygon(0 0, 100% 0, 100% 47%, 0 72%);
+      animation: nova-scroll-contact-sheet linear both;
+      animation-timeline: --scroll-best;
+      animation-range: entry var(--cut-delay, 0%) cover var(--cut-end, 48%);
+    }
+
+    [data-scroll-scene="best"] .section-heading {
+      position: relative;
+    }
+
+    [data-scroll-scene="best"] .section-heading::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      inset: auto 0 calc(-1 * var(--nova-space-3));
+      block-size: var(--nova-border-width-strong);
+      background: linear-gradient(90deg, var(--nova-color-border), var(--nova-brand-red));
+      transform-origin: right;
+      animation: nova-scroll-register linear both;
+      animation-timeline: --scroll-best-heading;
+      animation-range: entry 0% cover 39%;
+    }
+
+    [data-scroll-scene="lifestyle"] .lifestyle-card {
+      isolation: isolate;
+    }
+
+    [data-scroll-scene="lifestyle"] .lifestyle-card img {
+      animation: nova-scroll-editorial linear both;
+      animation-timeline: --scroll-lifestyle;
+      animation-range: entry 0% exit 100%;
+    }
+
+    [data-scroll-scene="lifestyle"] .lifestyle-card::before {
+      background: linear-gradient(90deg, #151515, #581217);
+      opacity: .68;
+      clip-path: polygon(25% 0, 100% 0, 100% 100%, 50% 100%);
+      animation: nova-scroll-category linear both;
+      animation-timeline: --scroll-lifestyle;
+      animation-range: entry var(--cut-delay, 0%) cover var(--cut-end, 53%);
+    }
+
+    [data-scroll-scene="outro"]::before {
+      animation: nova-scroll-splice linear both;
+      animation-timeline: --scroll-outro;
+      animation-range: entry 0% cover 46%;
+    }
+
+    /* Stagger wide columns. Mobile cards in the same row move together. */
+    @media (min-width: 901px) {
+      [data-scroll-scene] :is(.category-card, .lifestyle-card, .product-card):nth-child(2) {
+        --cut-delay: 10%;
+        --cut-end: 52%;
+      }
+
+      [data-scroll-scene] :is(.category-card, .lifestyle-card, .product-card):nth-child(3) {
+        --cut-delay: 21%;
+        --cut-end: 57%;
+      }
+
+      [data-scroll-scene] .product-card:nth-child(4) {
+        --cut-delay: 30%;
+        --cut-end: 63%;
+      }
+    }
+
+    @media (max-width: 900px) {
+      [data-scroll-scene="drop"] h2 > span + span { --drop-line-travel: 46px; }
+    }
+
+    @media (max-width: 600px) {
+      [data-scroll-scene="explore"] .section-heading h2 { --explore-travel: 18px; }
+      [data-scroll-scene="drop"] h2 > span { --drop-line-travel: 34px; }
+      [data-scroll-scene="lifestyle"] .lifestyle-card img { --editorial-scale: 1.09; }
+      [data-scroll-scene="drop"]::before { opacity: .36; }
+    }
+
+    [data-scroll-scene="explore"]:focus-within .section-heading h2,
+    [data-scroll-scene="drop"]:focus-within h2 > span {
+      animation: none;
+    }
+
+    [data-scroll-scene] .category-card:focus-visible::after,
+    [data-scroll-scene] .product-card:focus-within .product-image-wrap::after,
+    [data-scroll-scene] .lifestyle-card:focus-visible::before {
+      content: none;
+    }
+  }
+}
+
+@keyframes nova-scroll-camera {
+  from { transform: scale(1); }
+  to { transform: scale(1.14) translateY(3%); }
+}
+
+@keyframes nova-scroll-splice {
+  from { transform: translateX(-72%) skewX(-24deg); }
+  to { transform: translateX(0); }
+}
+
+@keyframes nova-scroll-type {
+  from { transform: translateY(var(--explore-travel, 28px)) scale(.78); }
+  to { transform: translateY(0) scale(1); }
+}
+
+@keyframes nova-scroll-category {
+  from { transform: translateX(0); }
+  to { transform: translateX(-106%); }
+}
+
+@keyframes nova-scroll-print {
+  from { transform: translateY(0); }
+  to { transform: translateY(61%); }
+}
+
+@keyframes nova-scroll-drop-field {
+  from { transform: translateX(52%) skewX(-12deg); }
+  to { transform: translateX(0); }
+}
+
+@keyframes nova-scroll-drop-type {
+  from { transform: translateY(var(--drop-line-travel)) scale(.9); transform-origin: left; }
+  to { transform: translateY(0) scale(1); transform-origin: left; }
+}
+
+@keyframes nova-scroll-contact-sheet {
+  from { transform: translateY(0); }
+  to { transform: translateY(-76%); }
+}
+
+@keyframes nova-scroll-register {
+  from { transform: scaleX(.08); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes nova-scroll-editorial {
+  from { transform: scale(var(--editorial-scale, 1.18)) translateY(-3%); }
+  to { transform: scale(var(--editorial-scale, 1.18)) translateY(3%); }
+}
