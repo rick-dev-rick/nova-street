@@ -3,12 +3,14 @@ import { ActionLink } from '../design-system/Action.jsx'
 import BestSellers from '../components/BestSellers.jsx'
 import Lifestyle from '../components/Lifestyle.jsx'
 import FinalCTA from '../components/FinalCTA.jsx'
+import HomeSignature from '../components/HomeSignature.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
 
 import '../styles/hero-showcase.css'
 import '../styles/scroll-showcase.css'
+import '../styles/home-signature.css'
 
 const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
 const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
@@ -95,7 +97,8 @@ export default function Home() {
       <BestSellers />
 
       <Lifestyle />
-      <div data-scroll-scene="outro"><FinalCTA /></div>
+      <div className="home-finale" data-scroll-scene="outro"><FinalCTA /></div>
+      <HomeSignature />
     </>
   )
 }
