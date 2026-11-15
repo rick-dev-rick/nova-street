@@ -8,6 +8,7 @@ import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
 
 import '../styles/hero-showcase.css'
+import '../styles/scroll-showcase.css'
 
 const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
 const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
@@ -44,11 +45,11 @@ export default function Home() {
         </div>
       </section>
 
-      <aside className="promo-strip" aria-label="Condição de frete">
+      <aside className="promo-strip" data-scroll-scene="exit" aria-label="Condição de frete">
         <p><strong>Frete grátis a partir de R$ 299</strong> no checkout demonstrativo.</p>
       </aside>
 
-      <section className="section container">
+      <section className="section container" data-scroll-scene="explore">
         <div className="section-heading">
           <div><p className="eyebrow">EXPLORE</p><h2>Vista do seu jeito.</h2></div>
           <ActionLink variant="text" to="/catalogo">Ver tudo →</ActionLink>
@@ -62,7 +63,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-soft">
+      <section className="section section-soft" data-scroll-scene="new">
         <div className="container">
           <div className="section-heading">
             <div><p className="eyebrow">NOVIDADES</p><h2>Chegou agora.</h2></div>
@@ -72,11 +73,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="featured-drop" data-nova-theme="dark">
+      <section className="featured-drop" data-scroll-scene="drop" data-nova-theme="dark">
         <div className="container featured-drop-inner">
           <div>
             <p className="eyebrow">NØVA STREET · DROP 01</p>
-            <h2>NO RULES.<br />JUST STREET.</h2>
+            <h2><span>NO RULES.</span>{' '}<span>JUST STREET.</span></h2>
           </div>
           <div>
             <p>Uma coleção construída para misturar proporções, camadas e atitude sem limitar estilo por gênero.</p>
@@ -88,7 +89,7 @@ export default function Home() {
       <BestSellers />
 
       <Lifestyle />
-      <FinalCTA />
+      <div data-scroll-scene="outro"><FinalCTA /></div>
     </>
   )
 }
