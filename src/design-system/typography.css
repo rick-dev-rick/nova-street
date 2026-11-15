@@ -41,17 +41,11 @@ h4 { font-size: var(--nova-type-size-h4); }
 h5 { font-size: var(--nova-type-size-h5); }
 h6 { font-size: var(--nova-type-size-h6); }
 
-.hero h1,
 .featured-drop h2,
 .final-cta h2 {
   font-weight: var(--nova-font-weight-heavy);
   line-height: var(--nova-type-leading-display);
   letter-spacing: var(--nova-type-tracking-display);
-}
-
-.hero h1 {
-  font-size: var(--nova-type-size-display);
-  text-wrap: wrap;
 }
 
 .featured-drop h2, .final-cta h2 {
@@ -65,11 +59,7 @@ h6 { font-size: var(--nova-type-size-h6); }
   letter-spacing: var(--nova-type-tracking-heading);
 }
 
-.hero p:not(.eyebrow) {
-  font-size: var(--nova-type-size-lead);
-}
-
-.hero p:not(.eyebrow), .featured-drop p:not(.eyebrow), .final-cta p:not(.eyebrow),
+.featured-drop p:not(.eyebrow), .final-cta p:not(.eyebrow),
 .catalog-intro > p:last-child, .empty-state > p, .checkout-confirmation > p {
   max-inline-size: var(--nova-type-measure-short);
 }
@@ -114,7 +104,7 @@ h6 { font-size: var(--nova-type-size-h6); }
 
 .main-nav, .footer-grid p, .product-benefits, .product-disclosure > div,
 .favorites-link, .favorite-button-labeled, .product-quantity, .drawer-cart-link,
-.order-totals > div, .drawer-item .price, .promo-strip, .purchase-help {
+.order-totals > div, .drawer-item .price, .purchase-help {
   font-size: var(--nova-type-size-small);
 }
 

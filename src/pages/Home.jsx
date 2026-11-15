@@ -7,16 +7,40 @@ import ProductCard from '../components/ProductCard.jsx'
 import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
 
+import '../styles/hero-showcase.css'
+
+const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
+const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
+
 export default function Home() {
   return (
     <>
-      <section className="hero" data-nova-theme="dark">
-        <div className="hero-overlay" />
+      <section className="hero" data-nova-theme="dark" aria-labelledby="drop-title">
+        <div className="hero-shot" aria-hidden="true">
+          <img
+            className="hero-photo"
+            src={heroSource(1440)}
+            srcSet={`${heroSource(800)} 800w, ${heroSource(1440)} 1440w, ${heroSource(1800)} 1800w`}
+            sizes="(max-width: 760px) 100vw, 61vw"
+            width={1800}
+            height={2584}
+            fetchPriority="high"
+            alt=""
+          />
+        </div>
+        <div className="hero-overlay" aria-hidden="true" />
+        <div className="hero-frame" aria-hidden="true" />
         <div className="container hero-content">
-          <p className="eyebrow">DROP 01 · 2026</p>
-          <h1>NEW DROP<br />STREET ESSENTIALS</h1>
-          <p>Peças urbanas, versáteis e sem rótulos para quem veste identidade.</p>
-          <ActionLink variant="primary" to="/catalogo">Ver coleção</ActionLink>
+          <p className="eyebrow hero-edition">DROP 01 · 2026</p>
+          <h1 className="hero-display" id="drop-title">
+            <span className="hero-display-line"><span>NEW DROP</span></span>{' '}
+            <span className="hero-display-line"><span>STREET</span></span>{' '}
+            <span className="hero-display-line"><span>ESSENTIALS</span></span>
+          </h1>
+          <p className="hero-description">Peças urbanas, versáteis e sem rótulos para quem veste identidade.</p>
+          <ActionLink variant="primary" className="hero-action" to="/catalogo">
+            Ver coleção <span className="hero-action-arrow" aria-hidden="true" />
+          </ActionLink>
         </div>
       </section>
 
