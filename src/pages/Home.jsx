@@ -74,14 +74,20 @@ export default function Home() {
       </section>
 
       <section className="featured-drop" data-scroll-scene="drop" data-nova-theme="dark">
-        <div className="container featured-drop-inner">
-          <div>
-            <p className="eyebrow">NØVA STREET · DROP 01</p>
-            <h2><span>NO RULES.</span>{' '}<span>JUST STREET.</span></h2>
-          </div>
-          <div>
-            <p>Uma coleção construída para misturar proporções, camadas e atitude sem limitar estilo por gênero.</p>
-            <ActionLink variant="secondary" to="/catalogo">Explorar o drop</ActionLink>
+        <div className="director-stage">
+          <div className="director-art" aria-hidden="true" />
+          <div className="container featured-drop-inner">
+            <div>
+              <p className="eyebrow">NØVA STREET · DROP 01</p>
+              <h2>
+                <span className="director-title-line"><span>NO RULES.</span></span>{' '}
+                <span className="director-title-line"><span>JUST STREET.</span></span>
+              </h2>
+            </div>
+            <div className="director-drop-copy">
+              <p>Uma coleção construída para misturar proporções, camadas e atitude sem limitar estilo por gênero.</p>
+              <ActionLink variant="secondary" to="/catalogo">Explorar o drop</ActionLink>
+            </div>
           </div>
         </div>
       </section>
