@@ -12,9 +12,8 @@
 @media (max-width: 900px), (max-width: 1024px) and (pointer: coarse) {
   .director-stage {
     overflow: visible;
-    min-block-size: 340px;
-    min-block-size: clamp(340px, 56svh, 550px);
-    padding-block: var(--nova-space-10);
+    min-block-size: auto;
+    padding-block: clamp(28px, 8vw, 48px) var(--nova-space-6);
   }
 
   .director-stage .featured-drop-inner {
@@ -66,7 +65,8 @@
     transform: scale(calc(.76 + .24 * var(--nova-mobile-progress))) skewX(calc(-8deg * (1 - var(--nova-mobile-progress))));
   }
 
-  [data-mobile-scroll] :is(.category-card, .lifestyle-card, .product-image-wrap)::after {
+  [data-mobile-scroll] :is(.category-card, .lifestyle-card)::after,
+  [data-mobile-scroll] [data-scroll-scene="new"] .product-image-wrap::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -119,6 +119,20 @@
       scale(calc(.8 + .2 * var(--second-line-progress))) skewX(calc(5deg * (1 - var(--second-line-progress))));
   }
 
+  [data-scroll-scene="best"].section {
+    position: relative;
+    padding-block-start: clamp(26px, 7vw, 42px);
+  }
+
+  [data-scroll-scene="best"].section::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    block-size: 3px;
+    pointer-events: none;
+    background: linear-gradient(105deg, var(--nova-brand-red-deep), var(--nova-brand-red) 62%, transparent);
+  }
+
   [data-scroll-scene="best"] .section-heading .eyebrow::after {
     content: '';
     display: block;
@@ -128,18 +142,25 @@
     background: var(--nova-brand-red);
   }
 
-  [data-mobile-scroll] [data-scroll-scene="best"] .section-heading .eyebrow::after {
-    transform-origin: right;
-    transform: scaleX(calc(.12 + .88 * var(--nova-mobile-progress)));
+  /* The cut at the edge and the heading share the section's progress. */
+  [data-mobile-scroll] [data-scroll-scene="best"].section::before {
+    transform-origin: left;
+    transform: scaleX(calc(.22 + .78 * var(--nova-mobile-progress, 1)));
   }
 
-  [data-mobile-scroll] [data-scroll-scene="best"] .product-card { --sheet-cut: -100%; }
-  [data-mobile-scroll] [data-scroll-scene="best"] .product-card:nth-child(even) { --sheet-cut: 100%; }
+  [data-mobile-scroll] [data-scroll-scene="best"] .section-heading .eyebrow::after {
+    transform-origin: left;
+    transform: scaleX(calc(.16 + .84 * var(--nova-mobile-progress, 1)));
+  }
 
-  [data-mobile-scroll] [data-scroll-scene="best"] .product-image-wrap::after {
-    background: repeating-linear-gradient(155deg, #190c10d9 0 18%, #830f1bd9 18% 30%, #190c10d9 30% 47%);
-    clip-path: polygon(0 0, 100% 0, 100% 34%, 0 87%);
-    transform: translate(calc(var(--sheet-cut) * var(--nova-mobile-progress)), calc(-100% * var(--nova-mobile-progress)));
+  [data-mobile-scroll] [data-scroll-scene="best"] .product-card { --best-pan: 5%; }
+  [data-mobile-scroll] [data-scroll-scene="best"] .product-card:nth-child(even) { --best-pan: -5%; }
+
+  [data-mobile-scroll] [data-scroll-scene="best"] .product-image-wrap img {
+    --remaining: calc(1 - var(--nova-mobile-progress, 1));
+    transition: none;
+    transform: translate(calc(var(--best-pan) * var(--remaining)), calc(4% * var(--remaining)))
+      scale(calc(1 + .18 * var(--remaining)));
   }
 
   [data-mobile-scroll] .lifestyle-card {
@@ -167,7 +188,7 @@
 
   [data-mobile-scroll] [data-scroll-scene="explore"]:focus-within h2,
   [data-mobile-scroll] .director-stage:focus-within .director-title-line > span,
-  [data-mobile-scroll] [data-scroll-scene="new"] .product-card:focus-within .product-image-wrap img,
+  [data-mobile-scroll] :is([data-scroll-scene="new"], [data-scroll-scene="best"]) .product-card:focus-within .product-image-wrap img,
   [data-mobile-scroll] .lifestyle-card:focus-visible img {
     transform: none;
   }
@@ -175,7 +196,6 @@
   @media (orientation: landscape) and (max-height: 519px) {
     .director-stage .featured-drop-inner {
       --nova-grid-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-      align-items: center;
     }
 
     .director-stage h2 { font-size: clamp(2.1rem, 1.3rem + 4vw, 4rem); }

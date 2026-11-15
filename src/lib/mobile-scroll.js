@@ -9,8 +9,8 @@ const sceneTracks = [
   ['[data-scroll-scene="explore"] .category-card', .96, .32],
   ['[data-scroll-scene="new"] .product-card', .96, .35],
   ['.director-stage', .96, .34, .18],
-  ['[data-scroll-scene="best"] .section-heading', .94, .45],
-  ['[data-scroll-scene="best"] .product-card', .96, .35],
+  ['[data-scroll-scene="best"]', .98, .28],
+  ['[data-scroll-scene="best"] .product-card', .99, .47],
   ['[data-scroll-scene="lifestyle"] .lifestyle-card', 1, .06, .34],
   ['[data-scroll-scene="outro"]', .94, .43],
 ]
