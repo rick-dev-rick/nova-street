@@ -16,93 +16,13 @@
 
 [data-scroll-scene="outro"]::before { inset: 0 0 auto; z-index: 1; }
 
-.featured-drop[data-scroll-scene="drop"] { padding-block: 0; }
-
-.director-stage {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  align-items: center;
-  overflow: clip;
-  min-block-size: 500px;
-  padding-block: var(--nova-campaign-space);
-  background: var(--nova-treatment-drop-texture) var(--nova-color-bg);
-}
-
-.director-art {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  overflow: clip;
-  background: linear-gradient(118deg, transparent 54%, #400b12 82%, #70101a);
-}
-
-.director-art::before,
-.director-art::after {
-  content: '';
-  position: absolute;
-  inset: 0 0 0 37%;
-}
-
-.director-art::before {
-  background:
-    linear-gradient(90deg, #10090bdd 4%, #17090d70 65%, #15090c2e),
-    url('https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=900&q=85') center 43% / cover;
-  filter: var(--nova-treatment-photo-monochrome);
-  clip-path: polygon(24% 0, 100% 0, 100% 100%, 0 100%);
-}
-
-.director-art::after {
-  inset: 0;
-  background:
-    linear-gradient(90deg, #0a0a0a 27%, #0a0a0ada 62%, #25070bbb),
-    linear-gradient(0deg, #0a0a0a 2%, transparent 65%);
-}
-
-.director-stage .featured-drop-inner {
-  align-items: end;
-  --nova-grid-columns: minmax(0, 1.7fr) minmax(0, .65fr);
-  --grid-gap: var(--nova-space-6);
-}
-
-.director-stage h2 {
-  font-size: clamp(3rem, 6.8vw, 7.25rem);
-  line-height: .91;
-}
-
-.director-title-line {
-  display: block;
-  overflow: clip;
-  padding: .12em .06em;
-  margin: -.12em -.06em;
-}
-
-.director-title-line > span { display: block; }
-.director-title-line + .director-title-line { color: var(--nova-brand-red-light); }
-.director-drop-copy { padding-inline-start: var(--nova-space-4); border-inline-start: 3px solid var(--nova-brand-red); }
-
-@media (max-width: 900px) {
-  .director-stage .featured-drop-inner { --nova-grid-columns: minmax(0, 1fr); }
-}
-
-@media (max-width: 600px) {
-  .director-stage { min-block-size: 445px; padding-block: var(--nova-space-10); }
-  .director-stage h2 { font-size: clamp(2.65rem, 1.2rem + 8vw, 4rem); }
-  .director-art::before { inset: 0 0 0 12%; background-position: 60% 50%; }
-  .director-art::after { background: linear-gradient(0deg, #0a0a0a 18%, #0a0a0abf 75%, #300a12be); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (width > 900px) and ((width > 1024px) or (not (pointer: coarse))) {
   @supports (animation-timeline: view()) and (view-timeline-name: --scroll-hero) and (animation-range: contain 0% contain 100%) {
     .hero:has(+ [data-scroll-scene="exit"]) { view-timeline-name: --scroll-hero; }
     [data-scroll-scene="exit"] { view-timeline-name: --scroll-exit; }
     [data-scroll-scene="explore"] .section-heading { view-timeline-name: --scroll-explore; }
     [data-scroll-scene="explore"] .category-card { view-timeline-name: --scroll-category; }
     [data-scroll-scene="new"] .product-card { view-timeline-name: --scroll-new; }
-    [data-scroll-scene="drop"] { view-timeline-name: --scroll-drop; }
-    [data-scroll-scene="best"] .section-heading { view-timeline-name: --scroll-best-heading; }
-    [data-scroll-scene="best"] .product-card { view-timeline-name: --scroll-best; }
     [data-scroll-scene="lifestyle"] .lifestyle-card { view-timeline-name: --scroll-lifestyle; }
     [data-scroll-scene="outro"] { view-timeline-name: --scroll-outro; }
 
@@ -127,7 +47,7 @@
     }
 
     [data-scroll-scene="explore"] .category-card::after,
-    [data-scroll-scene] .product-image-wrap::after,
+    [data-scroll-scene="new"] .product-image-wrap::after,
     [data-scroll-scene="lifestyle"] .lifestyle-card::before {
       content: '';
       position: absolute;
@@ -164,72 +84,6 @@
       animation: nova-scroll-print linear both;
       animation-timeline: --scroll-new;
       animation-range: entry var(--director-delay, 8%) cover var(--director-end, 58%);
-    }
-
-    /* Bounded sticky duration. Very short viewports keep the flowing scene. */
-    @media (min-height: 520px) {
-      [data-scroll-scene="drop"] { min-block-size: 174svh; }
-
-      .director-stage {
-        --director-pin-inset: clamp(80px, 15svh, 108px);
-        position: sticky;
-        inset-block-start: var(--director-pin-inset);
-        min-block-size: calc(100svh - var(--director-pin-inset));
-      }
-    }
-
-    @media (max-width: 900px) and (min-height: 520px) {
-      .director-stage { --director-pin-inset: 112px; }
-    }
-
-    .director-art {
-      animation: nova-scroll-drop-field linear both;
-      animation-timeline: --scroll-drop;
-      animation-range: contain 0% contain 100%;
-    }
-
-    .director-art::before {
-      animation: nova-scroll-drop-photo linear both;
-      animation-timeline: --scroll-drop;
-      animation-range: entry 0% exit-crossing 20%;
-    }
-
-    .director-title-line > span {
-      --director-x: -48%;
-      --director-y: 64%;
-      animation: nova-scroll-drop-type linear both;
-      animation-timeline: --scroll-drop;
-      animation-range: entry 12% contain 54%;
-    }
-
-    .director-title-line + .director-title-line > span {
-      --director-x: 42%;
-      --director-y: -58%;
-      animation-range: entry 35% contain 89%;
-    }
-
-    [data-scroll-scene="best"] .section-heading { position: relative; }
-
-    [data-scroll-scene="best"] .section-heading::after {
-      content: '';
-      position: absolute;
-      inset: auto 0 -13px;
-      block-size: 5px;
-      background: linear-gradient(90deg, transparent, var(--nova-brand-red) 61%, #0a0a0a);
-      transform-origin: right;
-      pointer-events: none;
-      animation: nova-scroll-register linear both;
-      animation-timeline: --scroll-best-heading;
-      animation-range: entry 0% cover 55%;
-    }
-
-    [data-scroll-scene="best"] .product-image-wrap::after {
-      background: repeating-linear-gradient(157deg, #1b1013 0 18%, #680f17 18% 36%, #130c0e 36% 57%);
-      clip-path: polygon(0 0, 100% 0, 100% 54%, 0 94%);
-      opacity: .85;
-      animation: nova-scroll-contact-sheet linear both;
-      animation-timeline: --scroll-best;
-      animation-range: entry var(--director-delay, 0%) cover var(--director-end, 55%);
     }
 
     [data-scroll-scene="lifestyle"] .lifestyle-card { isolation: isolate; }
@@ -270,23 +124,7 @@
       }
     }
 
-    @media (max-width: 600px) {
-      .hero-shot { --director-camera: 1.22; --director-camera-x: -6%; }
-      [data-scroll-scene="explore"] .category-card:nth-child(even) { --director-cut-x: 112%; }
-      [data-scroll-scene="new"] .product-card:nth-child(even) { --director-delay: 16%; --director-end: 61%; }
-      [data-scroll-scene="best"] .product-card:nth-child(even) { --director-sheet-x: 46%; }
-      .director-title-line > span { --director-x: -60%; --director-y: 40%; }
-      .director-title-line + .director-title-line > span { --director-x: 60%; --director-y: -37%; }
-      [data-scroll-scene="lifestyle"] .lifestyle-card img {
-        --director-photo-scale: 1.26;
-        --director-photo-x: 7%;
-        --director-photo-y: 5%;
-      }
-      [data-scroll-scene="lifestyle"] .lifestyle-card:nth-child(even) img { --director-photo-x: -7%; }
-    }
-
     [data-scroll-scene="explore"]:focus-within .section-heading h2,
-    [data-scroll-scene="drop"]:focus-within .director-title-line > span,
     [data-scroll-scene="lifestyle"] .lifestyle-card:focus-visible img { animation: none; }
 
     [data-scroll-scene] .category-card:focus-visible::after,
@@ -326,32 +164,6 @@
 @keyframes nova-scroll-print {
   from { transform: translateY(0); }
   to { transform: translateY(100%); }
-}
-
-@keyframes nova-scroll-drop-field {
-  from { transform: scale(1.12); }
-  to { transform: scale(1.38) translateX(-7%); }
-}
-
-@keyframes nova-scroll-drop-photo {
-  from { transform: scale(1.33) translateX(12%); }
-  to { transform: scale(1.06) translateX(-5%); }
-}
-
-@keyframes nova-scroll-drop-type {
-  from { transform: translate(var(--director-x), var(--director-y)) scale(.66) skewX(-12deg); }
-  73% { transform: translate(4%, 0) scale(.97) skewX(-4deg); }
-  to { transform: none; }
-}
-
-@keyframes nova-scroll-contact-sheet {
-  from { transform: translate(0); }
-  to { transform: translate(var(--director-sheet-x, -28%), -100%); }
-}
-
-@keyframes nova-scroll-register {
-  from { transform: scaleX(.05); }
-  to { transform: scaleX(1); }
 }
 
 @keyframes nova-scroll-editorial {

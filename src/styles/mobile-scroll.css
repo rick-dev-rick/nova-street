@@ -1,0 +1,103 @@
+/* A stationary ruler keeps animation offsets independent of the browser toolbar. */
+.mobile-scroll-viewport {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 0;
+  height: 100vh;
+  height: 100svh;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 900px), (max-width: 1024px) and (pointer: coarse) {
+  .hero-display,
+  [data-scroll-scene="explore"] h2,
+  [data-scroll-scene="lifestyle"] .lifestyle-card > span {
+    overflow-wrap: anywhere;
+  }
+
+  [data-scroll-scene] :is(a, button):focus-visible {
+    scroll-margin-block-start: calc(var(--nova-mobile-header, 112px) + var(--nova-space-2));
+  }
+
+  [data-mobile-scroll] .hero-shot {
+    transform: scale(calc(1 + .23 * var(--nova-mobile-progress))) translateY(calc(-4% * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] [data-scroll-scene="exit"]::after,
+  [data-mobile-scroll] [data-scroll-scene="outro"]::before {
+    transform-origin: left;
+    transform: scaleX(calc(.22 + .78 * var(--nova-mobile-progress))) scaleY(calc(4 - 3 * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] [data-scroll-scene="explore"] .section-heading h2 {
+    transform-origin: left center;
+    transform: scale(calc(.76 + .24 * var(--nova-mobile-progress))) skewX(calc(-8deg * (1 - var(--nova-mobile-progress))));
+  }
+
+  [data-mobile-scroll] :is(.category-card, .lifestyle-card)::after,
+  [data-mobile-scroll] [data-scroll-scene="new"] .product-image-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  [data-mobile-scroll] :is(.category-card, .lifestyle-card) > span,
+  [data-mobile-scroll] .product-badge {
+    z-index: 2;
+  }
+
+  [data-mobile-scroll] .category-card {
+    isolation: isolate;
+    --category-cut: -115%;
+  }
+
+  [data-mobile-scroll] .category-card:nth-child(even) { --category-cut: 115%; }
+
+  [data-mobile-scroll] .category-card::after {
+    background: linear-gradient(119deg, #120a0df0 20%, #86121de6 63%, #22090d9c);
+    clip-path: polygon(0 0, 90% 0, 46% 100%, 0 100%);
+    transform: translateX(calc(var(--category-cut) * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] [data-scroll-scene="new"] .product-image-wrap img {
+    transition: none;
+    transform: scale(calc(1.32 - .32 * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] [data-scroll-scene="new"] .product-image-wrap::after {
+    background: linear-gradient(0deg, #190b0bd9 17%, #841019db 72%, #e94f59 74% 78%, transparent 78%);
+    transform: translateY(calc(100% * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] .lifestyle-card {
+    isolation: isolate;
+    --lifestyle-pan: 7%;
+  }
+
+  [data-mobile-scroll] .lifestyle-card:nth-child(even) { --lifestyle-pan: -7%; }
+
+  [data-mobile-scroll] .lifestyle-card img {
+    transform: scale(1.24) translate(calc(var(--lifestyle-pan) * (1 - 2 * var(--nova-mobile-progress))),
+      calc(-5% + 11% * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] .lifestyle-card::after {
+    background: linear-gradient(92deg, #5f1019b3, #090909e6);
+    clip-path: polygon(13% 0, 100% 0, 100% 100%, 63% 100%);
+    transform: translateX(calc(110% * var(--nova-mobile-progress)));
+  }
+
+  [data-mobile-scroll] :is(.category-card, .lifestyle-card):focus-visible::after,
+  [data-mobile-scroll] .product-card:focus-within .product-image-wrap::after {
+    content: none;
+  }
+
+  [data-mobile-scroll] [data-scroll-scene="explore"]:focus-within h2,
+  [data-mobile-scroll] [data-scroll-scene="new"] .product-card:focus-within .product-image-wrap img,
+  [data-mobile-scroll] .lifestyle-card:focus-visible img {
+    transform: none;
+  }
+}
