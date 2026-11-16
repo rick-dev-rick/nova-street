@@ -10,7 +10,9 @@ export default function ProductGallery({ product }) {
   return (
     <div className="product-gallery">
       <button type="button" className={`gallery-main gallery-view-${view}`} onClick={() => dialog.current.showModal()} aria-label={`Ampliar ${views[view].toLowerCase()} de ${product.name}`}>
-        <img src={product.image} alt={`${product.name} — ${views[view].toLowerCase()}`} />
+        <span className="product-flight-frame" data-product-flight-target>
+          <img src={product.image} alt={`${product.name} — ${views[view].toLowerCase()}`} />
+        </span>
         <span className="gallery-zoom">Ampliar ↗</span>
       </button>
       <div className="gallery-controls" role="group" aria-label="Visualizações do produto">

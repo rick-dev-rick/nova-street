@@ -6,7 +6,7 @@ const read = path => readFileSync(new URL(`../src/${path}`, import.meta.url), 'u
 
 test('the interaction plane wraps the scroll-driven photograph beside an independent favorite', () => {
   const card = read('components/ProductCard.jsx')
-  assert.match(card, /<Link[^>]+product-image-wrap[^>]*>\s*<span className="product-image-plane">\s*<img/)
+  assert.match(card, /<Link[^>]+product-image-wrap[^>]*>\s*<span className="product-flight-frame"[^>]*>\s*<span className="product-image-plane">\s*<img/)
   assert.match(card, /<\/Link>\s*<FavoriteButton product=\{product\}/)
   assert.match(card, /<strong className="price">\{money\.format\(product\.price\)\}/)
   assert.match(card, /product-image-cue" aria-hidden="true"/)

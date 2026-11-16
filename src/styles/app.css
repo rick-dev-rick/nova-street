@@ -1,4 +1,5 @@
 @import '../design-system/tokens.css';
+@import './product-flight.css';
 @import '../design-system/typography.css';
 @import '../design-system/motion.css';
 :root{color:var(--nova-color-text);background:var(--nova-color-bg)}
