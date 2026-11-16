@@ -15,15 +15,25 @@ const mobileTracks = [
 // sequence on phones. Each tuple gives start, finish, and frame anchor.
 const campaignTracks = [
   ['.director-stage', [.98, .24, .32], [.98, .32, .24]],
-  ['.campaign-cut', [.99, .20, .40], [1, .17, .50]],
+  ['.campaign-cut', [.99, .20, .40], [.95, .52, .50]],
   ['[data-scroll-scene="best"] .section-heading', [.96, .42], [.99, .36]],
   ['[data-scroll-scene="best"] .product-card', [.99, .36], [1, .35]],
 ]
 
-export function getMobileScrollProgress(track, viewport, scrollTop) {
+export function getScrollWindow(track, viewport) {
   const visibleHeight = Math.max(1, viewport.height - viewport.header)
-  const position = track.top + track.height * track.anchor - scrollTop - viewport.header
-  return Math.min(1, Math.max(0, (track.from - position / visibleHeight) / (track.from - track.to)))
+  const origin = track.top + track.height * track.anchor - viewport.header
+  const start = origin - track.from * visibleHeight
+  const end = origin - track.to * visibleHeight
+  return { start, end, distance: end - start }
+}
+
+export function getScrollWindowProgress(bounds, scrollTop) {
+  return Math.min(1, Math.max(0, (scrollTop - bounds.start) / bounds.distance))
+}
+
+export function getMobileScrollProgress(track, viewport, scrollTop) {
+  return getScrollWindowProgress(getScrollWindow(track, viewport), scrollTop)
 }
 
 export function connectHomeScroll(hero) {
@@ -31,6 +41,9 @@ export function connectHomeScroll(hero) {
   if (!root || !window.ResizeObserver || !window.requestAnimationFrame || !window.matchMedia) return
 
   const mobile = window.matchMedia(mobileLayout)
+  const nativeCut = window.CSS?.supports('animation-timeline', 'view()') &&
+    window.CSS.supports('view-timeline-name', '--nova-mobile-cut') &&
+    window.CSS.supports('animation-range', 'entry 72% cover 43%')
   const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
   if (!mobile.addEventListener || !motion.addEventListener) return
 
@@ -63,15 +76,20 @@ export function connectHomeScroll(hero) {
       }
       for (const track of tracks) {
         const rect = track.element.getBoundingClientRect()
-        track.top = rect.top + scrollTop
-        track.height = rect.height
+        track.bounds = getScrollWindow({
+          ...track,
+          top: rect.top + scrollTop,
+          height: rect.height,
+        }, viewport)
       }
       needsMeasure = false
     }
 
     if (measure) root.style.setProperty('--nova-mobile-header', `${viewport.header}px`)
     for (const track of tracks) {
-      const progress = Math.round(getMobileScrollProgress(track, viewport, scrollTop) * 1000) / 1000
+      const { start, end } = track.bounds
+      if ((track.progress === 0 && scrollTop <= start) || (track.progress === 1 && scrollTop >= end)) continue
+      const progress = Math.round(getScrollWindowProgress(track.bounds, scrollTop) * 1000) / 1000
       if (track.progress === progress) continue
       track.progress = progress
       track.element.style.setProperty(track.property, progress)
@@ -110,9 +128,9 @@ export function connectHomeScroll(hero) {
     if (root.hasAttribute('data-campaign-motion') && usingMobile === mobile.matches) return
     stop()
     usingMobile = mobile.matches
-    const campaignSpecs = campaignTracks.map(([selector, desktop, phone]) =>
-      [selector, ...(usingMobile ? phone : desktop)],
-    )
+    const campaignSpecs = campaignTracks
+      .filter(([selector]) => !(usingMobile && nativeCut && selector === '.campaign-cut'))
+      .map(([selector, desktop, phone]) => [selector, ...(usingMobile ? phone : desktop)])
     tracks = measureTargets(campaignSpecs, '--nova-campaign-progress')
     if (usingMobile) tracks.push(...measureTargets(mobileTracks, '--nova-mobile-progress'))
     root.append(ruler)

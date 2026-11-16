@@ -189,6 +189,11 @@
 }
 
 @media (max-width: 900px), (max-width: 1024px) and (pointer: coarse) {
+  .director-stage, .campaign-cut {
+    --campaign-photo: url('../assets/campaign-portrait-mobile.webp');
+  }
+
+  .director-art::before, .campaign-cut-frame { filter: none; }
   .director-stage { padding-block: clamp(134px, 45vw, 220px) var(--nova-space-8); }
   .director-art { inset: 0 0 auto; block-size: clamp(260px, 80vw, 420px); }
   .director-art::before { background-position: center 20%; }
@@ -205,13 +210,37 @@
   .campaign-cut::before {
     background: linear-gradient(119deg, #5d0a19 0 19%, #b61731 19% 61%, #ec4351 61% 85%, #951027 85%);
   }
-  .campaign-cut-frame { justify-self: end; margin-inline-end: 8%; inline-size: 64%; block-size: 60%; }
+  .campaign-cut-frame {
+    justify-self: end;
+    margin-inline-end: 8%;
+    inline-size: 64%;
+    block-size: 60%;
+    box-shadow: none;
+  }
   .campaign-cut::after { clip-path: polygon(0 85%, 100% 5%, 100% 100%, 0 100%); }
 
   [data-scroll-scene="best"] h2 { font-size: clamp(2.05rem, 1.08rem + 5.9vw, 4.7rem); }
   [data-campaign-motion] .director-stage { --title-travel: .20em; }
-  [data-campaign-motion] .campaign-cut { --photo-travel: -25%; --photo-recede: .31; --photo-tilt: -3deg; }
-  [data-campaign-motion] .campaign-cut-frame { transform-origin: right center; }
+  /* Keep the field and paper edge steady while the portrait recedes. */
+  [data-campaign-motion] .campaign-cut::before,
+  [data-campaign-motion] .campaign-cut::after { transform: none; }
+
+  [data-campaign-motion] .director-art::before { transform: none; }
+
+  [data-campaign-motion] .campaign-cut-frame {
+    transform-origin: right center;
+    transform: translate3d(calc(-25% * var(--cut-progress)), 0, 0) scale(calc(1.10 - .31 * var(--cut-progress)));
+  }
+
+  @supports (animation-timeline: view()) and (view-timeline-name: --nova-mobile-cut) and (animation-range: entry 72% cover 43%) {
+    [data-campaign-motion] .campaign-cut { view-timeline-name: --nova-mobile-cut; }
+
+    [data-campaign-motion] .campaign-cut-frame {
+      animation: nova-mobile-cut both linear;
+      animation-timeline: --nova-mobile-cut;
+      animation-range: entry 72% cover 43%;
+    }
+  }
   [data-campaign-motion] [data-scroll-scene="best"] .product-card { --card-travel: -5%; }
   [data-campaign-motion] [data-scroll-scene="best"] .product-card:nth-child(even) { --card-travel: 5%; }
 
@@ -222,4 +251,9 @@
     .director-stage h2 { font-size: clamp(2.6rem, 7.25vw, 5rem); }
     .campaign-cut { height: clamp(130px, 28svh, 165px); }
   }
+}
+
+@keyframes nova-mobile-cut {
+  from { transform: translate3d(0, 0, 0) scale(1.10); }
+  to { transform: translate3d(-25%, 0, 0) scale(.79); }
 }
