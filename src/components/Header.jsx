@@ -4,10 +4,10 @@ import { useFavorites } from '../context/FavoritesContext.jsx'
 import BrandWordmark from '../design-system/BrandWordmark.jsx'
 import HeartIcon from '../design-system/HeartIcon.jsx'
 
-export default function Header({ cartCount = 0, onOpenCart, drawerOpen }) {
+export default function Header({ cartCount = 0, onOpenCart, drawerOpen, headerRef }) {
   const { favorites } = useFavorites()
   return (
-    <header className="site-header">
+    <header ref={headerRef} className="site-header">
       <div className="container header-inner">
         <NavLink className="brand" to="/" aria-label="NØVA STREET início">
           <BrandWordmark />

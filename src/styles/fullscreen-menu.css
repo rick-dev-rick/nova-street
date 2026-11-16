@@ -92,6 +92,7 @@
 .cinematic-menu-close span { color: var(--nova-brand-red-light); }
 
 .cinematic-menu-nav {
+  container-type: inline-size;
   display: grid;
   align-content: center;
   padding-block: clamp(.6rem, 3.5vh, 2.25rem);
@@ -202,7 +203,22 @@
   .cinematic-menu-nav { padding-block: .65rem; }
 }
 
+@container (inline-size < 9rem) {
+  .cinematic-menu-nav a {
+    grid-template-columns: minmax(0, 1fr);
+    font-size: clamp(1.15rem, 11vw, 2.05rem);
+  }
+
+  .cinematic-menu-index { display: none; }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .cinematic-menu-header:has(:focus-visible) { z-index: 4; }
+
+  .cinematic-menu-shell:has(.cinematic-menu-nav :focus-visible, .cinematic-menu-actions :focus-visible)::before {
+    visibility: hidden;
+  }
+
   .cinematic-menu[open] .cinematic-menu-shell::before {
     animation: nova-menu-curtain 280ms cubic-bezier(.65, 0, .2, 1) both;
   }

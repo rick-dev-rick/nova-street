@@ -9,6 +9,7 @@ import CartDrawer from './CartDrawer.jsx'
 export default function Layout({ shippingQuote, cartCount, cart, subtotal, drawerOpen, onOpenCart, onCloseCart, onCartClosed, onUpdateQuantity, onRemove }) {
   const { pathname } = useLocation()
   const main = useRef(null)
+  const header = useRef(null)
   const previousPath = useRef(pathname)
 
   useEffect(() => {
@@ -21,11 +22,23 @@ export default function Layout({ shippingQuote, cartCount, cart, subtotal, drawe
     return () => cancelAnimationFrame(frame)
   }, [pathname])
 
+  function revealKeyboardFocus(event) {
+    const target = event.target
+    if (target === main.current || !target.matches(':focus-visible')) return
+
+    const visibleTop = header.current.getBoundingClientRect().bottom + 8
+    const bounds = target.getBoundingClientRect()
+    if (bounds.top < visibleTop) {
+      // Sticky content does not participate in the browser's automatic focus scrolling.
+      window.scrollBy({ top: bounds.top - visibleTop, behavior: 'instant' })
+    }
+  }
+
   return (
     <>
       <a className="skip-link" href="#conteudo" onClick={(event) => { event.preventDefault(); main.current.focus() }}>Pular para o conteúdo</a>
-      <Header cartCount={cartCount} onOpenCart={onOpenCart} drawerOpen={drawerOpen} />
-      <main ref={main} id="conteudo" tabIndex={-1}>
+      <Header headerRef={header} cartCount={cartCount} onOpenCart={onOpenCart} drawerOpen={drawerOpen} />
+      <main ref={main} id="conteudo" tabIndex={-1} onFocus={revealKeyboardFocus}>
         <RouteErrorBoundary pathname={pathname}>
           <Suspense fallback={<LoadingStatus />}>
             <div className="route-view" key={pathname}><Outlet /></div>
