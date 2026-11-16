@@ -1,7 +1,3 @@
-.home-finale .final-cta {
-  background: radial-gradient(ellipse at 70% 130%, #4b101a 0%, transparent 62%), var(--nova-color-surface);
-}
-
 .home-signature {
   position: relative;
   isolation: isolate;
