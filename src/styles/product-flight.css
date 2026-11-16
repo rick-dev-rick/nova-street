@@ -1,0 +1,77 @@
+.product-flight-frame {
+  position: absolute;
+  display: block;
+  inset: 0;
+  overflow: hidden;
+}
+
+.route-view:has([data-product-flight-arrival]) { animation: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-product-flight] {
+    --product-flight-duration: 540ms;
+    view-transition-name: none;
+  }
+
+  html[data-product-flight]::view-transition { pointer-events: none; }
+
+  html[data-product-flight]::view-transition-group(nova-product-photo) {
+    animation-duration: var(--product-flight-duration);
+    animation-timing-function: cubic-bezier(.22, .72, .21, 1);
+    z-index: 1;
+  }
+
+  html[data-product-flight]::view-transition-image-pair(nova-product-photo) {
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  html[data-product-flight]::view-transition-old(nova-product-photo),
+  html[data-product-flight]::view-transition-new(nova-product-photo) {
+    inline-size: 100%;
+    block-size: 100%;
+    mix-blend-mode: normal;
+    animation-duration: var(--product-flight-duration);
+    animation-fill-mode: both;
+  }
+
+  html[data-product-flight]::view-transition-old(nova-product-photo) {
+    animation-name: nova-photo-out;
+  }
+
+  html[data-product-flight]::view-transition-new(nova-product-photo) {
+    animation-name: nova-photo-in;
+  }
+
+  .product-detail-info > :is(.eyebrow, h1, .product-price, .product-description) {
+    animation: nova-product-copy 330ms var(--nova-ease-expressive) both;
+    animation-delay: calc(var(--product-copy-offset, 0ms) + var(--product-copy-beat, 0ms));
+  }
+
+  .product-detail-info > h1 { --product-copy-beat: 55ms; --product-copy-rise: .42em; --product-copy-opacity: .75; }
+  .product-detail-info > .product-price { --product-copy-beat: 110ms; }
+  .product-detail-info > .product-description { --product-copy-beat: 155ms; }
+  [data-product-flight-arrival] .product-detail-info { --product-copy-offset: 345ms; }
+  .product-detail-info:focus-within > * { animation: none; }
+
+  @media (max-width: 760px), (max-width: 1024px) and (pointer: coarse) {
+    html[data-product-flight] { --product-flight-duration: 430ms; }
+    [data-product-flight-arrival] .product-detail-info { --product-copy-offset: 245ms; }
+    .product-detail-info > h1 { --product-copy-rise: .29em; }
+  }
+}
+
+@keyframes nova-photo-out {
+  0%, 42% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+
+@keyframes nova-photo-in {
+  0%, 40% { opacity: 0; }
+  73%, 100% { opacity: 1; }
+}
+
+@keyframes nova-product-copy {
+  from { transform: translateY(var(--product-copy-rise, .42rem)); opacity: var(--product-copy-opacity, .94); }
+  to { transform: none; opacity: 1; }
+}

@@ -3,7 +3,7 @@ import ChoiceButton from '../design-system/ChoiceButton.jsx'
 import Feedback from '../design-system/Feedback.jsx'
 import { ActionLink, Button } from '../design-system/Action.jsx'
 import { useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { products } from '../data/products.js'
 import EmptyState from '../components/EmptyState.jsx'
 import QuantitySelector from '../components/QuantitySelector.jsx'
@@ -11,15 +11,18 @@ import RelatedProducts from '../components/RelatedProducts.jsx'
 import FavoriteButton from '../components/FavoriteButton.jsx'
 import ProductGallery from '../components/ProductGallery.jsx'
 import ProductInformation from '../components/ProductInformation.jsx'
+import { isProductFlightArrival } from '../lib/product-flight.js'
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
 export default function Product({ cart, onAddToCart }) {
   const { id } = useParams()
-  return <ProductDetail key={id} id={id} cart={cart} onAddToCart={onAddToCart} />
+  const arriving = isProductFlightArrival(useLocation().state?.productFlight)
+  return <ProductDetail key={id} id={id} arriving={arriving} cart={cart} onAddToCart={onAddToCart} />
 }
 
-function ProductDetail({ id, cart, onAddToCart }) {
+function ProductDetail({ id, arriving, cart, onAddToCart }) {
+  const [flightArrival] = useState(arriving)
   const product = useMemo(() => products.find((item) => item.id === id), [id])
   const [size, setSize] = useState('')
   const purchaseSection = useRef(null)
@@ -50,7 +53,7 @@ function ProductDetail({ id, cart, onAddToCart }) {
 
   return (
     <>
-    <section className="section container product-page">
+    <section className="section container product-page" data-product-flight-arrival={flightArrival || undefined}>
       <ProductGallery product={product} />
       <div className="product-detail-info">
         <p className="eyebrow">{product.category} · {product.badge}</p>

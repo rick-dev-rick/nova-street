@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { observeProductLink, warmProductPage } from '../lib/product-route.js'
+import { startProductFlight } from '../lib/product-flight.js'
 import FavoriteButton from './FavoriteButton.jsx'
 import '../styles/premium-product-card.css'
 
@@ -21,12 +24,23 @@ const touchFeedback = {
 
 export default function ProductCard({ product, headingLevel = 3 }) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
+  const navigate = useNavigate()
+  const frame = useRef(null)
+  const to = `/produto/${product.id}`
+  useEffect(() => observeProductLink(frame.current), [])
+
+  function activate(event) {
+    startProductFlight(event, { frame: frame.current, to, navigate })
+  }
   return (
     <article className="product-card">
       <div className="product-card-visual">
-        <Link to={`/produto/${product.id}`} className="product-image-wrap" {...touchFeedback}>
-          <span className="product-image-plane">
-            <img src={product.image} alt={product.name} loading="lazy" />
+        <Link to={to} className="product-image-wrap" onClick={activate} onFocus={warmProductPage}
+          onPointerEnter={warmProductPage} {...touchFeedback}>
+          <span className="product-flight-frame" ref={frame}>
+            <span className="product-image-plane">
+              <img src={product.image} alt={product.name} loading="lazy" />
+            </span>
           </span>
           <span className="product-image-cue" aria-hidden="true" />
           {product.badge && <span className="product-badge">{product.badge}</span>}
@@ -35,7 +49,7 @@ export default function ProductCard({ product, headingLevel = 3 }) {
       </div>
       <div className="product-meta">
         <p>{product.category}</p>
-        <Heading className="product-card-title"><Link to={`/produto/${product.id}`} {...touchFeedback}>{product.name}</Link></Heading>
+        <Heading className="product-card-title"><Link to={to} onClick={activate} onFocus={warmProductPage} {...touchFeedback}>{product.name}</Link></Heading>
         <strong className="price">{money.format(product.price)}</strong>
       </div>
     </article>
