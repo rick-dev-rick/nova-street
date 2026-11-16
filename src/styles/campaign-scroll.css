@@ -1,0 +1,259 @@
+/* The portrait, red cut and contact sheet occupy real space in the document. */
+.featured-drop[data-scroll-scene="drop"] { padding-block: 0; }
+
+.director-stage, .campaign-cut {
+  --campaign-photo: url('https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=900&q=85');
+  position: relative;
+  isolation: isolate;
+}
+
+.director-stage {
+  display: grid;
+  align-items: center;
+  padding-block: clamp(60px, 8vw, 130px) clamp(54px, 7vw, 105px);
+  background: var(--nova-color-bg);
+}
+
+.director-art {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 35%;
+  overflow: hidden;
+  background: #24191c;
+  pointer-events: none;
+}
+
+.director-art::before, .director-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.director-art::before {
+  background: var(--campaign-photo) center 26% / cover;
+  filter: grayscale(1) brightness(.81);
+}
+
+.director-art::after {
+  background:
+    linear-gradient(90deg, #0a0a0a, #0a0a0ac9 27%, transparent 81%),
+    linear-gradient(0deg, #0a0a0a 0%, #15090d52 36%, #3d0a1240);
+}
+
+.director-stage .featured-drop-inner {
+  display: block;
+  position: relative;
+}
+
+.director-stage h2 {
+  font-size: clamp(4rem, 8.2vw, 8.75rem);
+  line-height: .94;
+  letter-spacing: -.065em;
+  overflow-wrap: anywhere;
+}
+
+.director-title-line, .director-title-line > span { display: block; }
+.director-title-line + .director-title-line { color: var(--nova-brand-red-light); }
+
+.director-drop-copy {
+  max-inline-size: 39ch;
+  margin-block-start: var(--nova-space-7);
+  padding-inline-start: var(--nova-space-4);
+  border-inline-start: 3px solid var(--nova-brand-red);
+}
+
+.director-drop-copy .btn { background: #151013; }
+.director-drop-copy .btn:hover { background: #27171d; }
+
+.campaign-cut {
+  display: grid;
+  place-items: center;
+  height: clamp(192px, 23vw, 330px);
+  overflow: hidden;
+  background: #a20f25;
+  pointer-events: none;
+}
+
+.campaign-cut::before, .campaign-cut::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.campaign-cut::before {
+  background: linear-gradient(114deg, #510915 0 21%, #bb152c 21% 65%, #ed3b48 65% 88%, #981027 88%);
+}
+
+.campaign-cut::after {
+  inset: auto 0 0;
+  height: clamp(16px, 3.4vw, 54px);
+  background: var(--nova-brand-paper);
+  clip-path: polygon(0 95%, 100% 0, 100% 100%, 0 100%);
+  transform-origin: bottom;
+}
+
+.campaign-cut-frame {
+  position: relative;
+  inline-size: min(64%, 920px);
+  block-size: 64%;
+  background: #261218 var(--campaign-photo) center 29% / cover;
+  filter: grayscale(1) contrast(1.11) brightness(.87);
+  box-shadow: 0 14px 38px #35081195;
+  outline: 1px solid #f5e0dc94;
+  outline-offset: 4px;
+}
+
+[data-scroll-scene="best"].section {
+  padding-block-start: clamp(24px, 4vw, 56px);
+}
+
+[data-scroll-scene="best"] h2 {
+  font-size: clamp(2.7rem, 6.8vw, 7rem);
+  line-height: .96;
+  letter-spacing: -.064em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+[data-campaign-motion] .director-stage {
+  --first-line: clamp(0, calc(1.28 * var(--nova-campaign-progress, 1)), 1);
+  --second-line: clamp(0, calc(1.3 * var(--nova-campaign-progress, 1) - .3), 1);
+  --title-travel: .32em;
+}
+
+[data-campaign-motion] .director-art::before {
+  --camera-depth: calc(1 - var(--nova-campaign-progress, 1));
+  transform: translateX(calc(-5% * var(--camera-depth))) scale(calc(1.03 + .3 * var(--camera-depth)));
+}
+
+[data-campaign-motion] .director-title-line > span {
+  transform-origin: left center;
+  transform: translate(calc(var(--title-travel) * (1 - var(--first-line))), calc(-.35em * (1 - var(--first-line))))
+    scale(calc(.77 + .23 * var(--first-line)));
+}
+
+[data-campaign-motion] .director-title-line + .director-title-line > span {
+  transform: translate(calc(.26em * (1 - var(--second-line))), calc(.38em * (1 - var(--second-line))))
+    scale(calc(.82 + .18 * var(--second-line)));
+}
+
+[data-campaign-motion] .campaign-cut {
+  --cut-progress: var(--nova-campaign-progress, .7);
+  --photo-travel: 29%;
+  --photo-recede: .38;
+  --photo-tilt: -5deg;
+}
+
+[data-campaign-motion] .campaign-cut::before {
+  transform: translateX(calc(-12% + 24% * var(--cut-progress))) scaleX(1.26);
+}
+
+[data-campaign-motion] .campaign-cut-frame {
+  transform: translateX(calc(var(--photo-travel) * var(--cut-progress))) rotate(calc(var(--photo-tilt) * (1 - var(--cut-progress)) + 2deg * var(--cut-progress)))
+    scale(calc(1.10 - var(--photo-recede) * var(--cut-progress)));
+}
+
+[data-campaign-motion] .campaign-cut::after {
+  transform: scaleY(calc(.12 + .88 * var(--cut-progress)));
+}
+
+[data-campaign-motion] [data-scroll-scene="best"] .section-heading h2 {
+  --heading-progress: var(--nova-campaign-progress, 1);
+  transform-origin: left bottom;
+  transform: scale(calc(.73 + .27 * var(--heading-progress))) translateX(calc(.24em * (1 - var(--heading-progress))));
+}
+
+[data-campaign-motion] [data-scroll-scene="best"] .product-card {
+  --card-travel: -7%;
+  --card-delay: 0;
+}
+
+[data-campaign-motion] [data-scroll-scene="best"] .product-card:nth-child(even) { --card-travel: 7%; --card-delay: .18; }
+
+[data-campaign-motion] [data-scroll-scene="best"] .product-image-wrap img {
+  --camera-depth: clamp(0, calc((1 + var(--card-delay)) * (1 - var(--nova-campaign-progress, 1))), 1);
+  transition: none;
+  transform: translate(calc(var(--card-travel) * var(--camera-depth)), calc(6% * var(--camera-depth)))
+    scale(calc(1 + .34 * var(--camera-depth)));
+}
+
+[data-campaign-motion] .director-stage:focus-within .director-title-line > span,
+[data-campaign-motion] [data-scroll-scene="best"] .section-heading:focus-within h2,
+[data-campaign-motion] [data-scroll-scene="best"] .product-card:focus-within .product-image-wrap img {
+  transform: none;
+}
+
+@media (min-width: 901px) {
+  [data-campaign-motion] [data-scroll-scene="best"] .product-card:nth-child(3) { --card-delay: .26; }
+  [data-campaign-motion] [data-scroll-scene="best"] .product-card:nth-child(4) { --card-delay: .38; }
+}
+
+@media (max-width: 900px), (max-width: 1024px) and (pointer: coarse) {
+  .director-stage, .campaign-cut {
+    --campaign-photo: url('../assets/campaign-portrait-mobile.webp');
+  }
+
+  .director-art::before, .campaign-cut-frame { filter: none; }
+  .director-stage { padding-block: clamp(134px, 45vw, 220px) var(--nova-space-8); }
+  .director-art { inset: 0 0 auto; block-size: clamp(260px, 80vw, 420px); }
+  .director-art::before { background-position: center 20%; }
+  .director-art::after {
+    background:
+      linear-gradient(0deg, #0a0a0a 2%, #0a0a0ae8 29%, #0a0a0a50 65%, #21070b13),
+      linear-gradient(90deg, #0a0a0a98, transparent 80%);
+  }
+
+  .director-stage h2 { font-size: clamp(2.45rem, 1.08rem + 8vw, 5.8rem); }
+  .director-drop-copy { margin-block-start: var(--nova-space-5); }
+
+  .campaign-cut { height: clamp(137px, 40vw, 210px); }
+  .campaign-cut::before {
+    background: linear-gradient(119deg, #5d0a19 0 19%, #b61731 19% 61%, #ec4351 61% 85%, #951027 85%);
+  }
+  .campaign-cut-frame {
+    justify-self: end;
+    margin-inline-end: 8%;
+    inline-size: 64%;
+    block-size: 60%;
+    box-shadow: none;
+  }
+  .campaign-cut::after { clip-path: polygon(0 85%, 100% 5%, 100% 100%, 0 100%); }
+
+  [data-scroll-scene="best"] h2 { font-size: clamp(2.05rem, 1.08rem + 5.9vw, 4.7rem); }
+  [data-campaign-motion] .director-stage { --title-travel: .20em; }
+  /* Keep the field and paper edge steady while the portrait recedes. */
+  [data-campaign-motion] .campaign-cut::before,
+  [data-campaign-motion] .campaign-cut::after { transform: none; }
+
+  [data-campaign-motion] .director-art::before { transform: none; }
+
+  [data-campaign-motion] .campaign-cut-frame {
+    transform-origin: right center;
+    transform: translate3d(calc(-25% * var(--cut-progress)), 0, 0) scale(calc(1.10 - .31 * var(--cut-progress)));
+  }
+
+  @supports (animation-timeline: view()) and (view-timeline-name: --nova-mobile-cut) and (animation-range: entry 72% cover 43%) {
+    [data-campaign-motion] .campaign-cut { view-timeline-name: --nova-mobile-cut; }
+
+    [data-campaign-motion] .campaign-cut-frame {
+      animation: nova-mobile-cut both linear;
+      animation-timeline: --nova-mobile-cut;
+      animation-range: entry 72% cover 43%;
+    }
+  }
+  [data-campaign-motion] [data-scroll-scene="best"] .product-card { --card-travel: -5%; }
+  [data-campaign-motion] [data-scroll-scene="best"] .product-card:nth-child(even) { --card-travel: 5%; }
+
+  @media (orientation: landscape) and (max-height: 519px) {
+    .director-stage { padding-block: var(--nova-space-10); }
+    .director-art { inset: 0 0 0 32%; block-size: auto; }
+    .director-art::after { background: linear-gradient(90deg, #0a0a0a, #0a0a0ac9 32%, #21070b16); }
+    .director-stage h2 { font-size: clamp(2.6rem, 7.25vw, 5rem); }
+    .campaign-cut { height: clamp(130px, 28svh, 165px); }
+  }
+}
+
+@keyframes nova-mobile-cut {
+  from { transform: translate3d(0, 0, 0) scale(1.10); }
+  to { transform: translate3d(-25%, 0, 0) scale(.79); }
+}
