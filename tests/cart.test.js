@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { addCartItem, updateCartItemQuantity, removeCartItem, getCartSubtotal } from '../src/lib/cart.js'
+import { addCartItem, updateCartItemQuantity, removeCartItem, getCartSubtotal, getCartLineSubtotal, readQuantityInput } from '../src/lib/cart.js'
 
 const tee = { id: 'tee-01', name: 'Essential Oversized Tee', price: 129.9 }
 
@@ -38,6 +38,21 @@ test('removes a cart line by key', () => {
 test('calculates subtotal using price times quantity', () => {
   const cart = addCartItem([], tee, 'M', 2)
   assert.equal(getCartSubtotal(cart), 259.8)
+})
+
+test('line subtotals match the bag total across independent product sizes', () => {
+  const twoSizes = addCartItem(addCartItem([], tee, 'M', 3), tee, 'G', 1)
+  assert.deepEqual(twoSizes.map(getCartLineSubtotal), [389.7, 129.9])
+  assert.equal(getCartSubtotal(twoSizes), 519.6)
+  assert.equal(getCartLineSubtotal(updateCartItemQuantity(twoSizes, twoSizes[0].key, 5)[0]), 649.5)
+})
+
+test('a cleared number input is a draft and valid input respects variant capacity', () => {
+  assert.equal(readQuantityInput(NaN), null)
+  assert.equal(readQuantityInput(12), 12)
+  assert.equal(readQuantityInput(8, 4), 4)
+  assert.equal(readQuantityInput(100), 99)
+  assert.equal(readQuantityInput(0), 1)
 })
 
 test('non-finite quantities cannot corrupt totals', () => {

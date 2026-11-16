@@ -16,13 +16,22 @@ test('product and checkout identify and group the information around their prima
   assert.match(read('pages/Product.jsx'), /className="product-purchase"[\s\S]+aria-describedby="purchase-help"/)
   const checkout = read('pages/Checkout.jsx')
   assert.ok(checkout.indexOf('<h1>Finalizar pedido</h1>') < checkout.indexOf('className="checkout-notice'))
-  assert.match(checkout, /<h2[^>]*>Dados do pedido<\/h2>/)
+  assert.match(checkout, /<h2[^>]*>Peças da simulação<\/h2>/)
   assert.match(checkout, /<h2[^>]*>Resumo e frete<\/h2>/)
 })
 
 test('empty catalog provides a recovery action without duplicating favorites actions', () => {
   const catalog = read('pages/Catalog.jsx')
   assert.match(catalog, /<EmptyState[\s\S]+onClick=\{clearFilters\}/)
-  assert.match(catalog, /function clearFilters\(\)\s*\{\s*setQuery\(''\)\s*chooseCategory\('Todos'\)/)
+  assert.match(catalog, /function clearFilters\(\)\s*\{\s*changeFilters\(\{ category: 'Todos', order: 'destaques', query: '' \}\)\s*resultsStatus\.current\.focus\(\)/)
   assert.match(read('pages/Favorites.jsx'), /\{saved\.length > 0 && <ActionLink/)
+})
+
+test('the demo checkout uses the cart and local CEP quote without requesting contact data', () => {
+  const checkout = read('pages/Checkout.jsx')
+  assert.doesNotMatch(checkout, /<input\b|<InputField\b|FormData/)
+  assert.match(checkout, /<ShippingCalculator\b/)
+  assert.match(checkout, /money\.format\(getCartLineSubtotal\(item\)\)/)
+  assert.match(checkout, /disabled=\{!shippingQuote\}/)
+  assert.ok(checkout.indexOf('<OrderTotals') < checkout.indexOf('Simular pedido'))
 })

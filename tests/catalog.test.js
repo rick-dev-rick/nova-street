@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { selectProducts } from '../src/lib/catalog.js'
+import { parseCatalogParams, selectProducts, updateCatalogParams } from '../src/lib/catalog.js'
 
 const items = [
   { id: 'a', name: 'Tee', category: 'Unissex', price: 200, releasedAt: '2026-10-01' },
@@ -29,4 +29,42 @@ test('default and unknown orders preserve editorial order, including price ties'
 })
 test('unmatched searches return an empty list', () => {
   assert.deepEqual(selectProducts(items, { query: 'missing', order: 'novidades' }), [])
+})
+
+
+test('reads catalog refinements from the URL and falls back for unsupported values', () => {
+  const categories = ['Todos', 'Acessórios', 'Unissex']
+  assert.deepEqual(
+    parseCatalogParams(new URLSearchParams('categoria=Acess%C3%B3rios&busca=bon%C3%A9&ordem=menor-preco'), categories),
+    { category: 'Acessórios', query: 'boné', order: 'menor-preco' },
+  )
+  assert.deepEqual(
+    parseCatalogParams(new URLSearchParams('categoria=404&ordem=unknown'), categories),
+    { category: 'Todos', query: '', order: 'destaques' },
+  )
+})
+
+test('changes one query refinement without dropping other refinements or mutating URL parameters', () => {
+  const current = new URLSearchParams('categoria=Unissex&ordem=maior-preco&origem=home')
+  const next = updateCatalogParams(current, { query: ' Têe ' })
+  assert.equal(next.get('busca'), ' Têe ')
+  assert.equal(next.get('categoria'), 'Unissex')
+  assert.equal(next.get('ordem'), 'maior-preco')
+  assert.equal(next.get('origem'), 'home')
+  assert.equal(current.has('busca'), false)
+})
+
+test('reset removes all catalog refinements while keeping unrelated URL parameters', () => {
+  const current = new URLSearchParams('categoria=Unissex&ordem=maior-preco&busca=moletom&origem=home')
+  assert.equal(updateCatalogParams(current, { category: 'Todos', query: '', order: 'destaques' }).toString(), 'origem=home')
+})
+
+test('searches by catalog terms regardless of accents, letter case or token order', () => {
+  const products = [
+    { id: 'crop', name: 'Nøva Cropped Tee', category: 'Feminino', description: 'Cropped de corte reto.' },
+    { id: 'cap', name: 'Urban Cap Redline', category: 'Acessórios', description: 'Boné estruturado.' },
+  ]
+  assert.deepEqual(selectProducts(products, { query: 'cropped NOVA' }).map(x => x.id), ['crop'])
+  assert.deepEqual(selectProducts(products, { query: 'BONE acessorio' }).map(x => x.id), ['cap'])
+  assert.deepEqual(selectProducts(products, { category: 'Feminino', query: 'boné' }), [])
 })
