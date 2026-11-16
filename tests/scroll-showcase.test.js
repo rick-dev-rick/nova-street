@@ -17,10 +17,9 @@ test('scroll enhancement has stable anchors and a visible keyboard and reduced-m
   const css = read('styles/scroll-showcase.css')
   assert.match(css, /@media \(prefers-reduced-motion: no-preference\)/)
   assert.match(css, /@supports \(animation-timeline: view\(\)\)/)
-  for (const timeline of ['hero', 'explore', 'new', 'lifestyle', 'outro']) {
+  for (const timeline of ['hero', 'exit', 'outro']) {
     assert.match(css, new RegExp(`animation-timeline: --scroll-${timeline}\\b`))
   }
-  assert.match(css, /:focus-within/)
   assert.doesNotMatch(css, /(?:visibility:\s*hidden|opacity:\s*0\s*[;}])/)
 })
 

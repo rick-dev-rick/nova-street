@@ -22,7 +22,7 @@ const touchFeedback = {
   onLostPointerCapture: endTouchPress,
 }
 
-export default function ProductCard({ product, headingLevel = 3 }) {
+export default function ProductCard({ product, headingLevel = 3, revealKey }) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
   const navigate = useNavigate()
   const frame = useRef(null)
@@ -33,7 +33,7 @@ export default function ProductCard({ product, headingLevel = 3 }) {
     startProductFlight(event, { frame: frame.current, to, navigate })
   }
   return (
-    <article className="product-card">
+    <article className="product-card" data-editorial-reveal={revealKey}>
       <div className="product-card-visual">
         <Link to={to} className="product-image-wrap" onClick={activate} onFocus={warmProductPage}
           onPointerEnter={warmProductPage} {...touchFeedback}>
