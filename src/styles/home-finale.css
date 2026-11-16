@@ -1,0 +1,166 @@
+.home-finale .final-cta {
+  --finale-surface: #1b1316;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  text-align: start;
+  padding-block: clamp(3.5rem, 9vw, 8rem) clamp(2.75rem, 7vw, 6.25rem);
+  background: linear-gradient(115deg, #0e0a0b 0%, var(--finale-surface) 80%);
+}
+
+.final-cta-visual {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 39%;
+  overflow: hidden;
+  background: #261218;
+  pointer-events: none;
+}
+
+.final-cta-visual img,
+.final-cta-visual::before,
+.final-cta-visual::after {
+  position: absolute;
+}
+
+.final-cta-visual img {
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: 54% 43%;
+  color: transparent;
+}
+
+.final-cta-visual::before {
+  content: '';
+  inset: 0;
+  background:
+    linear-gradient(90deg, #110c0d 0%, #140c0ef0 18%, #180b1080 52%, #240d1233 91%),
+    linear-gradient(0deg, var(--finale-surface), transparent 34%);
+  z-index: 1;
+}
+
+.final-cta-visual::after {
+  content: '';
+  inset: 10% 9% auto auto;
+  inline-size: clamp(2rem, 7vw, 9rem);
+  block-size: clamp(2rem, 7vw, 9rem);
+  border-block-start: 2px solid #ff586f91;
+  border-inline-end: 2px solid #ff586f91;
+  z-index: 1;
+}
+
+.final-cta-content {
+  position: relative;
+  padding-inline-start: clamp(.75rem, 2.1vw, 1.75rem);
+  border-inline-start: 2px solid var(--nova-brand-red);
+}
+
+.home-finale .final-cta h2 {
+  max-inline-size: 9ch;
+  font-size: clamp(2.5rem, 6.8vw, 7rem);
+  line-height: .92;
+  letter-spacing: -.064em;
+  overflow-wrap: anywhere;
+  margin-block: var(--nova-space-5);
+}
+
+.final-cta-line {
+  display: block;
+  transform-origin: left center;
+}
+
+.final-cta-line + .final-cta-line { color: var(--nova-brand-red-light); }
+
+.home-finale .final-cta p:not(.eyebrow) {
+  max-inline-size: 34ch;
+  margin-inline: 0;
+}
+
+.home-finale .final-cta .btn-secondary {
+  background: #1b1316;
+}
+
+.home-finale .final-cta .btn-secondary:hover {
+  background: #322027;
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .home-finale .final-cta {
+    padding-block: clamp(11rem, 55vw, 18rem) var(--nova-space-10);
+    background: linear-gradient(#120d0f 52%, var(--finale-surface));
+  }
+
+  .final-cta-visual {
+    inset: 0 0 auto;
+    block-size: clamp(17rem, 85vw, 30rem);
+  }
+
+  .final-cta-visual img { object-position: 54% 31%; }
+
+  .final-cta-visual::before {
+    background:
+      linear-gradient(0deg, #120d0f 0%, #120d0ff2 16%, #180b1038 56%, #210b1233 100%),
+      linear-gradient(90deg, #110b1047, transparent 78%);
+  }
+
+  .final-cta-visual::after { inset: 9% 10% auto auto; }
+
+  .home-finale .final-cta h2 {
+    max-inline-size: 11ch;
+    font-size: clamp(2.45rem, 10vw, 5.35rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) and (view-timeline-name: --nova-finale) and (animation-range: entry 0% entry 100%) {
+    .home-finale .final-cta { view-timeline-name: --nova-finale; }
+
+    .final-cta-visual img {
+      --finale-photo-x: 8%;
+      --finale-photo-y: -3%;
+      animation: nova-finale-camera linear both;
+      animation-timeline: --nova-finale;
+      animation-range: entry 12% cover 50%;
+    }
+
+    .final-cta-line {
+      --finale-title-x: 20%;
+      --finale-title-y: -.25em;
+      animation: nova-finale-title linear both;
+      animation-timeline: --nova-finale;
+      animation-range: entry 24% entry 82%;
+    }
+
+    .final-cta-line + .final-cta-line {
+      --finale-title-x: 15%;
+      --finale-title-y: .34em;
+      animation-range: entry 42% entry 97%;
+    }
+
+    .final-cta:focus-within .final-cta-line { animation: none; }
+
+    @media (max-width: 760px) and (orientation: portrait) {
+      .final-cta-visual img {
+        --finale-photo-x: -2%;
+        --finale-photo-y: -6%;
+        animation-range: entry 0% cover 42%;
+      }
+
+      .final-cta-line { --finale-title-x: 5%; --finale-title-y: -.32em; }
+      .final-cta-line + .final-cta-line { --finale-title-x: 24%; }
+    }
+  }
+}
+
+@keyframes nova-finale-camera {
+  from { transform: translate3d(var(--finale-photo-x), var(--finale-photo-y), 0) scale(1.24); }
+  to { transform: translate3d(0, 0, 0) scale(1.02); }
+}
+
+@keyframes nova-finale-title {
+  from { transform: translate3d(var(--finale-title-x), var(--finale-title-y), 0) scale(.74); }
+  to { transform: none; }
+}

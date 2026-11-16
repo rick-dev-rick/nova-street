@@ -15,6 +15,7 @@ import '../styles/scroll-showcase.css'
 import '../styles/mobile-scroll.css'
 import '../styles/campaign-scroll.css'
 import '../styles/home-signature.css'
+import '../styles/home-finale.css'
 
 const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
 const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
