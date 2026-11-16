@@ -17,7 +17,7 @@ test('menu and dialogs animate as their visibility changes', () => {
   assert.match(css, /@starting-style/)
   assert.match(css, /display var\(--nova-motion-normal\) allow-discrete/)
   assert.match(css, /overlay var\(--nova-motion-normal\) allow-discrete/)
-  assert.match(read('components/CategoryNavigation.jsx'), /inert=\{isMobile && !open\}/)
+  assert.match(read('components/CategoryNavigation.jsx'), /\.showModal\(\)/)
 })
 
 test('reduced motion removes transitions and animations from the motion rules', () => {
