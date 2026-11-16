@@ -1,0 +1,147 @@
+.product-card {
+  --card-hover-scale: 1.15;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--nova-color-border);
+  background: var(--nova-color-bg);
+}
+
+:is([data-scroll-scene="new"], [data-scroll-scene="best"]) .product-card {
+  /* Reserve part of the crop for the photograph's existing scroll animation. */
+  --card-hover-scale: 1.10;
+}
+
+.product-card .product-image-wrap {
+  isolation: isolate;
+  display: block;
+}
+
+.product-image-plane {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.product-image-cue {
+  position: absolute;
+  z-index: 2;
+  inset: var(--nova-space-2-5) auto auto var(--nova-space-2-5);
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  background: var(--nova-brand-ink);
+  color: var(--nova-brand-paper);
+  border-block-end: 2px solid var(--nova-brand-red-light);
+  opacity: var(--card-cue, 0);
+  pointer-events: none;
+}
+
+.product-image-cue::before,
+.product-image-cue::after {
+  content: '';
+  grid-area: 1 / 1;
+}
+
+.product-image-cue::before {
+  inline-size: .55rem;
+  block-size: .55rem;
+  border-block-start: 2px solid currentColor;
+  border-inline-end: 2px solid currentColor;
+  transform: translate(2px, -2px);
+}
+
+.product-image-cue::after {
+  inline-size: .95rem;
+  block-size: 2px;
+  background: currentColor;
+  transform: rotate(-45deg);
+}
+
+.product-card .product-meta {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(.625rem, 1.35vw, 1.15rem);
+  border-block-start: 1px solid var(--nova-color-border);
+  overflow-wrap: anywhere;
+}
+
+.product-card .product-meta::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto;
+  block-size: 3px;
+  background: var(--nova-brand-red);
+  opacity: var(--card-register, 0);
+  pointer-events: none;
+}
+
+.product-card .product-meta > p {
+  font-weight: var(--nova-font-weight-medium);
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+
+.product-card .price { margin-block-start: auto; }
+
+.product-card:has(.product-image-wrap:focus-visible, .product-card-title > a:focus-visible) {
+  --card-cue: 1;
+  --card-register: 1;
+  --card-display-transform: translateY(1%) scale(var(--card-hover-scale));
+}
+
+.product-card:has(.favorite-button:focus-visible) { --card-register: 1; }
+
+.product-card .product-card-visual > .favorite-button[aria-pressed="true"] {
+  color: var(--nova-color-accent);
+  box-shadow: inset 0 0 0 2px currentColor, var(--nova-shadow-control);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card:has(.product-image-wrap:hover, .product-card-title > a:hover) {
+    --card-cue: 1;
+    --card-register: 1;
+    --card-display-transform: translateY(1%) scale(var(--card-hover-scale));
+  }
+}
+
+.product-card:has(:is(.product-image-wrap, .product-card-title > a):is(:active, [data-touch-pressed])) {
+  --card-cue: 1;
+  --card-register: 1;
+  --card-display-transform: scale(1.055);
+  --card-camera-duration: var(--nova-motion-fast);
+}
+
+.product-card .product-card-visual > .favorite-button:active {
+  background: var(--nova-color-surface);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The photograph inside this plane still follows the Home's scroll choreography. */
+  .product-image-plane {
+    transform: var(--card-display-transform, none);
+    transition: transform var(--card-camera-duration, 520ms) cubic-bezier(.2, .72, .24, 1);
+  }
+
+  .product-image-cue {
+    transform: translate(calc(-7px * (1 - var(--card-cue, 0))), calc(7px * (1 - var(--card-cue, 0))));
+    transition: transform var(--nova-motion-normal) var(--nova-ease-standard), opacity var(--nova-motion-fast) linear;
+  }
+
+  .product-card .product-meta::before {
+    transform-origin: left;
+    transform: scaleX(calc(.06 + .94 * var(--card-register, 0)));
+    transition: transform var(--nova-motion-slow) var(--nova-ease-standard), opacity var(--nova-motion-fast) linear;
+  }
+
+  .product-card .product-card-visual > .favorite-button:active .heart-icon { transform: scale(.82); }
+}
+
+@media (max-width: 430px) {
+  .product-card .product-badge,
+  .product-image-cue {
+    inset-inline-start: var(--nova-space-2);
+  }
+}
