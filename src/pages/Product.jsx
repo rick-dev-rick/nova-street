@@ -62,7 +62,7 @@ function ProductDetail({ id, arriving, cart, onAddToCart }) {
         <p className="product-description">{product.description}</p>
         <section ref={purchaseSection} className="product-purchase" aria-labelledby="purchase-title">
           <h2 id="purchase-title">Escolha sua peça</h2>
-          <fieldset className="size-selector"><legend>Tamanho</legend><div className="size-options">{product.sizes.map((item) => <ChoiceButton className="size" selected={size === item} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</ChoiceButton>)}</div></fieldset>
+          <fieldset className="size-selector"><legend>Tamanho (obrigatório)</legend><div className="size-options">{product.sizes.map((item) => <ChoiceButton className="size" selected={size === item} onClick={() => { setSize(item); setAdded(false) }} key={item}>{item}</ChoiceButton>)}</div></fieldset>
           <QuantitySelector value={selectedQuantity} max={maxQuantity} disabled={unavailable} onChange={value => { setQuantity(value); setAdded(false) }} />
           <Button variant="primary" className="product-add" onClick={add} disabled={!size || unavailable} aria-describedby="purchase-help">Adicionar à sacola</Button>
           <div id="purchase-help" className="purchase-help" aria-live="polite" aria-atomic="true">
@@ -76,7 +76,7 @@ function ProductDetail({ id, arriving, cart, onAddToCart }) {
           <FavoriteButton product={product} showLabel />
         </section>
         <ProductInformation product={product} />
-        <div className="product-benefits"><p>✓ Troca simplificada</p><p>✓ Frete grátis a partir de R$ 299</p><p>✓ Checkout demonstrativo — nenhum pagamento real</p></div>
+        <div className="product-benefits"><p>✓ Frete grátis a partir de R$ 299</p><p>✓ Checkout demonstrativo — nenhum pagamento real</p></div>
       </div>
     </section>
     <RelatedProducts product={product} />

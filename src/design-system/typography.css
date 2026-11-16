@@ -97,7 +97,7 @@ h6 { font-size: var(--nova-type-size-h6); }
   text-wrap: wrap;
 }
 
-.cart-summary h2, .checkout-summary h2, .checkout-form h2,
+.cart-summary h2, .checkout-summary h2, .checkout-review h2,
 .product-purchase h2, .product-information h2 {
   font-size: var(--nova-type-size-h3);
 }
@@ -108,7 +108,7 @@ h6 { font-size: var(--nova-type-size-h6); }
   font-size: var(--nova-type-size-small);
 }
 
-.search-field, .sort-field, .quantity-field, .checkout-form label,
+.search-field, .sort-field, .quantity-field,
 .shipping-calculator > label, .shipping-input-row button, .gallery-zoom,
 .shipping-error, .shipping-result, .catalog-count {
   font-size: var(--nova-type-size-label);
@@ -131,7 +131,7 @@ h6 { font-size: var(--nova-type-size-h6); }
   text-align: center;
 }
 
-.cart-link, .search-field, .sort-field, .checkout-form label, .size-selector legend,
+.cart-link, .search-field, .sort-field, .size-selector legend,
 .gallery-zoom, .product-disclosure summary, .drawer-close, .favorites-link,
 .favorite-button-labeled, .product-quantity, .shipping-calculator > label,
 .shipping-input-row button {

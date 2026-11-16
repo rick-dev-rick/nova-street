@@ -1,4 +1,5 @@
 import { QuantityControls } from './QuantitySelector.jsx'
+import CartLinePrices from './CartLinePrices.jsx'
 import Dialog from '../design-system/Dialog.jsx'
 import { ActionLink } from '../design-system/Action.jsx'
 import { useEffect, useLayoutEffect, useRef } from 'react'
@@ -48,7 +49,7 @@ export default function CartDrawer({ shippingQuote, open, onClose, onClosed, car
           <div className="drawer-items" role="group" aria-label="Itens da sacola">
             {cart.map(item => <article className="drawer-item" key={item.key}>
               <Link to={`/produto/${item.id}`} onClick={onClose} tabIndex={-1} aria-hidden="true"><img src={item.image} alt="" /></Link>
-              <div className="drawer-item-info"><h3><Link to={`/produto/${item.id}`} onClick={onClose}>{item.name}</Link></h3><p>Tamanho {item.size}</p><strong className="price">{money.format(item.price * item.quantity)}</strong>
+              <div className="drawer-item-info"><h3><Link to={`/produto/${item.id}`} onClick={onClose}>{item.name}</Link></h3><p>Tamanho {item.size}</p><CartLinePrices item={item} />
                 <div className="drawer-item-actions"><QuantityControls
                   label={`Quantidade de ${item.name}, tamanho ${item.size}`}
                   value={item.quantity}

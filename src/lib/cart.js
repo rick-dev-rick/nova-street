@@ -4,6 +4,10 @@ export function normalizeQuantity(quantity) {
   return Number.isFinite(Number(quantity)) ? Math.min(MAX_CART_QUANTITY, Math.max(1, Math.floor(Number(quantity) || 1))) : 1
 }
 
+export function readQuantityInput(value, max = MAX_CART_QUANTITY) {
+  return Number.isFinite(value) ? Math.min(max, normalizeQuantity(value)) : null
+}
+
 export function makeCartKey(productId, size) {
   return `${productId}::${size}`
 }
@@ -37,8 +41,12 @@ export function removeCartItem(cart, key) {
   return cart.filter((item) => item.key !== key)
 }
 
+export function getCartLineSubtotal(item) {
+  return Number((Number(item.price) * Number(item.quantity)).toFixed(2))
+}
+
 export function getCartSubtotal(cart) {
   return Number(
-    cart.reduce((sum, item) => sum + Number(item.price) * Number(item.quantity), 0).toFixed(2),
+    cart.reduce((sum, item) => sum + getCartLineSubtotal(item), 0).toFixed(2),
   )
 }
