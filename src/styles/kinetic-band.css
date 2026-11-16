@@ -1,0 +1,167 @@
+.kinetic-band {
+  overflow: hidden;
+  overflow: clip;
+  border-block: 1px solid var(--nova-neutral-800);
+  background: linear-gradient(122deg, var(--nova-color-bg) 54%, var(--nova-color-surface));
+  color: var(--nova-color-text);
+}
+
+.kinetic-band-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-inline: auto;
+  max-inline-size: 98rem;
+  padding: clamp(2rem, 4.6vw, 4.5rem) clamp(1.65rem, 9vw, 9rem);
+}
+
+.kinetic-band-title,
+.kinetic-band-outline {
+  margin: 0;
+  font-weight: var(--nova-font-weight-heavy);
+  line-height: .92;
+  letter-spacing: var(--nova-type-tracking-display);
+  overflow-wrap: anywhere;
+}
+
+.kinetic-band-title {
+  grid-row: 2;
+  z-index: 1;
+  font-size: clamp(2.1rem, .8rem + 7.9vw, 8.25rem);
+}
+
+.kinetic-band-title span {
+  display: block;
+}
+
+.kinetic-band-title span + span {
+  text-align: right;
+}
+
+.kinetic-band-outline {
+  grid-row: 1;
+  justify-self: end;
+  margin-block-end: -.08em;
+  color: var(--nova-neutral-500);
+  font-size: clamp(1.3rem, .55rem + 6.1vw, 6.5rem);
+  text-align: right;
+  letter-spacing: -.04em;
+}
+
+@supports (-webkit-text-stroke: 1px currentColor) {
+  .kinetic-band-outline {
+    -webkit-text-stroke: 1px var(--nova-neutral-500);
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .kinetic-band-outline {
+    -webkit-text-stroke: 0;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+.kinetic-band-accent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  justify-self: start;
+  align-items: center;
+  gap: var(--nova-space-3);
+  margin: var(--nova-space-5) 0 0;
+  color: var(--nova-color-accent);
+  font-size: var(--nova-type-size-label);
+  font-weight: var(--nova-font-weight-bold);
+  letter-spacing: var(--nova-type-tracking-eyebrow);
+}
+
+.kinetic-band-accent::before {
+  content: "";
+  inline-size: clamp(1.5rem, 7vw, 7rem);
+  block-size: 3px;
+  background: currentColor;
+  transform: skewX(-28deg);
+}
+
+@media (max-width: 599px) {
+  .kinetic-band-inner {
+    padding: var(--nova-space-12) clamp(1.5rem, 8vw, 2.25rem) var(--nova-space-10);
+  }
+
+  .kinetic-band-title {
+    font-size: clamp(2.15rem, 10.95vw, 4.1rem);
+  }
+
+  .kinetic-band-outline {
+    margin-block-end: .12em;
+    font-size: clamp(1.35rem, 7.5vw, 3rem);
+  }
+
+  .kinetic-band-accent {
+    margin-block-start: var(--nova-space-6);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .kinetic-band-inner {
+    padding-block: var(--nova-space-5);
+  }
+
+  .kinetic-band-title {
+    font-size: clamp(2rem, 7.6vw, 3.75rem);
+  }
+
+  .kinetic-band-outline {
+    font-size: clamp(1.3rem, 5vw, 2.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) and (view-timeline-name: --kinetic-band) and (animation-range: entry 0% exit 100%) {
+    .kinetic-band {
+      /* Both moving planes are tied to the fixed band, independent of Home's scroll controller. */
+      view-timeline-name: --kinetic-band;
+      view-timeline-axis: block;
+      --kinetic-title-travel: clamp(1rem, 7vw, 6rem);
+      --kinetic-outline-travel: clamp(1rem, 8vw, 7rem);
+    }
+
+    .kinetic-band-title {
+      animation: kinetic-title-track 1s linear both;
+      animation-timeline: --kinetic-band;
+      animation-range: entry 0% exit 100%;
+    }
+
+    .kinetic-band-outline {
+      animation: kinetic-outline-track 1s linear both;
+      animation-timeline: --kinetic-band;
+      animation-range: entry 0% exit 100%;
+    }
+
+    @media (max-width: 599px), (orientation: landscape) and (max-height: 500px) {
+      .kinetic-band {
+        --kinetic-title-travel: clamp(.65rem, 6vw, 1.75rem);
+        --kinetic-outline-travel: clamp(.85rem, 7.2vw, 2.15rem);
+      }
+
+      .kinetic-band-title {
+        animation-range: entry 5% exit 85%;
+      }
+
+      .kinetic-band-outline {
+        animation-range: entry 18% exit 100%;
+      }
+    }
+  }
+}
+
+@keyframes kinetic-title-track {
+  0% { transform: translateX(calc(-1 * var(--kinetic-title-travel))); }
+  48% { transform: translateX(0); }
+  100% { transform: translateX(var(--kinetic-title-travel)); }
+}
+
+@keyframes kinetic-outline-track {
+  0% { transform: translateX(var(--kinetic-outline-travel)); }
+  62% { transform: translateX(0); }
+  100% { transform: translateX(calc(-1 * var(--kinetic-outline-travel))); }
+}

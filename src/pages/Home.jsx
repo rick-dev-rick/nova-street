@@ -3,6 +3,7 @@ import EditorialCard from '../components/EditorialCard.jsx'
 import { ActionLink } from '../design-system/Action.jsx'
 import BestSellers from '../components/BestSellers.jsx'
 import Lifestyle from '../components/Lifestyle.jsx'
+import KineticBand from '../components/KineticBand.jsx'
 import FinalCTA from '../components/FinalCTA.jsx'
 import HomeSignature from '../components/HomeSignature.jsx'
 import ProductCard from '../components/ProductCard.jsx'
@@ -108,6 +109,7 @@ export default function Home() {
       <BestSellers />
 
       <Lifestyle />
+      <KineticBand />
       <div className="home-finale" data-scroll-scene="outro"><FinalCTA /></div>
       <HomeSignature />
     </>
