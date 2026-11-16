@@ -1,0 +1,173 @@
+.home-finale .final-cta {
+  background: radial-gradient(ellipse at 70% 130%, #4b101a 0%, transparent 62%), var(--nova-color-surface);
+}
+
+.home-signature {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-block-size: clamp(360px, 68svh, 670px);
+  padding: clamp(66px, 10vw, 136px) max(12px, 3vw);
+  overflow: clip;
+  background: linear-gradient(#1b1316 0%, var(--nova-color-bg) 38%, var(--nova-color-surface) 100%);
+  color: var(--nova-color-text);
+}
+
+.home-signature-light {
+  position: absolute;
+  z-index: -1;
+  inset: -25%;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, #58131ed9 40% 52%, #8e1828ad 52% 56%, transparent 56%);
+  mask-image: linear-gradient(transparent 10%, #000 36% 60%, transparent 85%);
+}
+
+.home-signature::after {
+  content: '';
+  position: absolute;
+  inset: auto max(12px, 3vw) 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--nova-brand-red) 0 12%, #4d252e 12% 45%, var(--nova-color-border) 45%);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+.home-signature-type {
+  position: relative;
+  display: grid;
+  font-size: clamp(2.4rem, 13.9vw, 14rem);
+  line-height: .86;
+  letter-spacing: -.084em;
+  font-weight: var(--nova-font-weight-heavy);
+}
+
+.home-signature-wordmark, .home-signature-depth {
+  display: flex;
+  gap: .16em;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.home-signature-wordmark {
+  position: relative;
+  margin: 0;
+  color: var(--nova-color-text);
+}
+
+.home-signature-depth {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 1px #f0b0b661;
+  transform: translate(-.035em, -.31em) scale(1.04);
+  pointer-events: none;
+}
+
+.home-signature-mask {
+  display: block;
+  overflow: clip;
+  padding: .115em .08em;
+  margin: -.115em -.08em;
+}
+
+.home-signature-mask > span { display: block; }
+.home-signature-mask + .home-signature-mask { color: #ff5d6d; }
+
+@media (max-width: 700px) {
+  .home-signature {
+    min-block-size: clamp(350px, 66svh, 565px);
+    padding-block: var(--nova-space-12);
+  }
+
+  .home-signature-type { font-size: min(24vw, 10rem); line-height: .86; }
+  .home-signature-wordmark, .home-signature-depth { flex-direction: column; gap: .075em; }
+  .home-signature-mask:first-child, .home-signature-depth span:first-child { align-self: start; }
+  .home-signature-mask:last-child, .home-signature-depth span:last-child { align-self: end; }
+
+  .home-signature-light {
+    background: linear-gradient(152deg, transparent 34%, #58131ee6 34% 48%, #8e1828be 48% 54%, transparent 54%);
+  }
+
+  .home-signature-depth { transform: translate(.10em, -.24em) scale(1.02); }
+
+  @media (orientation: landscape) and (max-height: 460px) {
+    .home-signature { min-block-size: 0; }
+    .home-signature-type { font-size: min(13vw, 8rem); }
+    .home-signature-wordmark, .home-signature-depth { flex-direction: row; gap: .16em; }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) and (view-timeline-name: --nova-signature) and (animation-range: entry 0% entry 100%) {
+    .home-signature { view-timeline-name: --nova-signature; }
+
+    .home-signature-mask > span {
+      --signature-shift: -.13em;
+      --signature-rise: 112%;
+      animation: nova-signature-word both linear;
+      animation-timeline: --nova-signature;
+      animation-range: entry 27% entry 84%;
+    }
+
+    .home-signature-mask + .home-signature-mask > span {
+      --signature-shift: .16em;
+      animation-range: entry 46% entry 98%;
+    }
+
+    .home-signature-depth {
+      animation: nova-signature-depth both linear;
+      animation-timeline: --nova-signature;
+      animation-range: entry 2% entry 94%;
+    }
+
+    .home-signature-light {
+      animation: nova-signature-light both linear;
+      animation-timeline: --nova-signature;
+      animation-range: entry 4% entry 100%;
+    }
+
+    .home-signature::after {
+      animation: nova-signature-seam both linear;
+      animation-timeline: --nova-signature;
+      animation-range: entry 61% entry 100%;
+    }
+
+    @media (max-width: 700px) {
+      .home-signature-mask > span {
+        --signature-shift: -.70em;
+        --signature-rise: 85%;
+        animation-range: entry 26% entry 79%;
+      }
+
+      .home-signature-mask + .home-signature-mask > span {
+        --signature-shift: .48em;
+        --signature-rise: 111%;
+        animation-range: entry 45% entry 97%;
+      }
+    }
+  }
+}
+
+@keyframes nova-signature-word {
+  from { transform: translate(var(--signature-shift), var(--signature-rise)) scale(.82); }
+  70% { transform: translate(0, 10%) scale(.98); }
+  to { transform: none; }
+}
+
+@keyframes nova-signature-depth {
+  from { transform: translate(-.36em, .37em) scale(1.29); opacity: .32; }
+  64% { opacity: 1; }
+  to { opacity: 1; }
+}
+
+@keyframes nova-signature-light {
+  from { transform: translateX(-38%) scaleX(.68); opacity: .28; }
+  62% { opacity: 1; }
+  to { transform: translateX(4%); opacity: .76; }
+}
+
+@keyframes nova-signature-seam {
+  from { transform: scaleX(.08); }
+  to { transform: scaleX(1); }
+}
