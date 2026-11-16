@@ -20,10 +20,6 @@
   @supports (animation-timeline: view()) and (view-timeline-name: --scroll-hero) and (animation-range: contain 0% contain 100%) {
     .hero:has(+ [data-scroll-scene="exit"]) { view-timeline-name: --scroll-hero; }
     [data-scroll-scene="exit"] { view-timeline-name: --scroll-exit; }
-    [data-scroll-scene="explore"] .section-heading { view-timeline-name: --scroll-explore; }
-    [data-scroll-scene="explore"] .category-card { view-timeline-name: --scroll-category; }
-    [data-scroll-scene="new"] .product-card { view-timeline-name: --scroll-new; }
-    [data-scroll-scene="lifestyle"] .lifestyle-card { view-timeline-name: --scroll-lifestyle; }
     [data-scroll-scene="outro"] { view-timeline-name: --scroll-outro; }
 
     /* The intro animation is on .hero-photo. Scroll only moves its enclosing shot. */
@@ -39,97 +35,11 @@
       animation-range: entry 15% exit 55%;
     }
 
-    [data-scroll-scene="explore"] .section-heading h2 {
-      transform-origin: left bottom;
-      animation: nova-scroll-type linear both;
-      animation-timeline: --scroll-explore;
-      animation-range: entry 0% cover 55%;
-    }
-
-    [data-scroll-scene="explore"] .category-card::after,
-    [data-scroll-scene="new"] .product-image-wrap::after,
-    [data-scroll-scene="lifestyle"] .lifestyle-card::before {
-      content: '';
-      position: absolute;
-      z-index: 1;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    [data-scroll-scene="explore"] .category-card::after {
-      background: linear-gradient(125deg, #0a0a0a 25%, #86121d 62%, #22090d);
-      clip-path: polygon(0 0, 88% 0, 49% 100%, 0 100%);
-      opacity: .87;
-      animation: nova-scroll-category linear both;
-      animation-timeline: --scroll-category;
-      animation-range: entry var(--director-delay, 5%) cover var(--director-end, 53%);
-    }
-
-    [data-scroll-scene="explore"] .category-card > span,
-    [data-scroll-scene="lifestyle"] .lifestyle-card > span,
-    [data-scroll-scene] .product-badge {
-      z-index: 2;
-    }
-
-    [data-scroll-scene="new"] .product-image-wrap img {
-      animation: nova-scroll-negative linear both;
-      animation-timeline: --scroll-new;
-      animation-range: entry 0% cover 58%;
-    }
-
-    [data-scroll-scene="new"] .product-image-wrap::after {
-      background: linear-gradient(0deg, #0a0a0a 12%, #81131b 86%, #eb5961 86% 89%, #f5f5f377 89%);
-      clip-path: polygon(0 35%, 100% 13%, 100% 100%, 0 100%);
-      opacity: .82;
-      animation: nova-scroll-print linear both;
-      animation-timeline: --scroll-new;
-      animation-range: entry var(--director-delay, 8%) cover var(--director-end, 58%);
-    }
-
-    [data-scroll-scene="lifestyle"] .lifestyle-card { isolation: isolate; }
-
-    [data-scroll-scene="lifestyle"] .lifestyle-card img {
-      animation: nova-scroll-editorial linear both;
-      animation-timeline: --scroll-lifestyle;
-      animation-range: entry 0% exit 100%;
-    }
-
-    [data-scroll-scene="lifestyle"] .lifestyle-card::before {
-      background: linear-gradient(97deg, #090909 3%, #5f1019 53%, #090909);
-      opacity: .76;
-      clip-path: polygon(25% 0, 100% 0, 100% 100%, 51% 100%);
-      animation: nova-scroll-lifestyle-gate linear both;
-      animation-timeline: --scroll-lifestyle;
-      animation-range: entry var(--director-delay, 0%) cover var(--director-end, 56%);
-    }
-
     [data-scroll-scene="outro"]::before {
       animation: nova-scroll-outro linear both;
       animation-timeline: --scroll-outro;
       animation-range: entry 0% cover 36%;
     }
-
-    @media (min-width: 901px) {
-      [data-scroll-scene] :is(.category-card, .lifestyle-card, .product-card):nth-child(2) {
-        --director-delay: 14%;
-        --director-end: 60%;
-      }
-      [data-scroll-scene] :is(.category-card, .lifestyle-card, .product-card):nth-child(3) {
-        --director-delay: 25%;
-        --director-end: 66%;
-      }
-      [data-scroll-scene] .product-card:nth-child(4) {
-        --director-delay: 37%;
-        --director-end: 72%;
-      }
-    }
-
-    [data-scroll-scene="explore"]:focus-within .section-heading h2,
-    [data-scroll-scene="lifestyle"] .lifestyle-card:focus-visible img { animation: none; }
-
-    [data-scroll-scene] .category-card:focus-visible::after,
-    [data-scroll-scene] .product-card:focus-within .product-image-wrap::after,
-    [data-scroll-scene] .lifestyle-card:focus-visible::before { content: none; }
   }
 }
 
@@ -143,37 +53,6 @@
   from { transform: translateX(-86%) skewX(-32deg); }
   62% { transform: translateX(0) skewX(0); }
   to { transform: translateX(32%) skewX(-32deg); }
-}
-
-@keyframes nova-scroll-type {
-  from { transform: translate(15%, 24%) scale(.64) skewX(-13deg); }
-  70% { transform: translate(2%, 0) scale(.96) skewX(-3deg); }
-  to { transform: none; }
-}
-
-@keyframes nova-scroll-category {
-  from { transform: translateX(0); }
-  to { transform: translateX(var(--director-cut-x, -108%)); }
-}
-
-@keyframes nova-scroll-negative {
-  from { transform: scale(1.37) translateY(9%); }
-  to { transform: none; }
-}
-
-@keyframes nova-scroll-print {
-  from { transform: translateY(0); }
-  to { transform: translateY(100%); }
-}
-
-@keyframes nova-scroll-editorial {
-  from { transform: scale(var(--director-photo-scale, 1.34)) translate(var(--director-photo-x, 5%), -8%); }
-  to { transform: scale(var(--director-photo-scale, 1.34)) translate(calc(-1 * var(--director-photo-x, 5%)), var(--director-photo-y, 8%)); }
-}
-
-@keyframes nova-scroll-lifestyle-gate {
-  from { transform: translateX(0) skewX(0); }
-  to { transform: translateX(110%) skewX(-15deg); }
 }
 
 @keyframes nova-scroll-outro {

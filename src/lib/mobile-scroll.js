@@ -4,10 +4,6 @@ const mobileLayout = '(max-width: 900px), (max-width: 1024px) and (pointer: coar
 const mobileTracks = [
   ['.hero', .85, .05, 1],
   ['[data-scroll-scene="exit"]', .95, .32],
-  ['[data-scroll-scene="explore"] .section-heading', .94, .45],
-  ['[data-scroll-scene="explore"] .category-card', .96, .32],
-  ['[data-scroll-scene="new"] .product-card', .96, .35],
-  ['[data-scroll-scene="lifestyle"] .lifestyle-card', 1, .06, .34],
   ['[data-scroll-scene="outro"]', .94, .43],
 ]
 

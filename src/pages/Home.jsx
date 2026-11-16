@@ -10,6 +10,7 @@ import ProductCard from '../components/ProductCard.jsx'
 import { products } from '../data/products.js'
 import { selectProducts } from '../lib/catalog.js'
 import { connectHomeScroll } from '../lib/mobile-scroll.js'
+import { connectEditorialReveal } from '../lib/editorial-reveal.js'
 
 import '../styles/hero-showcase.css'
 import '../styles/scroll-showcase.css'
@@ -17,6 +18,7 @@ import '../styles/mobile-scroll.css'
 import '../styles/campaign-scroll.css'
 import '../styles/home-signature.css'
 import '../styles/home-finale.css'
+import '../styles/editorial-reveal.css'
 
 const heroPhoto = 'https://images.unsplash.com/photo-1523398002811-999ca8dec234'
 const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
@@ -24,6 +26,7 @@ const heroSource = width => `${heroPhoto}?auto=format&fit=crop&w=${width}&q=85`
 export default function Home() {
   const hero = useRef(null)
   useEffect(() => connectHomeScroll(hero.current), [])
+  useEffect(() => connectEditorialReveal(hero.current.closest('.route-view')), [])
 
   return (
     <>
@@ -67,7 +70,13 @@ export default function Home() {
         </div>
         <div className="category-grid">
           {['Masculino', 'Feminino', 'Unissex'].map((category, index) => (
-            <EditorialCard variant="category" className={`category-${index + 1}`} category={category} key={category}>
+            <EditorialCard
+              variant="category"
+              className={`category-${index + 1}`}
+              category={category}
+              revealKey={`category:${category}`}
+              key={category}
+            >
               <span>{category}</span>
             </EditorialCard>
           ))}
@@ -80,7 +89,11 @@ export default function Home() {
             <div><p className="eyebrow">NOVIDADES</p><h2>Chegou agora.</h2></div>
             <ActionLink variant="text" to="/catalogo?ordem=novidades">Ver novidades →</ActionLink>
           </div>
-          <div className="product-grid">{selectProducts(products, { order: 'novidades' }).slice(0, 4).map((product) => <ProductCard product={product} key={product.id} />)}</div>
+          <div className="product-grid">
+            {selectProducts(products, { order: 'novidades' }).slice(0, 4).map(product => (
+              <ProductCard product={product} revealKey={`new:${product.id}`} key={product.id} />
+            ))}
+          </div>
         </div>
       </section>
 
