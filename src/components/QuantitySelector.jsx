@@ -6,7 +6,7 @@ export function QuantityControls({ value, onChange, label, editable = false, max
     <div className="quantity-controls" role="group" aria-label={label}>
       <Button variant="plain" aria-label={`Diminuir ${label.replace(/^Quantidade/, 'quantidade')}`} disabled={disabled || value <= 1} onClick={() => onChange(value - 1)}>−</Button>
       {editable
-        ? <input aria-label={label} type="number" min="1" max={max} disabled={disabled} value={value} onChange={event => onChange(Math.min(max, normalizeQuantity(event.target.value)))} />
+        ? <input aria-label={label} type="number" inputMode="numeric" min="1" max={max} disabled={disabled} value={value} onChange={event => onChange(Math.min(max, normalizeQuantity(event.target.value)))} />
         : <span aria-live="polite" aria-atomic="true">{value}</span>}
       <Button variant="plain" aria-label={`Aumentar ${label.replace(/^Quantidade/, 'quantidade')}`} disabled={disabled || value >= max} onClick={() => onChange(value + 1)}>+</Button>
     </div>

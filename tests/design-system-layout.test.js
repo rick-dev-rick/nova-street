@@ -13,7 +13,8 @@ function token(name) {
 test('storefront spacing and container use shared tokens', () => {
   assert.equal(token('container-max'), '1180px')
   assert.equal(token('container-gutter'), 'var(--nova-space-5)')
-  assert.match(app, /\.container\{[^}]*var\(--nova-container-max\)[^}]*var\(--nova-container-gutter\)/)
+  assert.match(app, /\.container\{[^}]*var\(--nova-container-max\)[^}]*var\(--nova-safe-gutter\)/)
+  assert.match(app, /--nova-safe-gutter:max\(var\(--nova-container-gutter\),env\(safe-area-inset-left\),env\(safe-area-inset-right\)\)/)
   assert.equal([...app.matchAll(/(?:margin|padding|gap)(?:-[\w-]+)?:\s*(?:[1-9]\d*px)/g)].length, 0)
 })
 

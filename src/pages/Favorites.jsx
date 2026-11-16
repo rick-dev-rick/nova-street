@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { ActionLink } from '../design-system/Action.jsx'
 import EmptyState from '../components/EmptyState.jsx'
 import HeartIcon from '../design-system/HeartIcon.jsx'
@@ -8,11 +9,22 @@ import ProductCard from '../components/ProductCard.jsx'
 export default function Favorites() {
   const { favorites } = useFavorites()
   const saved = products.filter(product => favorites.includes(product.id))
+  const heading = useRef(null)
+
+  function moveFocusBeforeRemoval(event) {
+    const button = event.target.closest('.favorite-button')
+    if (!button || !button.closest('.product-card')?.contains(button.ownerDocument.activeElement)) return
+
+    const buttons = [...event.currentTarget.querySelectorAll('.favorite-button')]
+    const index = buttons.indexOf(button)
+    const next = buttons[index + 1] ?? buttons[index - 1] ?? heading.current
+    next.focus()
+  }
 
   return <section className="section container favorites-page">
-    <div className="section-heading"><div className="catalog-intro"><p className="eyebrow">SUA SELEÇÃO</p><h1>Peças que são a sua cara.</h1><p>Seus favoritos ficam salvos neste navegador.</p></div>{saved.length > 0 && <ActionLink variant="text" to="/catalogo">Explorar coleção →</ActionLink>}</div>
+    <div className="section-heading"><div className="catalog-intro"><p className="eyebrow">SUA SELEÇÃO</p><h1 ref={heading} tabIndex={-1}>Peças que são a sua cara.</h1><p>Seus favoritos ficam salvos neste navegador.</p></div>{saved.length > 0 && <ActionLink variant="text" to="/catalogo">Explorar coleção →</ActionLink>}</div>
     <p className="catalog-count" role="status">{saved.length} {saved.length === 1 ? 'peça salva' : 'peças salvas'}</p>
-    {saved.length ? <div className="product-grid">{saved.map(product => <ProductCard headingLevel={2} key={product.id} product={product} />)}</div> : (
+    {saved.length ? <div className="product-grid" onClickCapture={moveFocusBeforeRemoval}>{saved.map(product => <ProductCard headingLevel={2} key={product.id} product={product} />)}</div> : (
       <EmptyState
         headingLevel={2}
         title="Você ainda não tem favoritos."

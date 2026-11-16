@@ -79,6 +79,7 @@ export default function Checkout({ cart, subtotal, shippingCep, onShippingCepCha
         if (attempted.current) setErrors(readErrors(event.currentTarget))
       }}>
         <h2 id="checkout-details">Dados do pedido</h2>
+        <p>Todos os campos dos dados do pedido são obrigatórios.</p>
         <div className="form-grid"><InputField label="Nome" name="name" error={errors.name} required placeholder="Nome fictício" autoComplete="off" /><InputField label="E-mail" name="email" error={errors.email} required type="email" placeholder="demo@example.com" autoComplete="off" /><InputField label="Telefone" name="phone" error={errors.phone} required type="tel" placeholder="(00) 00000-0000" autoComplete="off" /></div>
         <InputField label="Endereço" name="address" error={errors.address} required placeholder="Endereço fictício, número e complemento" autoComplete="off" />
         {!shippingQuote && (
