@@ -1,0 +1,254 @@
+.header-inner > .category-menu-toggle {
+  min-height: var(--nova-control-min);
+  padding-inline: var(--nova-space-3);
+}
+
+@media (max-width: 760px), (max-width: 1024px) and (pointer: coarse) {
+  .header-inner > .main-nav { display: none; }
+}
+
+:root:has(.cinematic-menu[open]),
+:root:has(.cinematic-menu[open]) body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.cinematic-menu {
+  position: fixed;
+  inset: 0;
+  inline-size: 100%;
+  max-inline-size: none;
+  block-size: 100vh;
+  block-size: 100dvh;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: var(--nova-color-text);
+  background: #100b0e;
+  overflow: auto;
+  overscroll-behavior: contain;
+  isolation: isolate;
+}
+
+.cinematic-menu:not([open]),
+.cinematic-menu::backdrop { pointer-events: none; }
+
+.cinematic-menu::backdrop { background: transparent; }
+
+.cinematic-menu-shell {
+  --menu-gutter: clamp(1.125rem, 6vw, 7rem);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-block-size: 100%;
+  grid-template-rows: auto 1fr auto;
+  padding-block-end: max(1rem, env(safe-area-inset-bottom));
+  background: linear-gradient(122deg, #0e0b0d 0 63%, #1a0d13 63% 78%, #2c1019 78%);
+}
+
+.cinematic-menu-shell::before {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: linear-gradient(116deg, #620d20 0 24%, #a91029 24% 78%, #e2394d 78%);
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+
+.cinematic-menu-header,
+.cinematic-menu-nav,
+.cinematic-menu-actions {
+  padding-inline: max(var(--menu-gutter), env(safe-area-inset-left)) max(var(--menu-gutter), env(safe-area-inset-right));
+}
+
+.cinematic-menu-header {
+  position: sticky;
+  z-index: 2;
+  inset-block-start: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nova-space-3);
+  padding-block: max(.75rem, env(safe-area-inset-top)) .75rem;
+  background: #100b0e;
+  border-block-end: 1px solid #3c2530;
+}
+
+.cinematic-menu-header .brand {
+  color: var(--nova-color-text);
+  text-decoration: none;
+}
+
+.cinematic-menu-close {
+  gap: var(--nova-space-2);
+  min-block-size: var(--nova-control-min);
+  padding-inline: var(--nova-space-3);
+}
+
+.cinematic-menu-close span { color: var(--nova-brand-red-light); }
+
+.cinematic-menu-nav {
+  display: grid;
+  align-content: center;
+  padding-block: clamp(.6rem, 3.5vh, 2.25rem);
+}
+
+.cinematic-menu-nav ul {
+  max-inline-size: 54rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block-start: 1px solid #54343f;
+}
+
+.cinematic-menu-nav li { border-block-end: 1px solid #54343f; }
+
+.cinematic-menu-nav a {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(2.25rem, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(.625rem, 3vw, 2rem);
+  min-block-size: var(--nova-control-min);
+  padding-block: .18em;
+  font-size: clamp(2.05rem, 8vw, 5rem);
+  line-height: .98;
+  font-weight: var(--nova-font-weight-heavy);
+  letter-spacing: -.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cinematic-menu-nav a::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px;
+  block-size: 3px;
+  background: var(--nova-brand-red-light);
+  transform: scaleX(var(--menu-register, 0));
+  transform-origin: left;
+  pointer-events: none;
+}
+
+.cinematic-menu-index {
+  font-size: .78rem;
+  letter-spacing: .12em;
+  color: var(--nova-brand-red-light);
+  font-variant-numeric: tabular-nums;
+}
+
+.cinematic-menu-mask {
+  overflow: clip;
+  padding-block: .095em;
+  overflow-wrap: anywhere;
+}
+
+.cinematic-menu-mask > span {
+  display: block;
+}
+
+.cinematic-menu-nav a:is(:focus-visible, :active, [data-menu-pressed], [aria-current="page"]) {
+  --menu-register: 1;
+  color: var(--nova-brand-red-light);
+}
+
+.cinematic-menu-nav a:focus-visible { outline-offset: -3px; }
+.cinematic-menu-nav a:is(:active, [data-menu-pressed]) { background: #321522; }
+
+@media (hover: hover) and (pointer: fine) {
+  .cinematic-menu-nav a:hover {
+    --menu-register: 1;
+    color: var(--nova-brand-red-light);
+  }
+}
+
+.cinematic-menu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem 1.5rem;
+  align-self: end;
+}
+
+.cinematic-menu-actions :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  min-block-size: var(--nova-control-min);
+  color: var(--nova-color-text);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: .24em;
+}
+
+.cinematic-menu-actions button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cinematic-menu-actions button span { color: var(--nova-brand-red-light); }
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .cinematic-menu-nav a { font-size: clamp(2.05rem, 10.25vw, 5rem); }
+}
+
+@media (max-height: 495px) and (orientation: landscape) {
+  .cinematic-menu-nav a { font-size: clamp(1.7rem, 5.5vw, 3rem); }
+  .cinematic-menu-nav { padding-block: .65rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cinematic-menu[open] .cinematic-menu-shell::before {
+    animation: nova-menu-curtain 280ms cubic-bezier(.65, 0, .2, 1) both;
+  }
+
+  .cinematic-menu[open] .cinematic-menu-mask > span {
+    animation: nova-menu-line 250ms var(--nova-ease-expressive) both;
+    animation-delay: calc(105ms + var(--menu-order) * 26ms);
+  }
+
+  .cinematic-menu[open] .cinematic-menu-nav:focus-within .cinematic-menu-mask > span {
+    animation: none;
+  }
+
+  .cinematic-menu-nav a::after {
+    transition: transform var(--nova-motion-normal) var(--nova-ease-standard);
+  }
+
+  .cinematic-menu-mask {
+    translate: var(--menu-nudge, 0) 0;
+    transition: translate var(--nova-motion-normal) var(--nova-ease-standard);
+  }
+
+  .cinematic-menu-nav a:is(:focus-visible, :active, [data-menu-pressed]) { --menu-nudge: .14em; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cinematic-menu-nav a:hover { --menu-nudge: .18em; }
+  }
+
+  .cinematic-menu[open][data-closing] .cinematic-menu-shell::before {
+    animation: nova-menu-exit-curtain 165ms ease-in both;
+    transform-origin: bottom;
+  }
+
+}
+
+@keyframes nova-menu-curtain {
+  0%, 32% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+
+@keyframes nova-menu-exit-curtain {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes nova-menu-line {
+  from { transform: translateY(122%); }
+  to { transform: none; }
+}

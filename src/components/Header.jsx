@@ -12,7 +12,7 @@ export default function Header({ cartCount = 0, onOpenCart, drawerOpen }) {
         <NavLink className="brand" to="/" aria-label="NØVA STREET início">
           <BrandWordmark />
         </NavLink>
-        <CategoryNavigation />
+        <CategoryNavigation onOpenCart={onOpenCart} cartCount={cartCount} />
         <div className="header-actions">
           <NavLink className="favorites-link" to="/favoritos" aria-label={`Favoritos: ${favorites.length} ${favorites.length === 1 ? 'peça salva' : 'peças salvas'}`}>
             {({ isActive }) => <>

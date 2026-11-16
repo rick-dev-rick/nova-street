@@ -38,30 +38,6 @@ html { scroll-behavior: smooth; }
   to { transform: scale(1); }
 }
 
-@media (max-width: 600px) {
-  @supports (transition-behavior: allow-discrete) {
-    .main-nav {
-      transition:
-        transform var(--nova-motion-normal) var(--nova-ease-standard),
-        display var(--nova-motion-normal) allow-discrete;
-    }
-
-    .main-nav[data-expanded="false"] {
-      transform: translateY(calc(-1 * var(--nova-space-2)));
-    }
-
-    .main-nav[data-expanded="true"] {
-      transform: translateY(0);
-    }
-
-    @starting-style {
-      .main-nav[data-expanded="true"] {
-        transform: translateY(calc(-1 * var(--nova-space-2)));
-      }
-    }
-  }
-}
-
 @supports (transition-behavior: allow-discrete) {
   :is(.cart-drawer, .image-dialog) {
     transition:
