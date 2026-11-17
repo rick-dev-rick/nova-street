@@ -30,7 +30,7 @@ test('corrupt or unavailable browser storage never crashes the storefront', () =
   assert.deepEqual(loadCart(memoryStorage('{')), [])
   assert.deepEqual(loadCart(memoryStorage('{}')), [])
   const blocked = { getItem() { throw new Error('blocked') }, setItem() { throw new Error('quota') } }
-  assert.deepEqual(loadCart(blocked), [])
+  assert.equal(loadCart(blocked), null)
   assert.doesNotThrow(() => saveCart([], blocked))
 })
 
@@ -48,4 +48,13 @@ test('restored quantities are bounded and duplicate variants merge', () => {
   const cart = loadCart(storage)
   assert.equal(cart.length, 1)
   assert.equal(cart[0].quantity, 99)
+})
+
+test('a write failure leaves the previous saved collection readable', () => {
+  const retained = memoryStorage(JSON.stringify([{ id: products[0].id, size: "M", quantity: 2 }]))
+  const blocked = { getItem: retained.getItem, setItem() { throw Error('quota') } }
+  const items = loadCart(blocked)
+  assert.equal(items.length, 1)
+  assert.equal(saveCart([], blocked), false)
+  assert.deepEqual(loadCart(retained), items)
 })

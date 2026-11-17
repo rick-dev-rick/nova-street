@@ -34,6 +34,15 @@ test('malformed or unavailable storage cannot crash the storefront', () => {
   assert.deepEqual(loadFavorites(memoryStorage('{')), [])
   assert.deepEqual(loadFavorites(memoryStorage('{}')), [])
   const blocked = { getItem() { throw new Error('blocked') }, setItem() { throw new Error('quota') } }
-  assert.deepEqual(loadFavorites(blocked), [])
+  assert.equal(loadFavorites(blocked), null)
   assert.doesNotThrow(() => saveFavorites([id], blocked))
+})
+
+test('a write failure leaves the previous saved collection readable', () => {
+  const retained = memoryStorage(JSON.stringify([id]))
+  const blocked = { getItem: retained.getItem, setItem() { throw Error('quota') } }
+  const items = loadFavorites(blocked)
+  assert.equal(items.length, 1)
+  assert.equal(saveFavorites([], blocked), false)
+  assert.deepEqual(loadFavorites(retained), items)
 })

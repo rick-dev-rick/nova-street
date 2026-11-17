@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext } from 'react'
+import { useStoredList } from '../hooks/useStoredList.js'
 import { loadFavorites, saveFavorites, toggleFavorite } from '../lib/favorites.js'
 
 const FavoritesContext = createContext(null)
 
 export function FavoritesProvider({ children }) {
-  const [favorites, setFavorites] = useState(() => loadFavorites())
-  useEffect(() => { saveFavorites(favorites) }, [favorites])
+  const [favorites, setFavorites] = useStoredList(loadFavorites, saveFavorites)
 
   function toggle(id) {
     setFavorites(current => toggleFavorite(current, id))
