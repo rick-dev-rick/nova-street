@@ -1,23 +1,21 @@
 import { products } from '../data/products.js'
 import { addCartItem } from './cart.js'
+import { readStoredArray } from './read-stored-array.js'
 
 const STORAGE_KEY = 'nova-street:cart:v1'
 
 // Store only product references; prices and descriptions always come from the catalog.
 export function loadCart(storage) {
-  try {
-    const entries = JSON.parse((storage ?? window.localStorage).getItem(STORAGE_KEY) ?? '[]')
-    if (!Array.isArray(entries)) return []
-    return entries.reduce((cart, entry) => {
-      if (!entry || typeof entry !== 'object') return cart
-      const product = products.find((item) => item.id === entry.id)
-      if (!product || !product.sizes.includes(entry.size)) return cart
-      if (!Number.isFinite(entry.quantity) || entry.quantity < 1) return cart
-      return addCartItem(cart, product, entry.size, entry.quantity)
-    }, [])
-  } catch {
-    return []
-  }
+  const entries = readStoredArray(STORAGE_KEY, storage)
+  if (entries === null) return null
+
+  return entries.reduce((cart, entry) => {
+    if (!entry || typeof entry !== 'object') return cart
+    const product = products.find(item => item.id === entry.id)
+    if (!product || !product.sizes.includes(entry.size)) return cart
+    if (!Number.isFinite(entry.quantity) || entry.quantity < 1) return cart
+    return addCartItem(cart, product, entry.size, entry.quantity)
+  }, [])
 }
 
 export function saveCart(cart, storage) {

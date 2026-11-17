@@ -20,6 +20,7 @@ export default class RouteErrorBoundary extends Component {
         <h1>Página indisponível</h1>
         <Feedback tone="error">Não foi possível carregar esta página.</Feedback>
         <Button onClick={() => window.location.reload()}>Recarregar página</Button>
+        <p>Se a falha persistir após recarregar, abra este endereço em outra aba.</p>
       </section>
     )
   }

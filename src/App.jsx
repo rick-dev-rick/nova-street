@@ -1,5 +1,5 @@
 import { ActionLink } from './design-system/Action.jsx'
-import { lazy, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, useMemo, useRef, useState } from 'react'
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import EmptyState from './components/EmptyState.jsx'
@@ -8,6 +8,7 @@ import ProductRoute from './components/ProductRoute.jsx'
 import Cart from './pages/Cart.jsx'
 import { addCartItem, getCartSubtotal, removeCartItem, updateCartItemQuantity } from './lib/cart.js'
 import { loadCart, saveCart } from './lib/cart-storage.js'
+import { useStoredList } from './hooks/useStoredList.js'
 import Favorites from './pages/Favorites.jsx'
 import { FavoritesProvider } from './context/FavoritesContext.jsx'
 import { getShippingQuote } from './lib/shipping.js'
@@ -22,8 +23,7 @@ export default function App() {
   const [shippingCep, setShippingCep] = useState('')
   const [drawerOpen, setDrawerOpen] = useState(false)
   const drawerFocusFallback = useRef(null)
-  const [cart, setCart] = useState(() => loadCart())
-  useEffect(() => { saveCart(cart) }, [cart])
+  const [cart, setCart] = useStoredList(loadCart, saveCart)
   const subtotal = useMemo(() => getCartSubtotal(cart), [cart])
   const shippingQuote = getShippingQuote(shippingCep, subtotal)
   const cartCount = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart])

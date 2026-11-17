@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
-import { observeProductLink, warmProductPage } from '../lib/product-route.js'
+import { getProductPage, observeProductLink, warmProductPage } from '../lib/product-route.js'
 import { startProductFlight } from '../lib/product-flight.js'
 import FavoriteButton from './FavoriteButton.jsx'
 import '../styles/premium-product-card.css'
@@ -30,7 +30,7 @@ export default function ProductCard({ product, headingLevel = 3, revealKey }) {
   useEffect(() => observeProductLink(frame.current), [])
 
   function activate(event) {
-    startProductFlight(event, { frame: frame.current, to, navigate })
+    if (getProductPage()) startProductFlight(event, { frame: frame.current, to, navigate })
   }
   return (
     <article className="product-card" data-editorial-reveal={revealKey}>

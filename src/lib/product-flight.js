@@ -1,5 +1,4 @@
 import { flushSync } from 'react-dom'
-import { getProductPage } from './product-route.js'
 
 const photoName = 'nova-product-photo'
 let active
@@ -25,12 +24,18 @@ function photoIsVisible(frame) {
 }
 
 export function startProductFlight(event, { frame, to, navigate }) {
-  if (!isPlainProductActivation(event) || !document.startViewTransition || !getProductPage() ||
+  if (!isPlainProductActivation(event) || !document.startViewTransition ||
       !window.matchMedia('(prefers-reduced-motion: no-preference)').matches || !photoIsVisible(frame)) return
 
+  const token = ++sequence
   active?.interrupt()
   const root = document.documentElement
-  const request = { token: ++sequence, origin: window.location.href, source: frame }
+  const request = {
+    token,
+    origin: window.location.href,
+    historyKey: window.history.state?.key,
+    source: frame,
+  }
   active = request
 
   function clean() {
@@ -45,8 +50,8 @@ export function startProductFlight(event, { frame, to, navigate }) {
   }
 
   function interrupt() {
-    request.transition?.skipTransition()
     clean()
+    request.transition?.skipTransition()
   }
 
   const controller = new AbortController()
@@ -55,7 +60,12 @@ export function startProductFlight(event, { frame, to, navigate }) {
   root.setAttribute('data-product-flight', '')
   try {
     request.transition = document.startViewTransition(() => {
-      if (active !== request || request.origin !== window.location.href) return
+      if (request.cancelNavigation || token !== sequence || request.origin !== window.location.href ||
+          request.historyKey !== window.history.state?.key) return
+      if (controller.signal.aborted) {
+        navigate(to)
+        return
+      }
       flushSync(() => navigate(to, { state: { productFlight: request.token } }))
       window.scrollTo({ top: 0, behavior: 'instant' })
       request.destination = document.querySelector('[data-product-flight-target]')
@@ -71,7 +81,10 @@ export function startProductFlight(event, { frame, to, navigate }) {
   for (const type of ['pointerdown', 'keydown', 'wheel']) {
     document.addEventListener(type, interrupt, { capture: true, passive: true, signal: controller.signal })
   }
-  window.addEventListener('popstate', interrupt, { signal: controller.signal })
+  window.addEventListener('popstate', () => {
+    request.cancelNavigation = true
+    interrupt()
+  }, { signal: controller.signal })
   void request.transition.ready.catch(() => {})
   void request.transition.finished.then(clean, clean)
 }
