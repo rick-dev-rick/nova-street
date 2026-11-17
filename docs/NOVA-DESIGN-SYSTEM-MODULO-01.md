@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 01
 
+> Na versão atual, use o componente compartilhado `Feedback` para as mensagens semânticas. O checkout apresenta um aviso informativo e uma instrução junto ao botão enquanto aguarda a cotação. [Guia vigente](NOVA-DESIGN-SYSTEM.md) · [Módulo 09](NOVA-DESIGN-SYSTEM-MODULO-09.md)
+
 A auditoria partiu do commit `3f81307`. Os tokens de base já estavam importados, mas várias cores ainda eram declaradas diretamente em `app.css`. A configuração escura ainda não era aplicada nas páginas. O nome da marca era repetido no cabeçalho e no rodapé, e os favoritos misturavam um caractere tipográfico com um ícone SVG.
 
 ## Paleta e papéis

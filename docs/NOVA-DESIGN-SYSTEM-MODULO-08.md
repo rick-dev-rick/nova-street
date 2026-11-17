@@ -1,5 +1,7 @@
 # NØVA Design System · Módulo 08 · Responsividade e acessibilidade
 
+> Os testes de checkout deste relatório cobrem o formulário que existia antes da revisão comercial. A partir do Módulo 09, a única entrada da simulação é o CEP. [Módulo 09](NOVA-DESIGN-SYSTEM-MODULO-09.md)
+
 Base auditada `d0c011b`. Escopo de referência [WCAG 2.2 nível AA](https://www.w3.org/TR/WCAG22/). A severidade indica o impacto observado na jornada e ajuda a priorizar a revisão.
 
 ## Achados e correções

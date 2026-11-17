@@ -1,58 +1,71 @@
-# NØVA Design System — escopo e auditoria inicial
+# NØVA Design System
 
-**Status: em implantação.** Este documento não afirma que os requisitos estão concluídos. O objetivo é cobrir os 11 pilares aprovados, evoluindo o código existente sem reconstrução desnecessária.
+A identidade da NØVA STREET combina preto, branco e vermelho com fotografia editorial, títulos de alto contraste e acentos pontuais. Este guia orienta mudanças no sistema vigente. Os relatórios dos módulos preservam o contexto, as decisões e as evidências de cada entrega.
 
-[Módulo 01 — Identidade visual e cores](NOVA-DESIGN-SYSTEM-MODULO-01.md)
+## Cores, marca e tratamento editorial
 
-[Módulo 02 — Tipografia](NOVA-DESIGN-SYSTEM-MODULO-02.md)
+- Use `--nova-color-*` de acordo com o papel. Combine texto e superfície, ação e texto sobre ação, ou controle e borda de controle. `--nova-brand-*` e `--nova-neutral-*` definem a paleta e servem de base aos papéis semânticos. Os pares `success`, `warning`, `error` e `info` têm cores de texto e superfície próprias. Aplique cada estado com uma mensagem legível.
+- O tema claro é o padrão. Áreas escuras são delimitadas com `data-nova-theme="dark"`, que redefine papéis semânticos e o esquema dos controles nativos. Confira o contraste no tema usado pela seção e sobre as fotos mais claras do conjunto.
+- Reuse `BrandWordmark` para a marca no cabeçalho, menu e rodapé, e preserve a grafia NØVA STREET. O favicon tem desenho próprio. Nos controles de favorito, `HeartIcon` acompanha `currentColor` e o botão fornece nome e estado acessíveis.
+- Gradientes de legenda, textura e tratamento monocromático têm tokens `--nova-treatment-*`. Preserve a leitura das legendas sobre imagens e a proporção prevista para o quadro. Quando a foto transmite informação sobre um produto, forneça texto alternativo. Em imagens decorativas, mantenha alternativa vazia.
 
-[Módulo 03 — Espaçamento e geometria](NOVA-DESIGN-SYSTEM-MODULO-03.md)
+[Tokens](../src/design-system/tokens.css) · [Wordmark](../src/design-system/BrandWordmark.jsx) · [Favicon](../public/nova-mark.svg) · [Favorito](../src/components/FavoriteButton.jsx) · [Ícone de coração](../src/design-system/HeartIcon.jsx)
 
-[Módulo 04 — Hierarquia visual e composição](NOVA-DESIGN-SYSTEM-MODULO-04.md)
+## Tipografia e hierarquia
 
-[Módulo 05 — Componentes e variantes](NOVA-DESIGN-SYSTEM-MODULO-05.md)
+A Inter Variable é empacotada com a aplicação, com `font-display: swap` e famílias de sistema como fallback. A escala usa `--nova-type-*` para tamanhos, entrelinhas, espaçamento entre letras e largura de leitura. Os títulos fluidos e o texto em `rem` acompanham os ajustes de fonte do navegador. `.eyebrow` identifica o contexto da seção. `.price` reserva tratamento de peso e algarismos tabulares.
 
-[Módulo 06 — Estados e comportamento](NOVA-DESIGN-SYSTEM-MODULO-06.md)
+Use um título principal para identificar a página e títulos subordinados conforme a estrutura do conteúdo. Escolha a escala visual pelo papel editorial. Em uma seção, agrupe identificação, título e próxima ação em `.section-heading` onde esse padrão couber. Dê à ação principal a maior ênfase e mantenha as alternativas na hierarquia secundária ou textual. Preserve nome, preço e controles de produto com ponteiro, teclado e toque.
 
-[Módulo 07 — Animações e movimento](NOVA-DESIGN-SYSTEM-MODULO-07.md)
+[Tipografia](../src/design-system/typography.css) · [Estilos da loja](../src/styles/app.css) · [Card de produto](../src/components/ProductCard.jsx)
 
-## O que já foi observado no repositório (10/11/2026)
-- React/Vite e rotas separadas em Home, Catálogo, Produto, Carrinho, Checkout e Favoritos.
-- Componentes como Layout, Header, Footer, ProductCard e CartDrawer.
-- Variáveis existentes para preto, branco, vermelho, cinza e bordas.
-- Hierarquia de títulos e CTA, grades para produtos/categorias, breakpoints para tablet/mobile.
-- Foco visível, skip link e preferência por movimento reduzido já aparecem no CSS.
-- Checkout, preços, estoque, frete e dados de produto são **demonstrativos**, sem backend nem transações reais.
+## Espaçamento, geometria e responsividade
 
-**Não validado ainda:** WCAG, contraste elemento por elemento, teclado/leitor de tela, cobertura de testes, qualidade de estados de erro, performance e consistência geral entre componentes. Não marcar esses pontos como concluídos sem teste.
+A escala `--nova-space-*` parte de 4 px e inclui intervalos intermediários. `.container` define largura e margens, incluindo as áreas seguras quando o navegador fornece os insets. `.section` usa a cadência vertical compartilhada. Os grids ajustam `--nova-grid-columns` e, se necessário, `--grid-gap`. Use as proporções de produto e editorial para reservar espaço à imagem e os tokens de raio, borda, sombra e tamanho mínimo dos controles conforme o contexto.
 
-## Inventário de 11 frentes (todas fazem parte do escopo)
-1. Identidade visual e cores: paletas, semântica, contraste, temas, marca, ícones, texturas.
-2. Tipografia: famílias, escalas, pesos, entrelinhas, títulos, texto, preço e responsividade.
-3. Espaçamento e geometria: tokens, margens, paddings, gaps, grids, breakpoints, raios, bordas, sombras e proporções.
-4. Hierarquia visual e composição: prioridades, CTA, agrupamento, escaneabilidade, ritmo, áreas promocionais e estados vazios.
-5. Componentes e variantes: botões, controles, busca, cards, menus, filtros, overlays, mensagens, loaders, tabelas e seletores.
-6. Estados e comportamento: hover/focus/active, disabled/loading, validação, feedback, indisponibilidade, navegação e teclado.
-7. Animações e movimento: durações, easing, microinterações, menus, modais, cards, carrinho, transições e redução de movimento.
-8. Responsividade e acessibilidade: mobile, alvos de toque, semântica, navegação, contraste, zoom, leitor de tela e erros.
-9. E-commerce: categorias, busca, produto, variantes, preços, carrinho, checkout, frete, favoritos, avaliações e confiança.
-10. Arquitetura front-end: componentes compartilhados, tokens, convenções, hooks, rotas, dados, testes e performance.
-11. Documentação e governança: catálogo, exemplos de uso, decisões, versão, revisões e regressão visual.
+| Faixa existente | Comportamento |
+| --- | --- |
+| Acima de 900 px | Grade de produtos em quatro colunas. Produto, sacola e checkout distribuem suas áreas principais lado a lado. |
+| Até 1200 px | O cabeçalho compacta a navegação e as ações. Outros ajustes de espaçamento entram nas faixas menores. |
+| Até 900 px | Grade de produtos em duas colunas. Categorias, produto, sacola e checkout passam a uma coluna. |
+| Até 600 px | Margens e intervalos menores, filtros empilhados, Lifestyle e rodapé em uma coluna. |
+| Até 760 px ou até 1024 px com ponteiro grosseiro | Navegação de categorias pelo menu fullscreen. O acionador do menu também existe no desktop. |
 
-## Fases de implementação
-- **Fase 1 — Foundation**: centralizar tokens, inventariar estilos atuais, revisar hierarquia e definir padrões.
-- **Fase 2 — Components**: migrar componentes compartilhados, estados, acessibilidade e variantes.
-- **Fase 3 — Motion & Responsive**: microinterações coerentes, navegabilidade e testes em diferentes dispositivos.
-- **Fase 4 — Commerce UX**: aprimorar jornada de descoberta, produto, carrinho e checkout demonstrativo.
-- **Fase 5 — Quality & Governance**: documentação viva, testes automatizados, contraste e revisão de performance.
+Componentes com espaço próprio podem responder à largura do container. Miniaturas da galeria e controles de frete têm regras desse tipo. A sacola lateral e o menu também tratam altura reduzida em paisagem. Consulte os estilos de cada cena para adaptações específicas. [Estilos da loja](../src/styles/app.css) · [Menu fullscreen](../src/styles/fullscreen-menu.css) · [Tokens](../src/design-system/tokens.css)
 
-## Convenções iniciais
-- Novas decisões globais devem utilizar `--nova-*` e, quando possível, tokens semânticos.
-- Preserve as classes legadas enquanto componentes são migrados; evite regressões visuais.
-- Cor de estado não pode ser o único mecanismo de feedback.
-- Acessibilidade e performance fazem parte dos critérios de conclusão, não de uma etapa opcional.
-- Tema escuro é opt-in; o visual claro existente continua sendo o padrão.
-- Não alterar o comportamento de compra demonstrativa sem separar claramente protótipo de operação comercial real.
+## Componentes, variantes e estados
 
-## Critérios de conclusão
-Cada item deve ter implementação, demonstração, documentação e verificação de uso. Checkbox marcado na conversa é **aprovação do escopo**, não evidência de implementação.
+| Necessidade | Padrão em uso |
+| --- | --- |
+| Ações e navegação | `Button` para executar e `ActionLink` para navegar. Variantes `primary`, `secondary`, `text` e `plain`. [Action.jsx](../src/design-system/Action.jsx) |
+| Escolhas e favoritos | `ChoiceButton` expõe seleção para filtros, tamanhos e galeria. `FavoriteButton` mantém o nome e expõe o estado pressionado. [ChoiceButton.jsx](../src/design-system/ChoiceButton.jsx) · [FavoriteButton.jsx](../src/components/FavoriteButton.jsx) |
+| Campos | `InputField` e `SelectField` associam rótulos nativos. `InputField` integra erro e descrição. O simulador de frete usa um campo dedicado com indicação do erro. [Field.jsx](../src/design-system/Field.jsx) · [ShippingCalculator.jsx](../src/components/ShippingCalculator.jsx) |
+| Feedback e espera | `Feedback` oferece informação, aviso, erro (`alert`) e sucesso (`status`). `LoadingStatus` sinaliza carregamento. `EmptyState` contextualiza a ausência de resultados e pode oferecer uma saída. [Feedback.jsx](../src/design-system/Feedback.jsx) · [LoadingStatus.jsx](../src/design-system/LoadingStatus.jsx) · [EmptyState.jsx](../src/components/EmptyState.jsx) |
+| Diálogos | `Dialog` usa o elemento nativo e delega a abertura, o fechamento e a gestão do foco aos chamadores. [Dialog.jsx](../src/design-system/Dialog.jsx) · [Menu](../src/components/CategoryNavigation.jsx) · [Sacola lateral](../src/components/CartDrawer.jsx) · [Galeria](../src/components/ProductGallery.jsx) |
+| Cards e seleção comercial | `EditorialCard` para conteúdo editorial. `ProductCard` para produto, com navegação e favorito independentes. `QuantitySelector` agrupa controles de quantidade. `SizeTable` mantém cabeçalhos nativos de tabela. [EditorialCard.jsx](../src/components/EditorialCard.jsx) · [ProductCard.jsx](../src/components/ProductCard.jsx) · [QuantitySelector.jsx](../src/components/QuantitySelector.jsx) · [SizeTable.jsx](../src/components/SizeTable.jsx) |
+
+Diferencie foco, pressionamento momentâneo e seleção persistente. Use `disabled` em controles nativos indisponíveis e explique o motivo junto à ação quando necessário. Trate confirmação e erro com texto associado ao controle ou à região adequada. Preserve o comportamento dos controles em telas sem hover.
+
+## Revisão e manutenção
+
+- Ao mudar um papel visual compartilhado, verifique os usos existentes antes de ajustar o token. Ajustes de uma seção ficam no componente ou estilo responsável por ela.
+- Confira Tab e Shift+Tab, o atalho para o conteúdo, o foco visível sobre a fotografia, o fechamento de diálogos e o retorno do foco. O `Layout` foca o conteúdo ao mudar o caminho e mantém o foco local em ajustes de consulta do catálogo. [Layout.jsx](../src/components/Layout.jsx)
+- Confira controles e legibilidade em retrato, paisagem e fonte ampliada. O token de alvo mínimo reserva 44 px para controles que o usam. Verifique as variantes em espaço reduzido e nas áreas seguras antes de alterar o espaçamento. [Módulo 08](NOVA-DESIGN-SYSTEM-MODULO-08.md)
+- Preserve conteúdo e controles com `prefers-reduced-motion` e na ausência de uma API de animação. As regras globais desativam animações e a rolagem suave para a preferência reduzida. As cenas com efeitos próprios mantêm seus respectivos fallbacks. [Movimento base](../src/design-system/motion.css) · [Sistemas cinematográficos](MOTION.md)
+- Compare as telas afetadas antes e depois com os mesmos dados e dimensões. Anote diferenças esperadas e as verificações pendentes. Use WCAG 2.2 AA como referência e complemente as checagens automáticas com avaliação manual. [Módulo 08](NOVA-DESIGN-SYSTEM-MODULO-08.md)
+
+## Relatórios dos módulos
+
+| Módulo | Registro |
+| --- | --- |
+| 01 | [Identidade visual e cores](NOVA-DESIGN-SYSTEM-MODULO-01.md) |
+| 02 | [Tipografia](NOVA-DESIGN-SYSTEM-MODULO-02.md) |
+| 03 | [Espaçamento e geometria](NOVA-DESIGN-SYSTEM-MODULO-03.md) |
+| 04 | [Hierarquia visual e composição](NOVA-DESIGN-SYSTEM-MODULO-04.md) |
+| 05 | [Componentes e variantes](NOVA-DESIGN-SYSTEM-MODULO-05.md) |
+| 06 | [Estados e comportamento](NOVA-DESIGN-SYSTEM-MODULO-06.md) |
+| 07 | [Animações e movimento](NOVA-DESIGN-SYSTEM-MODULO-07.md) |
+| 08 | [Responsividade e acessibilidade](NOVA-DESIGN-SYSTEM-MODULO-08.md) |
+| 09 | [Experiência comercial](NOVA-DESIGN-SYSTEM-MODULO-09.md) |
+| 10 | [Arquitetura e engenharia](NOVA-DESIGN-SYSTEM-MODULO-10.md) |
+| 11 | Governança consolidada neste guia, no [guia de contribuição](../CONTRIBUTING.md) e na [auditoria documental](NOVA-DESIGN-SYSTEM-MODULO-11.md). |

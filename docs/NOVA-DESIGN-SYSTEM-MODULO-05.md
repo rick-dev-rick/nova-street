@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 05
 
+> O Motion Showcase substituiu o menu recolhível pelo fullscreen, e o Módulo 09 removeu os campos de contato do checkout. A tabela registra os usos na entrega deste módulo. [Menu fullscreen](NOVA-MOTION-SHOWCASE-ETAPA-04.md) · [Módulo 09](NOVA-DESIGN-SYSTEM-MODULO-09.md) · [Guia vigente](NOVA-DESIGN-SYSTEM.md)
+
 Base de implementação `ae77916`, com o módulo 04 integrado à `main`. As variantes abaixo reutilizam as cores, a tipografia e os estilos existentes.
 
 | Componente | Variantes e uso |

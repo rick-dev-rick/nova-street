@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 07
 
+> Os tempos e o menu deslizante abaixo descrevem a base de movimento desta entrega. O Motion Showcase acrescentou coreografias próprias de campanha, cards e menu fullscreen. [Sistemas cinematográficos](MOTION.md)
+
 Base `96a8c00`, com o módulo 06 integrado à `main`. Antes deste módulo, a galeria e os cards usavam durações fixas, enquanto as demais interações eram instantâneas.
 
 | Duração | Aplicação |

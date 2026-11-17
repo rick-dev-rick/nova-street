@@ -1,5 +1,7 @@
 # NØVA Motion Showcase 2.0 — Etapa 02
 
+> Registro da etapa original. Categorias, Novidades e Lifestyle passaram a usar [Editorial Reveal](NOVA-HOME-EDITORIAL-REVEAL.md). Consulte o [guia atual](MOTION.md) para manter as cenas.
+
 A base é a `main` em `2925af7`, que integrou o PR #9. A auditoria confirmou que a entrada do hero anima `.hero-photo`, dentro de `.hero-shot`. A saída desta etapa atua no elemento externo e permite que os dois movimentos coexistam. O PR #8 usava uma subida com fade genérico no drop e no CTA final. A implementação aproveitou a técnica de progresso pela rolagem e partiu do PR #9 integrado.
 
 ## As sete cenas

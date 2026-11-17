@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 02
 
+> A tabela registra a escala desta entrega. O Hero 2.0 acrescentou tamanhos e entrelinha próprios para a cena, com ajustes de mobile no CSS dedicado. [Hero 2.0](NOVA-MOTION-SHOWCASE-ETAPA-01.md) · [Estilos do hero](../src/styles/hero-showcase.css)
+
 A auditoria partiu de `850dd18`, com o módulo 01 integrado à `main`. A Inter aparecia na lista de famílias, mas o projeto dependia das fontes instaladas no dispositivo. Os tamanhos, pesos e espaçamentos estavam dispersos no CSS. Os cards do catálogo e dos favoritos apareciam como H3 logo abaixo do H1.
 
 ## Família e escala

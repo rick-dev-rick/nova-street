@@ -1,5 +1,7 @@
 # NØVA Motion Showcase 2.0 · Etapa 02.1
 
+> Registro da revisão original. Categorias, Novidades e Lifestyle passaram a usar [Editorial Reveal](NOVA-HOME-EDITORIAL-REVEAL.md). Consulte o [guia atual](MOTION.md) para a divisão de responsabilidades.
+
 Revisão da rolagem da Home a partir de `5ad1ec4`, integração do [PR #10](https://github.com/rick-dev-rick/nova-street/pull/10). O diagnóstico partiu do código da Home, das regras do Hero 2.0 e do Scroll Showcase, além da comparação dos dois builds em Chromium.
 
 ## Coreografia
