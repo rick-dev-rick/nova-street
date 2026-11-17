@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 04
 
+> O Módulo 09 passou a limpar também a ordenação do catálogo e substituiu o grupo de dados do pedido pelo resumo das peças. As descrições abaixo registram a composição anterior a essa revisão. [Módulo 09](NOVA-DESIGN-SYSTEM-MODULO-09.md)
+
 A implementação partiu de `0a97233`, com o módulo 03 integrado à `main`. A revisão encontrou duas chamadas vermelhas para o catálogo na Home, duas saídas para o mesmo destino em Favoritos vazio e uma busca sem resultados que exigia desfazer filtros manualmente. Na página de produto, seleção e compra apareciam misturadas às informações editoriais. No checkout, o aviso aparecia antes do título da página.
 
 ## Prioridades e chamadas

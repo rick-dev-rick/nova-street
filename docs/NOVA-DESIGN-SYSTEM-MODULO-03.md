@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 03
 
+> A geometria do checkout abaixo inclui os campos de contato usados na época. O Módulo 09 substituiu esse formulário por resumo das peças e simulador de frete. [Módulo 09](NOVA-DESIGN-SYSTEM-MODULO-09.md) · [Checkout atual](../src/pages/Checkout.jsx)
+
 A auditoria partiu de `4da3e8f`, com o módulo 02 integrado à `main`. A escala de espaços já existia, mas margens, paddings, gaps e bordas ainda repetiam valores em pixels. Os ajustes para 600 px apareciam em vários pontos do CSS.
 
 ## Espaçamento, grids e breakpoints

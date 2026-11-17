@@ -1,5 +1,7 @@
 # NØVA Motion Showcase 2.0 · Etapa 05 · Cinematic Product Transition
 
+> Registro da passagem original. O [Módulo 10](NOVA-DESIGN-SYSTEM-MODULO-10.md) ajustou a interrupção e a limpeza do pré-carregamento. O [guia atual](MOTION.md) descreve a interação com Editorial Reveal.
+
 Base `f6c06b1`, integração do menu fullscreen.
 
 ## Auditoria da navegação

@@ -1,5 +1,7 @@
 # NØVA Design System — Módulo 06
 
+> O formulário de contato e a ação **Ir para o CEP** pertencem ao checkout da época. No fluxo vigente, a cotação de frete libera a confirmação e um CEP inválido recebe mensagem associada e foco no campo. [Módulo 09](NOVA-DESIGN-SYSTEM-MODULO-09.md)
+
 Base `c43a484`, com o módulo 05 integrado à `main`. O módulo aplica estados aos controles existentes e trata os caminhos de recuperação na loja demonstrativa.
 
 | Estado | Comportamento |
